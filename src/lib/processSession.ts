@@ -29,10 +29,10 @@ export async function processSession(
     const formData = new FormData();
     formData.append('file', file);
 
-    // Step 2: Send to AssemblyAI for transcription
+    // Step 2: Send to Deepgram for transcription
     onProgress?.({ stage: 'transcribing', progress: 30, message: 'Transcribing audio...' });
 
-    const transcriptionResponse = await fetch('/api/assemblyai', {
+    const transcriptionResponse = await fetch('/api/deepgram', {
       method: 'POST',
       body: formData,
     });

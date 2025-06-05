@@ -62,7 +62,7 @@ export default function Home() {
       <section className="bg-green-50 py-16 px-6 text-center">
         <h1 className="text-4xl font-bold mb-4">Skip the paperwork. Keep the progress.</h1>
         <p className="text-lg max-w-xl mx-auto mb-6">
-          Whether you're a parent or a therapist, NurtureLog writes the report so you don't have to. Upload your letterboarding session—get instant summaries, strengths, and next steps.
+          Whether you're a parent or a practitioner, NurtureLog writes the report so you don't have to. Upload your letterboarding session—get instant summaries, strengths, and next steps.
         </p>
         <div className="flex justify-center gap-4">
           <Link href="/upload">
@@ -104,7 +104,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Therapist Section */}
+      {/* Practitioner Section */}
       <section className="bg-gray-100 py-16 px-6 text-center">
         <h2 className="text-3xl font-bold mb-4">No more late-night notes.</h2>
         <p className="max-w-2xl mx-auto text-lg">
@@ -125,7 +125,7 @@ export default function Home() {
         <h2 className="text-3xl font-bold mb-6">15+ minutes saved per session. That adds up.</h2>
         <blockquote className="italic text-lg max-w-xl mx-auto text-gray-700">
           "I used to spend my evenings trying to summarize sessions. Now it's just… done."<br />
-          <span className="text-sm font-semibold block mt-2">— Early Access Therapist</span>
+          <span className="text-sm font-semibold block mt-2">— Early Access Practitioner</span>
         </blockquote>
       </section>
 
