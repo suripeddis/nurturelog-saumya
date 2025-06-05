@@ -23,80 +23,76 @@ export async function processSession(
   onProgress?: (progress: ProcessingProgress) => void
 ): Promise<ProcessingResult> {
   try {
-    // Step 1: Start upload
-    onProgress?.({ stage: 'uploading', progress: 10, message: 'Uploading file...' });
+    // Step 1: Upload (stage=10)
+    onProgress?.({
+      stage: 'uploading',
+      progress: 10,
+      message: 'Uploading file…',
+    });
 
     const formData = new FormData();
     formData.append('file', file);
 
-    // Step 2: Send to external transcription service
-    onProgress?.({ stage: 'transcribing', progress: 30, message: 'Transcribing audio...' });
-
-    const transcriptionResponse = await fetch('https://nurturelogserver.onrender.com/transcribe', {
-      method: 'POST',
-      body: formData,
+    // Step 2: Transcribe (stage=30)
+    onProgress?.({
+      stage: 'transcribing',
+      progress: 30,
+      message: 'Transcribing audio…',
     });
 
+    const transcriptionResponse = await fetch(
+      'https://nurturelogserver.onrender.com/transcribe',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
+
     if (!transcriptionResponse.ok) {
-      throw new Error('Failed to transcribe audio');
+      // You can inspect transcriptionResponse.status or body if you like:
+      const errorText = await transcriptionResponse.text();
+      console.error('Transcription service error:', errorText);
+      throw new Error(`Transcription failed: ${errorText}`);
     }
 
-    const { text: transcript } = await transcriptionResponse.json();
-    console.log('Transcript received:', transcript?.substring(0, 100) + '...');
+    const transcriptionJson = await transcriptionResponse.json();
+    const transcript: string = transcriptionJson.text;
+    console.log('📝 Transcript received:', transcript?.substring(0, 100) + '…');
 
-    // Step 3: Send to ChatGPT for analysis
-    onProgress?.({ stage: 'analyzing', progress: 70, message: 'Analyzing content...' });
+    // Step 3: Analyze (stage=70)
+    onProgress?.({
+      stage: 'analyzing',
+      progress: 70,
+      message: 'Analyzing content…',
+    });
 
     const analysisResponse = await fetch('/api/chatgpt', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ transcript }),
     });
 
     if (!analysisResponse.ok) {
       const errorText = await analysisResponse.text();
-      console.error('ChatGPT API error:', errorText);
-      throw new Error('Failed to analyze transcript');
+      console.error('ChatGPT analysis error:', errorText);
+      throw new Error(`Analysis failed: ${errorText}`);
     }
 
-    const analysis: SessionAnalysis = await analysisResponse.json();
-    console.log('Structured analysis received:', {
-      summary: analysis.summary?.substring(0, 50) + '...',
-      successesCount: analysis.successes?.length,
-      strugglesCount: analysis.struggles?.length,
-      topicsCount: analysis.topicsDiscussed?.length
+    const analysisJson = await analysisResponse.json();
+
+    // Step 4: Complete (stage=100)
+    onProgress?.({
+      stage: 'complete',
+      progress: 100,
+      message: 'Done!',
     });
 
-    // Validate the structure
-    if (!analysis.summary || !Array.isArray(analysis.successes) || 
-        !Array.isArray(analysis.struggles) || !Array.isArray(analysis.topicsDiscussed)) {
-      console.error('Invalid analysis structure:', analysis);
-      throw new Error('Received invalid analysis structure from ChatGPT');
-    }
-
-    // Step 4: Complete
-    onProgress?.({ stage: 'complete', progress: 100, message: 'Complete!' });
-
-    const result: ProcessingResult = {
+    return {
       transcript,
-      analysis,
+      analysis: analysisJson,
     };
-
-    console.log('Final result structure:', {
-      hasTranscript: !!result.transcript,
-      analysisStructure: {
-        hasSummary: !!result.analysis.summary,
-        successesCount: result.analysis.successes.length,
-        strugglesCount: result.analysis.struggles.length,
-        topicsCount: result.analysis.topicsDiscussed.length
-      }
-    });
-
-    return result;
-  } catch (error) {
-    console.error('Error processing session:', error);
+  } catch (error: any) {
+    console.error('processSession error:', error);
     throw error;
   }
-} 
+}
