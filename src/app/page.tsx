@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -17,7 +18,9 @@ export default function Home() {
           Whether you're a parent or a therapist, NurtureLog writes the report so you don't have to. Upload your letterboarding session—get instant summaries, strengths, and next steps.
         </p>
         <div className="flex justify-center gap-4">
-          <button className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold">Upload a Session</button>
+          <Link href="/upload">
+            <button className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold">Upload a Session</button>
+          </Link>
           <button className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-semibold">See Sample Report</button>
         </div>
         <p className="mt-4 text-sm text-gray-600">Supports real-world, imperfect recordings—no need for clean audio or perfect structure.</p>
