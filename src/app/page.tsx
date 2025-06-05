@@ -29,12 +29,14 @@ export default function Home() {
               Upload a Session
             </button>
           </Link>
-          <button 
-            onClick={() => analytics.trackLandingPageButton('See Sample Report - Hero')}
-            className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-semibold"
-          >
-            See Sample Report
-          </button>
+          <Link href="/sample">
+            <button 
+              onClick={() => analytics.trackLandingPageButton('See Sample Report - Hero')}
+              className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-semibold"
+            >
+              See Sample Report
+            </button>
+          </Link>
         </div>
         <p className="mt-4 text-sm text-gray-600">Supports real-world, imperfect recordings—no need for clean audio or perfect structure.</p>
       </section>
@@ -95,18 +97,22 @@ export default function Home() {
       <section className="bg-green-600 text-white py-20 px-6 text-center">
         <h2 className="text-4xl font-bold mb-4">Get clarity without the burnout.</h2>
         <div className="flex justify-center gap-4">
-          <button 
-            onClick={() => analytics.trackLandingPageButton('Try NurtureLog Free - Footer')}
-            className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold"
-          >
-            Try NurtureLog Free
-          </button>
-          <button 
-            onClick={() => analytics.trackLandingPageButton('See a Demo Report - Footer')}
-            className="border border-white px-6 py-3 rounded-lg font-semibold"
-          >
-            See a Demo Report
-          </button>
+          <Link href="/upload">
+            <button 
+              onClick={() => analytics.trackLandingPageButton('Try NurtureLog Free - Footer')}
+              className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold"
+            >
+              Try NurtureLog Free
+            </button>
+          </Link>
+          <Link href="/sample">
+            <button 
+              onClick={() => analytics.trackLandingPageButton('See a Demo Report - Footer')}
+              className="border border-white px-6 py-3 rounded-lg font-semibold"
+            >
+              See a Demo Report
+            </button>
+          </Link>
         </div>
       </section>
     </main>
