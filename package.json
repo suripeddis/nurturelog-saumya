@@ -11,6 +11,8 @@
   "dependencies": {
     "@deepgram/sdk": "^4.2.0",
     "@descope/nextjs-sdk": "^0.13.15",
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2",
     "@types/uuid": "^10.0.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",

@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { AudioChunker } from './audioChunker';
 
 export interface SessionAnalysis {
   summary: string;
@@ -16,6 +17,8 @@ export interface ProcessingProgress {
   stage: 'uploading' | 'transcribing' | 'analyzing' | 'complete';
   progress: number;
   message: string;
+  chunksProcessed?: number;
+  totalChunks?: number;
 }
 
 export async function processSession(
@@ -23,25 +26,46 @@ export async function processSession(
   onProgress?: (progress: ProcessingProgress) => void
 ): Promise<ProcessingResult> {
   try {
-    // Step 1: Start upload
-    onProgress?.({ stage: 'uploading', progress: 10, message: 'Uploading file...' });
+    // Step 1: Initialize
+    onProgress?.({ stage: 'uploading', progress: 5, message: 'Preparing file for processing...' });
 
-    const formData = new FormData();
-    formData.append('file', file);
-
-    // Step 2: Send to Deepgram for transcription
-    onProgress?.({ stage: 'transcribing', progress: 30, message: 'Transcribing audio...' });
-
-    const transcriptionResponse = await fetch('/api/deepgram', {
-      method: 'POST',
-      body: formData,
+    // Step 2: Use AudioChunker for smart processing
+    const audioChunker = new AudioChunker();
+    
+    const transcriptionResult = await audioChunker.processLargeAudioFile(file, (chunkProgress) => {
+      // Map AudioChunker progress to our ProcessingProgress format
+      let mappedProgress: ProcessingProgress;
+      
+      if (chunkProgress.stage === 'initializing' || chunkProgress.stage === 'splitting') {
+        mappedProgress = {
+          stage: 'uploading',
+          progress: Math.max(5, chunkProgress.progress * 0.3), // Map to 5-30%
+          message: chunkProgress.message,
+          chunksProcessed: chunkProgress.chunksProcessed,
+          totalChunks: chunkProgress.totalChunks
+        };
+      } else if (chunkProgress.stage === 'transcribing') {
+        mappedProgress = {
+          stage: 'transcribing',
+          progress: 30 + (chunkProgress.progress - 60) * 0.6, // Map 60-90% to 30-48%
+          message: chunkProgress.message,
+          chunksProcessed: chunkProgress.chunksProcessed,
+          totalChunks: chunkProgress.totalChunks
+        };
+      } else {
+        mappedProgress = {
+          stage: 'transcribing',
+          progress: Math.min(50, 30 + chunkProgress.progress * 0.2),
+          message: chunkProgress.message,
+          chunksProcessed: chunkProgress.chunksProcessed,
+          totalChunks: chunkProgress.totalChunks
+        };
+      }
+      
+      onProgress?.(mappedProgress);
     });
 
-    if (!transcriptionResponse.ok) {
-      throw new Error('Failed to transcribe audio');
-    }
-
-    const { text: transcript } = await transcriptionResponse.json();
+    const transcript = transcriptionResult.text;
     console.log('Transcript received:', transcript?.substring(0, 100) + '...');
 
     // Step 3: Send to ChatGPT for analysis
