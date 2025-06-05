@@ -2,16 +2,21 @@
 
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useRouter } from 'next/navigation';
+import { useProcessing } from '@/contexts/ProcessingContext';
 
 export default function UploadPage() {
+  const router = useRouter();
+  const { startProcessing } = useProcessing();
   const [youtubeLink, setYoutubeLink] = useState('');
-  const [isUploading, setIsUploading] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    // Handle file upload here
-    console.log(acceptedFiles);
-    setIsUploading(true);
-    // TODO: Implement actual file upload logic
+    if (acceptedFiles.length > 0) {
+      setUploadedFile(acceptedFiles[0]);
+      setError(null);
+    }
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -26,6 +31,19 @@ export default function UploadPage() {
     e.preventDefault();
     // TODO: Implement YouTube link processing
     console.log('Processing YouTube link:', youtubeLink);
+  };
+
+  const handleProcess = async () => {
+    if (!uploadedFile) {
+      setError('Please upload a file first');
+      return;
+    }
+
+    setError(null);
+    
+    // Start processing and immediately navigate to processing page
+    startProcessing(uploadedFile);
+    router.push('/processing');
   };
 
   return (
@@ -76,14 +94,33 @@ export default function UploadPage() {
               )}
             </div>
           </div>
-        </div>
 
-        {isUploading && (
-          <div className="text-center text-gray-600">
-            <p>Uploading your file...</p>
-            {/* TODO: Add progress indicator */}
-          </div>
-        )}
+          {uploadedFile && (
+            <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-600">
+                Selected file: {uploadedFile.name}
+              </p>
+            </div>
+          )}
+
+          {error && (
+            <div className="mt-4 p-4 bg-red-50 text-red-600 rounded-lg">
+              {error}
+            </div>
+          )}
+
+          <button
+            onClick={handleProcess}
+            disabled={!uploadedFile}
+            className={`mt-4 w-full py-3 rounded-lg font-semibold transition-colors
+              ${!uploadedFile
+                ? 'bg-gray-300 cursor-not-allowed'
+                : 'bg-green-600 text-white hover:bg-green-700'
+              }`}
+          >
+            Process File
+          </button>
+        </div>
       </div>
     </main>
   );

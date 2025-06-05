@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server';
+import { AssemblyAI } from 'assemblyai';
 
 const ASSEMBLYAI_API_KEY = process.env.ASSEMBLYAI_API_KEY;
+
+if (!ASSEMBLYAI_API_KEY) {
+  throw new Error('ASSEMBLYAI_API_KEY is not set in environment variables');
+}
+
+const client = new AssemblyAI({
+  apiKey: ASSEMBLYAI_API_KEY,
+});
 
 /**
  * POST /api/transcribe
@@ -9,40 +18,41 @@ const ASSEMBLYAI_API_KEY = process.env.ASSEMBLYAI_API_KEY;
  */
 export async function POST(req: Request) {
   try {
-    const { audioUrl } = await req.json();
+    const formData = await req.formData();
+    const file = formData.get('file') as File;
 
-    if (!audioUrl || typeof audioUrl !== 'string') {
-      return NextResponse.json({ error: 'A valid audioUrl is required' }, { status: 400 });
+    if (!file) {
+      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    if (!ASSEMBLYAI_API_KEY) {
-      return NextResponse.json({ error: 'AssemblyAI API key not configured' }, { status: 500 });
-    }
+    // Convert File to ArrayBuffer
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
-    const res = await fetch('https://api.assemblyai.com/v2/transcript', {
-      method: 'POST',
-      headers: {
-        Authorization: ASSEMBLYAI_API_KEY,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        audio_url: audioUrl,
-        language_code: 'en',
-        auto_chapters: true,
-        auto_highlights: true,
-      }),
+    // Transcribe the audio
+    const transcript = await client.transcripts.transcribe({
+      audio: buffer,
+      speech_model: "slam-1",
     });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      console.error('AssemblyAI API error:', data);
-      return NextResponse.json({ error: data.error || 'Failed to process audio' }, { status: 502 });
+    if (transcript.status === "error") {
+      console.error(`Transcription failed: ${transcript.error}`);
+      return NextResponse.json(
+        { error: transcript.error || 'Transcription failed' },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json(data);
-  } catch (err) {
-    console.error('Unexpected error during transcription:', err);
-    return NextResponse.json({ error: 'Unexpected server error' }, { status: 500 });
+    return NextResponse.json({
+      text: transcript.text,
+      words: transcript.words,
+      confidence: transcript.confidence,
+    });
+  } catch (error) {
+    console.error('AssemblyAI API error:', error);
+    return NextResponse.json(
+      { error: 'Failed to process audio' },
+      { status: 500 }
+    );
   }
 }

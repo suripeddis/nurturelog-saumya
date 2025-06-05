@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ProcessingProvider } from "@/contexts/ProcessingContext";
 
 export const metadata: Metadata = {
   title: "NurtureLog – Skip the Paperwork",
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        {children}
+        <ProcessingProvider>
+          {children}
+        </ProcessingProvider>
       </body>
     </html>
   );
