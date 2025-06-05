@@ -1,14 +1,17 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from 'next/navigation';
 import { useProcessing } from '@/contexts/ProcessingContext';
 import { analytics } from '@/lib/mixpanel';
+import { useSession, useUser } from '@descope/nextjs-sdk/client';
 
 export default function UploadPage() {
   const router = useRouter();
   const { startProcessing } = useProcessing();
+  const { isAuthenticated, isSessionLoading } = useSession();
+  const { user } = useUser();
   const [youtubeLink, setYoutubeLink] = useState('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);

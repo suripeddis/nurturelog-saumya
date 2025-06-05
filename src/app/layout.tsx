@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ProcessingProvider } from "@/contexts/ProcessingContext";
 import { AuthProvider } from '@descope/nextjs-sdk';
+import UserIdentification from '@/components/UserIdentification';
 
 export const metadata: Metadata = {
   title: "NurtureLog – Skip the Paperwork",
@@ -18,6 +19,7 @@ export default function RootLayout({
       <html lang="en">
         <body className="antialiased">
           <ProcessingProvider>
+            <UserIdentification />
             {children}
           </ProcessingProvider>  
         </body>
