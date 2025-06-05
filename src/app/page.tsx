@@ -3,14 +3,58 @@
 import Image from "next/image";
 import Link from "next/link";
 import { analytics } from '@/lib/mixpanel';
+import { useSession, useUser, useDescope } from '@descope/nextjs-sdk/client';
+import { useCallback, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const { isAuthenticated, isSessionLoading } = useSession();
+  const { user } = useUser();
+  const sdk = useDescope();
+  const router = useRouter();
+
+  const handleLogout = useCallback(() => {
+    sdk.logout();
+  }, [sdk]);
+
+  // Redirect authenticated users to upload page
+  useEffect(() => {
+    if (!isSessionLoading && isAuthenticated) {
+      router.push('/upload');
+    }
+  }, [isAuthenticated, isSessionLoading, router]);
+
   return (
     <main className="bg-white text-gray-800 font-sans">
       {/* App Header */}
       <header className="bg-white shadow px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <h1 className="text-2xl font-bold text-green-600">NurtureLog</h1>
+          
+          {/* User Profile / Auth Section */}
+          {!isSessionLoading && (
+            <div className="flex items-center gap-4">
+              {isAuthenticated && user ? (
+                <>
+                  <span className="text-sm text-gray-600">
+                    Welcome, {user.name || user.email || 'User'}
+                  </span>
+                  <button
+                    onClick={handleLogout}
+                    className="text-sm text-gray-600 hover:text-gray-800 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link href="/sign-in">
+                  <button className="text-sm text-green-600 hover:text-green-700 transition-colors">
+                    Sign In
+                  </button>
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       </header>
 
