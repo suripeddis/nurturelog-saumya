@@ -1,28 +1,22 @@
-# NurtureLog
-
-NurtureLog helps parents and therapists skip the paperwork while keeping track of progress. Upload your letterboarding session and get instant summaries, strengths, and next steps.
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-1. Install dependencies:
+First, run the development server:
+
 ```bash
-npm install
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-2. Start the development server:
-```bash
-npm start
-```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Features
-
-- Upload video sessions
-- Get instant AI-powered summaries
-- Track progress over time
-- Generate professional reports
-- Works with real-world, imperfect recordings
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
