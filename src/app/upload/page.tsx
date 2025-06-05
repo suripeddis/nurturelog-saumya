@@ -88,6 +88,9 @@ export default function UploadPage() {
                   <p className="text-sm text-gray-500">
                     Supports MP4, MOV, AVI, MP3, WAV, M4A
                   </p>
+                  <p className="text-xs text-green-600 mt-2">
+                    ✨ Files are automatically optimized for faster processing
+                  </p>
                 </>
               )}
             </div>

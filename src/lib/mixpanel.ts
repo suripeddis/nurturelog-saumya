@@ -8,6 +8,7 @@ if (typeof window !== 'undefined') {
     debug: process.env.NODE_ENV === 'development',
     track_pageview: true,
     persistence: 'localStorage',
+    ignore_dnt: true,
   });
 }
 

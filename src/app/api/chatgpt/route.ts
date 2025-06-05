@@ -14,9 +14,10 @@ const AnalysisSchema = z.object({
     topicsDiscussed: z.array(z.string()),
 });
 
-export async function POST(req: Request) {
+export async function POST(req: Request) {    
     try {
         const { transcript } = await req.json();
+        console.log('transcript', transcript);
         if (!transcript || typeof transcript !== 'string') {
             return NextResponse.json(
                 { error: 'Transcript is required' },
@@ -35,7 +36,7 @@ export async function POST(req: Request) {
                     role: 'user',
                     content: `
 Analyze this letterboarding session transcript and return exactly these fields—no extra keys:
-- summary: Professional summary of the session
+- summary: Professional summary of the session. When you see words being spelled out, that means the learner is speaking. Treat that as their speech. 
 - successes: List of quoted examples where learner succeeded. Give at least 3 examples. Describe the success in detail, then include a quote from the transcript.
 - struggles: List of quoted examples where learner struggled. Give at least 3 examples. Describe the struggle in detail, then include a quote from the transcript.
 - topicsDiscussed: List of distinct topics discussed, with details.

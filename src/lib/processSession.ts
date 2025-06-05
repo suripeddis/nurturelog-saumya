@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { AudioChunker } from './audioChunker';
+import { downsampleAudio, AudioProcessingProgress } from './audioProcessor';
 
 export interface SessionAnalysis {
   summary: string;
@@ -14,11 +14,9 @@ export interface ProcessingResult {
 }
 
 export interface ProcessingProgress {
-  stage: 'uploading' | 'transcribing' | 'analyzing' | 'complete';
+  stage: 'processing_audio' | 'uploading' | 'transcribing' | 'analyzing' | 'complete';
   progress: number;
   message: string;
-  chunksProcessed?: number;
-  totalChunks?: number;
 }
 
 export async function processSession(
@@ -26,49 +24,41 @@ export async function processSession(
   onProgress?: (progress: ProcessingProgress) => void
 ): Promise<ProcessingResult> {
   try {
-    // Step 1: Initialize
-    onProgress?.({ stage: 'uploading', progress: 5, message: 'Preparing file for processing...' });
+    // Step 1: Process audio client-side
+    onProgress?.({ stage: 'processing_audio', progress: 5, message: 'Processing audio...' });
 
-    // Step 2: Use AudioChunker for smart processing
-    const audioChunker = new AudioChunker();
-    
-    const transcriptionResult = await audioChunker.processLargeAudioFile(file, (chunkProgress) => {
-      // Map AudioChunker progress to our ProcessingProgress format
-      let mappedProgress: ProcessingProgress;
-      
-      if (chunkProgress.stage === 'initializing' || chunkProgress.stage === 'splitting') {
-        mappedProgress = {
-          stage: 'uploading',
-          progress: Math.max(5, chunkProgress.progress * 0.3), // Map to 5-30%
-          message: chunkProgress.message,
-          chunksProcessed: chunkProgress.chunksProcessed,
-          totalChunks: chunkProgress.totalChunks
-        };
-      } else if (chunkProgress.stage === 'transcribing') {
-        mappedProgress = {
-          stage: 'transcribing',
-          progress: 30 + (chunkProgress.progress - 60) * 0.6, // Map 60-90% to 30-48%
-          message: chunkProgress.message,
-          chunksProcessed: chunkProgress.chunksProcessed,
-          totalChunks: chunkProgress.totalChunks
-        };
-      } else {
-        mappedProgress = {
-          stage: 'transcribing',
-          progress: Math.min(50, 30 + chunkProgress.progress * 0.2),
-          message: chunkProgress.message,
-          chunksProcessed: chunkProgress.chunksProcessed,
-          totalChunks: chunkProgress.totalChunks
-        };
-      }
-      
-      onProgress?.(mappedProgress);
+    const processedFile = await downsampleAudio(file, (audioProgress) => {
+      // Map audio processing progress to overall progress (5-25%)
+      const overallProgress = 5 + (audioProgress.progress * 0.2);
+      onProgress?.({ 
+        stage: 'processing_audio', 
+        progress: overallProgress, 
+        message: audioProgress.message 
+      });
     });
 
-    const transcript = transcriptionResult.text;
+    // Step 2: Start upload
+    onProgress?.({ stage: 'uploading', progress: 25, message: 'Uploading processed file...' });
+
+    const formData = new FormData();
+    formData.append('file', processedFile);
+
+    // Step 3: Send to Deepgram for transcription
+    onProgress?.({ stage: 'transcribing', progress: 40, message: 'Transcribing audio...' });
+
+    const transcriptionResponse = await fetch('/api/deepgram', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!transcriptionResponse.ok) {
+      throw new Error('Failed to transcribe audio');
+    }
+
+    const { text: transcript } = await transcriptionResponse.json();
     console.log('Transcript received:', transcript?.substring(0, 100) + '...');
 
-    // Step 3: Send to ChatGPT for analysis
+    // Step 4: Send to ChatGPT for analysis
     onProgress?.({ stage: 'analyzing', progress: 70, message: 'Analyzing content...' });
 
     const analysisResponse = await fetch('/api/chatgpt', {
@@ -100,7 +90,7 @@ export async function processSession(
       throw new Error('Received invalid analysis structure from ChatGPT');
     }
 
-    // Step 4: Complete
+    // Step 5: Complete
     onProgress?.({ stage: 'complete', progress: 100, message: 'Complete!' });
 
     const result: ProcessingResult = {
