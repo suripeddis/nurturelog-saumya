@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import { downsampleAudio, AudioProcessingProgress } from './audioProcessor';
 
 export interface SessionAnalysis {
   summary: string;
@@ -14,7 +13,7 @@ export interface ProcessingResult {
 }
 
 export interface ProcessingProgress {
-  stage: 'processing_audio' | 'uploading' | 'transcribing' | 'analyzing' | 'complete';
+  stage: 'uploading' | 'transcribing' | 'analyzing' | 'complete';
   progress: number;
   message: string;
 }
@@ -24,29 +23,16 @@ export async function processSession(
   onProgress?: (progress: ProcessingProgress) => void
 ): Promise<ProcessingResult> {
   try {
-    // Step 1: Process audio client-side
-    onProgress?.({ stage: 'processing_audio', progress: 5, message: 'Processing audio...' });
-
-    const processedFile = await downsampleAudio(file, (audioProgress) => {
-      // Map audio processing progress to overall progress (5-25%)
-      const overallProgress = 5 + (audioProgress.progress * 0.2);
-      onProgress?.({ 
-        stage: 'processing_audio', 
-        progress: overallProgress, 
-        message: audioProgress.message 
-      });
-    });
-
-    // Step 2: Start upload
-    onProgress?.({ stage: 'uploading', progress: 25, message: 'Uploading processed file...' });
+    // Step 1: Start upload
+    onProgress?.({ stage: 'uploading', progress: 10, message: 'Uploading file...' });
 
     const formData = new FormData();
-    formData.append('file', processedFile);
+    formData.append('file', file);
 
-    // Step 3: Send to Deepgram for transcription
-    onProgress?.({ stage: 'transcribing', progress: 40, message: 'Transcribing audio...' });
+    // Step 2: Send to external transcription service
+    onProgress?.({ stage: 'transcribing', progress: 30, message: 'Transcribing audio...' });
 
-    const transcriptionResponse = await fetch('/api/deepgram', {
+    const transcriptionResponse = await fetch('https://nurturelogserver.onrender.com/transcribe', {
       method: 'POST',
       body: formData,
     });
@@ -58,7 +44,7 @@ export async function processSession(
     const { text: transcript } = await transcriptionResponse.json();
     console.log('Transcript received:', transcript?.substring(0, 100) + '...');
 
-    // Step 4: Send to ChatGPT for analysis
+    // Step 3: Send to ChatGPT for analysis
     onProgress?.({ stage: 'analyzing', progress: 70, message: 'Analyzing content...' });
 
     const analysisResponse = await fetch('/api/chatgpt', {
@@ -90,7 +76,7 @@ export async function processSession(
       throw new Error('Received invalid analysis structure from ChatGPT');
     }
 
-    // Step 5: Complete
+    // Step 4: Complete
     onProgress?.({ stage: 'complete', progress: 100, message: 'Complete!' });
 
     const result: ProcessingResult = {

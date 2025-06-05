@@ -16,15 +16,6 @@ export default function UploadPage() {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
-      
-      // Check file size - reject files over 100MB
-      const maxSizeBytes = 100 * 1024 * 1024; // 100MB in bytes
-      if (file.size > maxSizeBytes) {
-        setError('File is too large. Please upload a session recording that is less than 1 hour long.');
-        setUploadedFile(null);
-        return;
-      }
-      
       setUploadedFile(file);
       setError(null);
       
@@ -45,6 +36,15 @@ export default function UploadPage() {
     }
   });
 
+  const handleYoutubeSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Track YouTube submission
+    analytics.trackYouTubeSubmitted(youtubeLink);
+    
+    // TODO: Implement YouTube link processing
+    console.log('Processing YouTube link:', youtubeLink);
+  };
 
   const handleProcess = async () => {
     if (!uploadedFile) {
@@ -88,9 +88,6 @@ export default function UploadPage() {
                   <p className="text-sm text-gray-500">
                     Supports MP4, MOV, AVI, MP3, WAV, M4A
                   </p>
-                  <p className="text-xs text-green-600 mt-2">
-                    ✨ Files are automatically optimized for faster processing
-                  </p>
                 </>
               )}
             </div>
@@ -124,12 +121,6 @@ export default function UploadPage() {
           >
             Process File
           </button>
-
-          <div className="mt-4" >
-            <p className="text-sm text-gray-600">
-              Files are automatically optimized for faster processing. 0.0.1.
-            </p>
-          </div>
         </div>
       </div>
     </main>
