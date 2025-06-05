@@ -58,7 +58,7 @@ export default function ResultsPage() {
   }
 
   const handleSavePDF = () => {
-    // small delay so html2canvas doesn’t capture before painting
+    // small delay so html2canvas doesn't capture before painting
     setTimeout(() => {
       toPDF()
     }, 100)
@@ -285,39 +285,47 @@ export default function ResultsPage() {
           {/* Topics Discussed */}
           <div
             style={{
-              marginBottom: '32px',
-              padding: '24px',
-              borderRadius: '8px',
-              backgroundColor: '#faf5ff',
+              marginBottom: "32px",
+              padding: "24px",
+              borderRadius: "8px",
+              backgroundColor: "#faf5ff",
             }}
           >
             <h2
               style={{
-                fontSize: '20px',
-                fontWeight: '600',
-                marginBottom: '16px',
-                color: '#7c2d12',
+                fontSize: "20px",
+                fontWeight: 600,
+                marginBottom: "16px",
+                color: "#7c2d12",
               }}
             >
               Topics Discussed
             </h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-              {results.analysis.topicsDiscussed.map((topic, index) => (
-                <span
-                  key={index}
+            <ul style={{ padding: 0, margin: 0, listStyle: 'none' }}>
+              {results.analysis.topicsDiscussed.map((topic, idx) => (
+                <li
+                  key={idx}
                   style={{
-                    padding: '4px 12px',
-                    borderRadius: '9999px',
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    backgroundColor: '#e9d5ff',
-                    color: '#7c2d12',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    marginBottom: '12px',
                   }}
                 >
-                  {topic}
-                </span>
+                  <span
+                    style={{
+                      color: '#7c2d12',
+                      fontWeight: 500,
+                      marginRight: '8px',
+                    }}
+                  >
+                    •
+                  </span>
+                  <span style={{ color: '#374151', lineHeight: 1.5 }}>
+                    {topic}
+                  </span>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
           {/* Full Transcript */}
@@ -356,3 +364,4 @@ export default function ResultsPage() {
     </main>
   )
 }
+
