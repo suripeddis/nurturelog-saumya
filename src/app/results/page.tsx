@@ -173,7 +173,7 @@ export default function ResultsPage() {
                 color: '#1f2937',
               }}
             >
-              Therapy Session Analysis Report
+              Session Analysis Report
             </h2>
 
             <p

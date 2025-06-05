@@ -29,12 +29,12 @@ export async function POST(req: Request) {
             input: [
                 {
                     role: 'system',
-                    content: 'You are a skilled clinical analyst helping to interpret therapy sessions with non-verbal learners using a spelling board.',
+                    content: 'You are a skilled clinical analyst helping to interpret letterboarding sessions with non-verbal learners using a spelling board.',
                 },
                 {
                     role: 'user',
                     content: `
-Analyze this therapy session transcript and return exactly these fields—no extra keys:
+Analyze this letterboarding session transcript and return exactly these fields—no extra keys:
 - summary: Professional summary of the session
 - successes: List of quoted examples where learner succeeded. Give at least 3 examples. Describe the success in detail, then include a quote from the transcript.
 - struggles: List of quoted examples where learner struggled. Give at least 3 examples. Describe the struggle in detail, then include a quote from the transcript.

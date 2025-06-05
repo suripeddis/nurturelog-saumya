@@ -153,7 +153,7 @@ export default function SamplePage() {
                 color: '#1f2937',
               }}
             >
-              Therapy Session Analysis Report (Sample)
+              Session Analysis Report (Sample)
             </h2>
 
             <p

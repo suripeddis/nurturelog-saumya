@@ -45,14 +45,14 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!result?.results?.channels?.[0]?.alternatives?.[0]) {
+    if (!result?.results?.channels?.[0]?.alternatives?.[0]?.paragraphs) {
       return NextResponse.json(
         { error: 'No transcription results found' },
         { status: 500 }
       );
     }
 
-    const transcript = result.results.channels[0].alternatives[0].transcript;
+    const transcript = result.results.channels[0].alternatives[0].paragraphs.transcript;
     const words = result.results.channels[0].alternatives[0].words || [];
     const confidence = result.results.channels[0].alternatives[0].confidence || 0;
 
