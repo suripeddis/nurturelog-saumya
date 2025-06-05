@@ -1,148 +1,358 @@
-'use client';
+'use client'
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useProcessing } from '@/contexts/ProcessingContext';
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useProcessing } from '@/contexts/ProcessingContext'
+import { usePDF } from 'react-to-pdf'
 
 export default function ResultsPage() {
-  const router = useRouter();
-  const { results, error, isProcessing } = useProcessing();
+  const router = useRouter()
+  const { results, error, isProcessing, reset } = useProcessing()
+
+  // Precompute date/time strings
+  const now = new Date()
+  const formattedDate = now.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+  const formattedTime = now.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+
+  const { toPDF, targetRef } = usePDF({
+    filename: `session-analysis-${now.toISOString().split('T')[0]}.pdf`,
+    page: {
+      margin: 20,
+      format: 'a4',
+    },
+  })
 
   useEffect(() => {
-    // If there's no results and no active processing, redirect to upload
-    if (!results && !isProcessing && !error) {
-      router.push('/upload');
+    if (!isProcessing && !results && !error) {
+      router.push('/upload')
     }
-  }, [results, router, isProcessing, error]);
+  }, [results, router, isProcessing, error])
 
   if (error) {
     return (
       <main className="min-h-screen bg-white p-8">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold text-red-600 mb-8">Error</h1>
-          <div className="p-4 bg-red-50 text-red-600 rounded-lg">
-            {error}
-          </div>
-        </div>
+        {/* …error UI… */}
       </main>
-    );
+    )
   }
 
   if (!results) {
     return (
       <main className="min-h-screen bg-white p-8">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-600 mb-8">No Results</h1>
-          <div className="p-4 bg-gray-50 text-gray-600 rounded-lg">
-            No results found. Please try processing a session again.
-          </div>
-        </div>
+        {/* …no-results UI… */}
       </main>
-    );
+    )
+  }
+
+  const handleNewSession = () => {
+    reset()
+    router.push('/upload')
+  }
+
+  const handleSavePDF = () => {
+    // small delay so html2canvas doesn’t capture before painting
+    setTimeout(() => {
+      toPDF()
+    }, 100)
   }
 
   return (
     <main className="min-h-screen bg-white p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-green-600 mb-8">Session Analysis</h1>
-        
-        <div className="space-y-8">
-          {/* Summary Section */}
-          <section className="bg-green-50 p-6 rounded-lg border border-green-200">
-            <h2 className="text-xl font-semibold text-green-800 mb-4 flex items-center">
-              <span className="text-2xl mr-2">📋</span>
-              Session Summary
+      <div className="max-w-2xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-green-600">Session Analysis</h1>
+          <div className="flex gap-3">
+            <button
+              onClick={handleSavePDF}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+            >
+              {/* …icon SVG… */}
+              Save as PDF
+            </button>
+            <button
+              onClick={handleNewSession}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+            >
+              {/* …icon SVG… */}
+              New Session
+            </button>
+          </div>
+        </div>
+
+        {/* 👇 PDF CONTENT: WRAP IN A PLAIN WHITE-BACKGROUND DIV 👇 */}
+        <div
+          ref={targetRef}
+          style={{
+            backgroundColor: 'white',
+            color: 'black',
+            fontFamily: 'Arial, sans-serif',
+            padding: 0,
+            margin: 0,
+          }}
+        >
+          {/* PDF Header */}
+          <div
+            style={{
+              marginBottom: '32px',
+              textAlign: 'center',
+              borderBottom: '2px solid #16a34a',
+              paddingBottom: '24px',
+              backgroundColor: 'white',
+            }}
+          >
+            <div style={{ marginBottom: '16px' }}>
+              <h1
+                style={{
+                  fontSize: '32px',
+                  fontWeight: '700',
+                  margin: 0,
+                  color: '#16a34a',
+                }}
+              >
+                NurtureLog
+              </h1>
+              <a
+                href="https://nurturelog.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontSize: '14px',
+                  color: '#6b7280',
+                  textDecoration: 'none',
+                  marginTop: '4px',
+                  display: 'block',
+                }}
+              >
+                nurturelog.com
+              </a>
+            </div>
+            <h2
+              style={{
+                fontSize: '24px',
+                fontWeight: '600',
+                margin: '8px 0',
+                color: '#1f2937',
+              }}
+            >
+              Therapy Session Analysis Report
             </h2>
-            <p className="text-gray-700 leading-relaxed">
-              {results.analysis.summary}
+
+            <p
+              style={{
+                color: "#374151",
+                fontSize: "14px",
+                margin: "0 0 24px 0",
+              }}
+            >
+              Generated on {formattedDate} at {formattedTime}
             </p>
-          </section>
-
-          {/* Successes and Struggles Grid */}
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Successes Section */}
-            <section className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-              <h2 className="text-xl font-semibold text-blue-800 mb-4 flex items-center">
-                <span className="text-2xl mr-2">🎉</span>
-                Successes
-              </h2>
-              {results.analysis.successes.length > 0 ? (
-                <ul className="space-y-3">
-                  {results.analysis.successes.map((success, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-blue-600 font-bold mr-2">•</span>
-                      <span className="text-gray-700">{success}</span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-gray-500 italic">No specific successes identified.</p>
-              )}
-            </section>
-
-            {/* Struggles Section */}
-            <section className="bg-orange-50 p-6 rounded-lg border border-orange-200">
-              <h2 className="text-xl font-semibold text-orange-800 mb-4 flex items-center">
-                <span className="text-2xl mr-2">💪</span>
-                Areas for Growth
-              </h2>
-              {results.analysis.struggles.length > 0 ? (
-                <ul className="space-y-3">
-                  {results.analysis.struggles.map((struggle, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-orange-600 font-bold mr-2">•</span>
-                      <span className="text-gray-700">{struggle}</span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-gray-500 italic">No specific challenges identified.</p>
-              )}
-            </section>
           </div>
 
-          {/* Topics Discussed Section */}
-          <section className="bg-purple-50 p-6 rounded-lg border border-purple-200">
-            <h2 className="text-xl font-semibold text-purple-800 mb-4 flex items-center">
-              <span className="text-2xl mr-2">💭</span>
+          {/* Session Summary */}
+          <div
+            style={{
+              marginBottom: '32px',
+              padding: '24px',
+              borderRadius: '8px',
+              backgroundColor: '#f0fdf4',
+            }}
+          >
+            <h2
+              style={{
+                fontSize: '20px',
+                fontWeight: '600',
+                marginBottom: '16px',
+                color: '#166534',
+              }}
+            >
+              Summary
+            </h2>
+            <p style={{ lineHeight: 1.5, color: '#374151', margin: 0 }}>
+              {results.analysis.summary}
+            </p>
+          </div>
+
+          {/* Successes & Struggles Grid */}
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '32px',
+              marginBottom: '32px',
+            }}
+          >
+            {/* Successes */}
+            <div
+              style={{
+                flex: '1 1 45%',
+                padding: '24px',
+                borderRadius: '8px',
+                backgroundColor: '#eff6ff',
+              }}
+            >
+              <h2
+                style={{
+                  fontSize: '20px',
+                  fontWeight: '600',
+                  marginBottom: '16px',
+                  color: '#1e40af',
+                }}
+              >
+                Successes
+              </h2>
+              <ul style={{ padding: 0, margin: 0, listStyle: 'none' }}>
+                {results.analysis.successes.map((success, index) => (
+                  <li
+                    key={index}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      marginBottom: '12px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: '#1d4ed8',
+                        fontWeight: 500,
+                        marginRight: '8px',
+                      }}
+                    >
+                      •
+                    </span>
+                    <span style={{ color: '#374151', lineHeight: 1.5 }}>
+                      {success}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Areas for Growth */}
+            <div
+              style={{
+                flex: '1 1 45%',
+                padding: '24px',
+                borderRadius: '8px',
+                backgroundColor: '#fffbeb',
+              }}
+            >
+              <h2
+                style={{
+                  fontSize: '20px',
+                  fontWeight: '600',
+                  marginBottom: '16px',
+                  color: '#92400e',
+                }}
+              >
+                Areas for Growth
+              </h2>
+              <ul style={{ padding: 0, margin: 0, listStyle: 'none' }}>
+                {results.analysis.struggles.map((struggle, index) => (
+                  <li
+                    key={index}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      marginBottom: '12px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: '#d97706',
+                        fontWeight: 500,
+                        marginRight: '8px',
+                      }}
+                    >
+                      •
+                    </span>
+                    <span style={{ color: '#374151', lineHeight: 1.5 }}>
+                      {struggle}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Topics Discussed */}
+          <div
+            style={{
+              marginBottom: '32px',
+              padding: '24px',
+              borderRadius: '8px',
+              backgroundColor: '#faf5ff',
+            }}
+          >
+            <h2
+              style={{
+                fontSize: '20px',
+                fontWeight: '600',
+                marginBottom: '16px',
+                color: '#7c2d12',
+              }}
+            >
               Topics Discussed
             </h2>
-            {results.analysis.topicsDiscussed.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                {results.analysis.topicsDiscussed.map((topic, index) => (
-                  <span
-                    key={index}
-                    className="bg-purple-200 text-purple-800 px-3 py-1 rounded-full text-sm font-medium"
-                  >
-                    {topic}
-                  </span>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 italic">No specific topics identified.</p>
-            )}
-          </section>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {results.analysis.topicsDiscussed.map((topic, index) => (
+                <span
+                  key={index}
+                  style={{
+                    padding: '4px 12px',
+                    borderRadius: '9999px',
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    backgroundColor: '#e9d5ff',
+                    color: '#7c2d12',
+                  }}
+                >
+                  {topic}
+                </span>
+              ))}
+            </div>
+          </div>
 
-          {/* Transcript Section */}
-          <section className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="text-2xl mr-2">📝</span>
+          {/* Full Transcript */}
+          <div
+            style={{
+              padding: '24px',
+              borderRadius: '8px',
+              backgroundColor: '#f9fafb',
+            }}
+          >
+            <h2
+              style={{
+                fontSize: '20px',
+                fontWeight: '600',
+                marginBottom: '16px',
+                color: '#1f2937',
+              }}
+            >
               Full Transcript
             </h2>
-            <div className="max-h-96 overflow-y-auto">
-              <div className="prose max-w-none text-gray-700">
-                {results.transcript.split('\n').map((paragraph, index) => (
-                  paragraph.trim() && (
-                    <p key={index} className="mb-3 leading-relaxed">
-                      {paragraph}
-                    </p>
-                  )
-                ))}
-              </div>
+            <div
+              style={{
+                fontSize: '12px',
+                lineHeight: 1.5,
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+                color: '#374151',
+                fontFamily: 'monospace',
+              }}
+            >
+              {results.transcript}
             </div>
-          </section>
+          </div>
         </div>
       </div>
     </main>
-  );
-} 
+  )
+}
