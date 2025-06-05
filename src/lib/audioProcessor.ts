@@ -79,6 +79,8 @@ export async function downsampleAudio(
       { type: 'audio/m4a' }
     );
 
+    console.log('processedFile size (MB):', Math.round(processedFile.size / (1024 * 1024) * 100) / 100);
+
     return processedFile;
 
   } catch (error) {

@@ -45,15 +45,6 @@ export default function UploadPage() {
     }
   });
 
-  const handleYoutubeSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Track YouTube submission
-    analytics.trackYouTubeSubmitted(youtubeLink);
-    
-    // TODO: Implement YouTube link processing
-    console.log('Processing YouTube link:', youtubeLink);
-  };
 
   const handleProcess = async () => {
     if (!uploadedFile) {
@@ -133,6 +124,12 @@ export default function UploadPage() {
           >
             Process File
           </button>
+
+          <div className="mt-4" >
+            <p className="text-sm text-gray-600">
+              Files are automatically optimized for faster processing. 0.0.1.
+            </p>
+          </div>
         </div>
       </div>
     </main>
