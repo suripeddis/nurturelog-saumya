@@ -16,6 +16,15 @@ export default function UploadPage() {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
+      
+      // Check file size - reject files over 100MB
+      const maxSizeBytes = 100 * 1024 * 1024; // 100MB in bytes
+      if (file.size > maxSizeBytes) {
+        setError('File is too large. Please upload a session recording that is less than 1 hour long.');
+        setUploadedFile(null);
+        return;
+      }
+      
       setUploadedFile(file);
       setError(null);
       

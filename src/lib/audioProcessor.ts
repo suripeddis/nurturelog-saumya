@@ -1,7 +1,7 @@
 'use client';
 
 import { FFmpeg } from '@ffmpeg/ffmpeg';
-import { fetchFile, toBlobURL } from '@ffmpeg/util';
+import { fetchFile } from '@ffmpeg/util';
 
 let ffmpeg: FFmpeg | null = null;
 
@@ -10,12 +10,10 @@ export async function initFFmpeg(): Promise<FFmpeg> {
 
   ffmpeg = new FFmpeg();
   
-  // Initialize ffmpeg with CDN URLs
-  const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
-  
+  // Load from your public/ffmpeg directory instead of CDN
   await ffmpeg.load({
-    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+    coreURL: '/ffmpeg-core.js',
+    wasmURL: '/ffmpeg-core.wasm',
   });
 
   return ffmpeg;
