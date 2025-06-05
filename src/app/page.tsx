@@ -1,5 +1,8 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
+import { analytics } from '@/lib/mixpanel';
 
 export default function Home() {
   return (
@@ -19,9 +22,19 @@ export default function Home() {
         </p>
         <div className="flex justify-center gap-4">
           <Link href="/upload">
-            <button className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold">Upload a Session</button>
+            <button 
+              onClick={() => analytics.trackLandingPageButton('Upload a Session - Hero')}
+              className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold"
+            >
+              Upload a Session
+            </button>
           </Link>
-          <button className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-semibold">See Sample Report</button>
+          <button 
+            onClick={() => analytics.trackLandingPageButton('See Sample Report - Hero')}
+            className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-semibold"
+          >
+            See Sample Report
+          </button>
         </div>
         <p className="mt-4 text-sm text-gray-600">Supports real-world, imperfect recordings—no need for clean audio or perfect structure.</p>
       </section>
@@ -82,8 +95,18 @@ export default function Home() {
       <section className="bg-green-600 text-white py-20 px-6 text-center">
         <h2 className="text-4xl font-bold mb-4">Get clarity without the burnout.</h2>
         <div className="flex justify-center gap-4">
-          <button className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold">Try NurtureLog Free</button>
-          <button className="border border-white px-6 py-3 rounded-lg font-semibold">See a Demo Report</button>
+          <button 
+            onClick={() => analytics.trackLandingPageButton('Try NurtureLog Free - Footer')}
+            className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold"
+          >
+            Try NurtureLog Free
+          </button>
+          <button 
+            onClick={() => analytics.trackLandingPageButton('See a Demo Report - Footer')}
+            className="border border-white px-6 py-3 rounded-lg font-semibold"
+          >
+            See a Demo Report
+          </button>
         </div>
       </section>
     </main>

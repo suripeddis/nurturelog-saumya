@@ -36,9 +36,9 @@ export async function POST(req: Request) {
                     content: `
 Analyze this therapy session transcript and return exactly these fields—no extra keys:
 - summary: Professional summary of the session
-- successes: List of quoted examples where learner succeeded. Describe the success in detail, then include a quote from the transcript.
-- struggles: List of quoted examples where learner struggled. Describe the struggle in detail, then include a quote from the transcript.
-- topicsDiscussed: List of distinct topics discussed
+- successes: List of quoted examples where learner succeeded. Give at least 3 examples. Describe the success in detail, then include a quote from the transcript.
+- struggles: List of quoted examples where learner struggled. Give at least 3 examples. Describe the struggle in detail, then include a quote from the transcript.
+- topicsDiscussed: List of distinct topics discussed, with details.
 
 Transcript:
 ${transcript}

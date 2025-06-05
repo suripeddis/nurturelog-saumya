@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from 'next/navigation';
 import { useProcessing } from '@/contexts/ProcessingContext';
+import { analytics } from '@/lib/mixpanel';
 
 export default function UploadPage() {
   const router = useRouter();
@@ -14,8 +15,12 @@ export default function UploadPage() {
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
-      setUploadedFile(acceptedFiles[0]);
+      const file = acceptedFiles[0];
+      setUploadedFile(file);
       setError(null);
+      
+      // Track file upload
+      analytics.trackFileUploaded(file.type, file.size);
     }
   }, []);
 
@@ -29,6 +34,10 @@ export default function UploadPage() {
 
   const handleYoutubeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Track YouTube submission
+    analytics.trackYouTubeSubmitted(youtubeLink);
+    
     // TODO: Implement YouTube link processing
     console.log('Processing YouTube link:', youtubeLink);
   };
@@ -40,6 +49,9 @@ export default function UploadPage() {
     }
 
     setError(null);
+    
+    // Track processing started
+    analytics.trackProcessingStarted('file');
     
     // Start processing and immediately navigate to processing page
     startProcessing(uploadedFile);
@@ -64,6 +76,7 @@ export default function UploadPage() {
             />
             <button
               type="submit"
+              onClick={() => analytics.trackLandingPageButton('Process YouTube Link')}
               className="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700"
             >
               Process
@@ -78,6 +91,7 @@ export default function UploadPage() {
             {...getRootProps()}
             className={`border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors
               ${isDragActive ? 'border-green-500 bg-green-50' : 'border-gray-300 hover:border-green-500'}`}
+            onClick={() => analytics.trackLandingPageButton('File Drop Zone Clicked')}
           >
             <input {...getInputProps()} />
             <div className="space-y-4">
@@ -110,7 +124,10 @@ export default function UploadPage() {
           )}
 
           <button
-            onClick={handleProcess}
+            onClick={() => {
+              analytics.trackLandingPageButton('Process File');
+              handleProcess();
+            }}
             disabled={!uploadedFile}
             className={`mt-4 w-full py-3 rounded-lg font-semibold transition-colors
               ${!uploadedFile

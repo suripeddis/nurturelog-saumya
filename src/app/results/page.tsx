@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useProcessing } from '@/contexts/ProcessingContext'
 import { usePDF } from 'react-to-pdf'
+import { analytics } from '@/lib/mixpanel'
 
 export default function ResultsPage() {
   const router = useRouter()
@@ -36,6 +37,26 @@ export default function ResultsPage() {
     }
   }, [results, router, isProcessing, error])
 
+  // Track results viewed when results are available
+  useEffect(() => {
+    if (results) {
+      const analysisData = {
+        successesCount: results.analysis.successes.length,
+        strugglesCount: results.analysis.struggles.length,
+        topicsCount: results.analysis.topicsDiscussed.length,
+        transcriptLength: results.transcript.length,
+      }
+      analytics.trackResultsViewed(analysisData)
+    }
+  }, [results])
+
+  // Track errors
+  useEffect(() => {
+    if (error) {
+      analytics.trackError('processing_error', error, 'results_page')
+    }
+  }, [error])
+
   if (error) {
     return (
       <main className="min-h-screen bg-white p-8">
@@ -53,11 +74,21 @@ export default function ResultsPage() {
   }
 
   const handleNewSession = () => {
+    analytics.trackNewSessionStarted()
     reset()
     router.push('/upload')
   }
 
   const handleSavePDF = () => {
+    const analysisData = {
+      successesCount: results.analysis.successes.length,
+      strugglesCount: results.analysis.struggles.length,
+      topicsCount: results.analysis.topicsDiscussed.length,
+      transcriptLength: results.transcript.length,
+    }
+    
+    analytics.trackPDFSaved(analysisData)
+    
     // small delay so html2canvas doesn't capture before painting
     setTimeout(() => {
       toPDF()
