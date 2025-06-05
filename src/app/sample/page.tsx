@@ -43,14 +43,12 @@ export default function SamplePage() {
         "Task Transitions: Reed demonstrated ongoing struggle with tasks outside his comfort zone, particularly when moving from discussion to hands-on activities."
       ],
       topicsDiscussed: [
-        "Aliens and extraterrestrial life",
-        "Fermi Paradox",
-        "Evidence and probability",
-        "Intelligent life rarity",
-        "Hypothetical alien contact scenarios",
-        "Anxiety management strategies",
-        "Drawing and creative expression",
-        "Opinion formation and reasoning"
+        "The session primarily revolved around discussing aliens and the Fermi Paradox, which relates to the contradiction between the likelihood of extraterrestrial life and the lack of evidence.",
+        "Reed and the therapist explored explanations for why humans have not encountered alien life, considering possibilities such as \"we are alone,\" \"aliens are hiding,\" and \"we are in a zoo.\"",
+        "Reed shared his belief that intelligent life is rare, emphasizing that \"only we exist\" and expressing skepticism about alien visibility or contact.",
+        "The therapist encouraged Reed to explore hypothetical scenarios, such as the potential appearance of aliens and reasons for contacting Earth.",
+        "The session also touched briefly on Reed's anxiety, revealing that it could stem from engaging in new or purposeful tasks requiring intention.",
+        "The therapist closed the session with an activity, inviting Reed to draw an alien, which Reed resisted, pointing to an ongoing struggle with tasks outside his comfort zone."
       ]
     },
     
@@ -79,9 +77,9 @@ export default function SamplePage() {
           <div className="flex gap-3">
             <button
               onClick={handleSavePDF}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center gap-2 font-semibold whitespace-nowrap"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
               Save as PDF
@@ -89,9 +87,9 @@ export default function SamplePage() {
             <Link href="/upload">
               <button
                 onClick={() => analytics.trackLandingPageButton('Try NurtureLog - Sample Page')}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+                className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center gap-2 font-semibold whitespace-nowrap"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
                 </svg>
                 Try NurtureLog
