@@ -53,55 +53,7 @@ export default function SamplePage() {
         "Opinion formation and reasoning"
       ]
     },
-    transcript: `Therapist: Hi Reed! What would you like to talk about today?
-
-Reed: [moves to spelling board] e-g-g-s
-
-Therapist: Eggs? Or did you want to choose something else?
-
-Reed: [pauses, then moves to board] a-l-i-e-n-s
-
-Therapist: Great choice! Aliens. That's a really interesting topic. What do you think about aliens, Reed?
-
-Reed: [spells] n-o  e-v-i-d-e-n-c-e
-
-Therapist: No evidence - that's right. Even though there might be a high probability of life out there, we don't have evidence. Do you know what we call that kind of contradiction?
-
-Reed: [spells] p-a-r-a-d-o-x
-
-Therapist: Exactly! The Fermi Paradox. So what do you think - are there aliens out there?
-
-Reed: [spells] m-o-s-t  l-i-k-e-l-y  a-l-i-e-n-s  b-u-t  n-o  e-v-i-d-e-n-c-e
-
-Therapist: That's a really thoughtful way to put it. So why do you think we haven't found evidence?
-
-Reed: [spells] i-n-t-e-l-l-i-g-e-n-t  l-i-f-e  m-a-y  b-e  e-x-t-r-e-m-e-l-y  r-a-r-e
-
-Therapist: Interesting! So you think...
-
-Reed: [spells] o-n-l-y  w-e  e-x-i-s-t
-
-Therapist: So in your opinion, there are no aliens because...
-
-Reed: [spells] n-o  b-e-c-a-u-s-e  t-h-e-r-e  i-s  n-o  e-v-i-d-e-n-c-e
-
-Therapist: That makes sense. But let's imagine - if aliens did exist and wanted to contact us, why do you think they would want to?
-
-Reed: [spells] I  d-o-n-'t  t-h-i-n-k  t-h-e-y  w-a-n-t  t-o
-
-Therapist: Interesting perspective! Now, would you like to try drawing what you think an alien might look like?
-
-Reed: n-o
-
-Therapist: Just a quick sketch?
-
-Reed: a-l-l  d-o-n-e
-
-Therapist: That's okay, Reed. You did great sharing your thoughts about aliens today.
-
-Reed: d-o-n-e
-
-Therapist: Yes, we're done for today. Great job exploring that paradox with me!`
+    
   }
 
   const handleSavePDF = () => {
@@ -109,10 +61,9 @@ Therapist: Yes, we're done for today. Great job exploring that paradox with me!`
       successesCount: sampleResults.analysis.successes.length,
       strugglesCount: sampleResults.analysis.struggles.length,
       topicsCount: sampleResults.analysis.topicsDiscussed.length,
-      transcriptLength: sampleResults.transcript.length,
     }
     
-    analytics.trackPDFSaved(analysisData)
+    
     
     // small delay so html2canvas doesn't capture before painting
     setTimeout(() => {
@@ -388,39 +339,7 @@ Therapist: Yes, we're done for today. Great job exploring that paradox with me!`
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Full Transcript */}
-          <div
-            style={{
-              padding: '24px',
-              borderRadius: '8px',
-              backgroundColor: '#f9fafb',
-            }}
-          >
-            <h2
-              style={{
-                fontSize: '20px',
-                fontWeight: '600',
-                marginBottom: '16px',
-                color: '#1f2937',
-              }}
-            >
-              Full Transcript
-            </h2>
-            <div
-              style={{
-                fontSize: '12px',
-                lineHeight: 1.5,
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-word',
-                color: '#374151',
-                fontFamily: 'monospace',
-              }}
-            >
-              {sampleResults.transcript}
-            </div>
-          </div>
+          </div>        
         </div>
       </div>
     </main>
