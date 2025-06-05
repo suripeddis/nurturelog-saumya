@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { processSession, ProcessingResult, ProcessingProgress } from '@/lib/processSession';
+import { processSession, ProcessingResult, ProcessingProgress, SessionAnalysis } from '@/lib/processSession';
 
 interface ProcessingContextType {
   results: ProcessingResult | null;

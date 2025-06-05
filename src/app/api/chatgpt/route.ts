@@ -1,55 +1,62 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
-
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+import { zodTextFormat } from 'openai/helpers/zod';
+import { z } from 'zod';
 
 const openai = new OpenAI({
-  apiKey: OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY,
+});
+
+const AnalysisSchema = z.object({
+    summary: z.string(),
+    successes: z.array(z.string()),
+    struggles: z.array(z.string()),
+    topicsDiscussed: z.array(z.string()),
 });
 
 export async function POST(req: Request) {
     try {
-      const { transcript } = await req.json();
-  
-      if (!transcript || typeof transcript !== 'string') {
-        return NextResponse.json({ error: 'Transcript is required' }, { status: 400 });
-      }
-  
-      const completion = await openai.chat.completions.create({
-        model: 'gpt-4o',
-        temperature: 0.7,
-        max_tokens: 1200,
-        messages: [
-          {
-            role: 'system',
-            content: `You are a skilled clinical analyst helping to interpret therapy sessions with non-verbal learners using a spelling board.`,
-          },
-          {
-            role: 'user',
-            content: `
-  The following is a transcript of a therapy session between a therapist and a non-verbal learner. The therapist uses a spelling board to help the learner express themselves.
-  
-  Your task:
-  
-  1. Summarize the session clearly and professionally.
-  2. Identify where the learner succeeded. Quote examples.
-  3. Identify where the learner struggled. Quote examples.
-  4. Give an overview of the topics discussed during the session.
-  
-  Transcript:
-  ${transcript}
-            `.trim(),
-          },
-        ],
-      });
-  
-      return NextResponse.json(completion.choices[0].message);
+        const { transcript } = await req.json();
+        if (!transcript || typeof transcript !== 'string') {
+            return NextResponse.json(
+                { error: 'Transcript is required' },
+                { status: 400 }
+            );
+        }
+
+        const response = await openai.responses.parse({
+            model: 'gpt-4o',
+            input: [
+                {
+                    role: 'system',
+                    content: 'You are a skilled clinical analyst helping to interpret therapy sessions with non-verbal learners using a spelling board.',
+                },
+                {
+                    role: 'user',
+                    content: `
+Analyze this therapy session transcript and return exactly these fields—no extra keys:
+- summary: Professional summary of the session
+- successes: List of quoted examples where learner succeeded
+- struggles: List of quoted examples where learner struggled
+- topicsDiscussed: List of distinct topics discussed
+
+Transcript:
+${transcript}
+          `.trim(),
+                },
+            ],
+            text: {
+                format: zodTextFormat(AnalysisSchema, 'analysis'),
+            },
+        });
+
+        const analysis = response.output_parsed;
+        return NextResponse.json(analysis);
     } catch (error) {
-      console.error('OpenAI API error:', error);
-      return NextResponse.json(
-        { error: 'Failed to process chat request' },
-        { status: 500 }
-      );
+        console.error('Error:', error);
+        return NextResponse.json(
+            { error: 'Failed to process analysis' },
+            { status: 500 }
+        );
     }
-  }
-  
+}
