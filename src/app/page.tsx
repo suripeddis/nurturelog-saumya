@@ -4,8 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { analytics } from '@/lib/mixpanel';
 import { useSession, useUser, useDescope } from '@descope/nextjs-sdk/client';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import {
+  Presentation,
+  Zap,
+  Users as LucideUsers,
+  BarChart2,
+  Layers,
+  Eye,
+  Clock,
+  Megaphone,
+  BookOpen,
+  ClipboardList,
+} from 'lucide-react';
 
 export default function Home() {
   const { isAuthenticated, isSessionLoading } = useSession();
@@ -17,22 +30,21 @@ export default function Home() {
     sdk.logout();
   }, [sdk]);
 
-
-
   return (
-    <main className="bg-white text-gray-800 font-sans">
+    <main className="font-sans text-gray-800">
       {/* App Header */}
       <header className="bg-white shadow px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <h1 className="text-2xl font-bold text-green-600">NurtureLog</h1>
-          
-          {/* User Profile / Auth Section */}
           {!isSessionLoading && (
             <div className="flex items-center gap-4">
               {isAuthenticated && user ? (
                 <>
                   <Link href="/upload">
-                    <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors">
+                    <button
+                      onClick={() => analytics.trackLandingPageButton('Go to App')}
+                      className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors"
+                    >
                       Go to App
                     </button>
                   </Link>
@@ -63,7 +75,7 @@ export default function Home() {
         </p>
         <div className="flex justify-center gap-4">
           <Link href="/upload">
-            <button 
+            <button
               onClick={() => analytics.trackLandingPageButton('Upload a Session - Hero')}
               className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold"
             >
@@ -71,7 +83,7 @@ export default function Home() {
             </button>
           </Link>
           <Link href="/sample">
-            <button 
+            <button
               onClick={() => analytics.trackLandingPageButton('See Sample Report - Hero')}
               className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-semibold"
             >
@@ -100,86 +112,171 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Here’s What You Get */}
+      <motion.section
+        className="py-16 px-6"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <div className="max-w-5xl mx-auto rounded-2xl bg-green-50 shadow-lg p-8">
+          <h2 className="text-3xl font-bold mb-6 text-center">🔍 What You’ll Unlock</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="flex items-center gap-4">
+              <Presentation className="w-6 h-6 text-green-600" />
+              <span className="text-lg">Session Summary</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <Zap className="w-6 h-6 text-green-600" />
+              <span className="text-lg">Strengths &amp; Challenges</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <LucideUsers className="w-6 h-6 text-green-600" />
+              <span className="text-lg">Communication Patterns</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <BarChart2 className="w-6 h-6 text-green-600" />
+              <span className="text-lg">Visuals &amp; Trends (coming soon)</span>
+            </div>            
+          </div>
+        </div>
+      </motion.section>
 
-      {/* Practitioner Section */}
-      <section className="bg-gray-100 py-16 px-6 text-center">
-        <h2 className="text-3xl font-bold mb-4">No more late-night notes.</h2>
-        <p className="max-w-2xl mx-auto text-lg">
-          You already did the hard part—running the session. Let NurtureLog handle the write-up so you can move on to the next family, client, or moment of rest.
-        </p>
-      </section>
+      {/* Built for... */}
+      <motion.section
+        className="py-16 px-6 bg-white"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <div className="max-w-5xl mx-auto rounded-2xl border border-gray-200 shadow-lg p-8">
+          <h2 className="text-3xl font-bold mb-6 text-center">👥 Made for the Team Around the Learner</h2>
+          <div className="grid gap-6 md:grid-cols-3 text-lg">
+            <div className="flex items-start gap-4">
+              <LucideUsers className="w-6 h-6 text-green-600 mt-1" />
+              <p className="text-gray-700">Parents documenting growth and communication for IEPs, schools, and families.</p>
+            </div>
+            <div className="flex items-start gap-4">
+              <ClipboardList className="w-6 h-6 text-green-600 mt-1" />
+              <p className="text-gray-700">Practitioners saving time on notes while giving families deeper insights.</p>
+            </div>
+            <div className="flex items-start gap-4">
+              <BookOpen className="w-6 h-6 text-green-600 mt-1" />
+              <p className="text-gray-700">Educators &amp; Therapists tracking progress and advocating effectively.</p>
+            </div>
+          </div>
+        </div>
+      </motion.section>
 
-      {/* Parent Section */}
-      <section className="bg-white py-16 px-6 text-center">
-        <h2 className="text-3xl font-bold mb-4">Understand what happened—without rewatching.</h2>
-        <p className="max-w-2xl mx-auto text-lg">
-          Sessions can be messy. You're not sure if they were focused, tuned out, or progressing. NurtureLog gives you clarity—what worked, what didn't, and what's next.
-        </p>
-      </section>
-
-      {/* Time-Saving Quote */}
-      <section className="bg-green-100 py-16 px-6 text-center">
-        <h2 className="text-3xl font-bold mb-6">15+ minutes saved per session. That adds up.</h2>
-        <blockquote className="italic text-lg max-w-xl mx-auto text-gray-700">
-          "I used to spend my evenings trying to summarize sessions. Now it's just… done."<br />
-          <span className="text-sm font-semibold block mt-2">— Early Access Practitioner</span>
-        </blockquote>
-      </section>
-
-      {/* Real-World Section */}
-      <section className="bg-white py-16 px-6 text-center">
-        <h2 className="text-3xl font-bold mb-4">Real progress doesn't need perfect recordings.</h2>
-        <p className="max-w-2xl mx-auto text-lg">
-          NurtureLog is built for: background noise, mid-session breaks, unscripted moments, and unfiltered joy and frustration. Upload what you have—we'll make sense of it.
-        </p>
-      </section>
+      {/* Why You’ll Care */}
+      <motion.section
+        className="py-16 px-6 bg-amber-50"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <div className="max-w-5xl mx-auto rounded-2xl shadow-lg p-8">
+          <h2 className="text-3xl font-bold mb-6 text-center">💡 Why It Matters</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="flex items-start gap-4">
+              <Eye className="w-6 h-6 text-green-600 mt-1" />
+              <div>
+                <h3 className="font-semibold">Clarity</h3>
+                <p className="text-gray-700">Understand what happened in a session—without rewatching video.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <Clock className="w-6 h-6 text-green-600 mt-1" />
+              <div>
+                <h3 className="font-semibold">Time-Saving</h3>
+                <p className="text-gray-700">Automate note-taking so you can focus on the next task.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <Megaphone className="w-6 h-6 text-green-600 mt-1" />
+              <div>
+                <h3 className="font-semibold">Advocacy Tool</h3>
+                <p className="text-gray-700">Share meaningful progress—rooted in the presumption of potential—with schools, IEP teams, and therapists.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <LucideUsers className="w-6 h-6 text-green-600 mt-1" />
+              <div>
+                <h3 className="font-semibold">Aligned</h3>
+                <p className="text-gray-700">Built for both parents &amp; practitioners doing the work.</p>
+              </div>
+            </div>
+          </div>
+          <div className="text-center mt-8">
+            <Link href="/upload">
+              <button
+                onClick={() => analytics.trackLandingPageButton('Get Started - Why Section')}
+                className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+              >
+                Get Started
+              </button>
+            </Link>
+          </div>
+        </div>
+      </motion.section>
 
       {/* About Section */}
       <section className="bg-gray-50 py-20 px-6 text-center">
         <h2 className="text-3xl font-bold mb-4">Meet the team</h2>
         <p className="max-w-2xl mx-auto text-lg mb-12 text-gray-600">
-          Built by parents and practitioners who understand the daily challenges of documentation and progress tracking.
+          Built by families of non-speakers. Informed by practitioners.
         </p>
         <div className="flex flex-col md:flex-row justify-center gap-12 max-w-4xl mx-auto">
+          {/* Arti */}
           <div className="flex flex-col items-center max-w-xs">
             <div className="w-32 h-32 overflow-hidden mb-4 rounded-lg">
-              <Image 
-                src="/artiPicture.png" 
-                alt="Arti" 
-                width={128} 
-                height={128} 
+              <Image
+                src="/artiPicture.png"
+                alt="Arti"
+                width={128}
+                height={128}
                 className="w-full h-full object-cover"
               />
             </div>
             <h3 className="text-xl font-semibold mb-2">Arti Bhatia</h3>
-            <p className="text-gray-600 text-center">Arti is a parent of a non-speaking college student who began letterboarding at 17, leading her to pivot from a 15-year career at Microsoft, Dell, and AWS into autism innovation. She leads go-to-market and user research through trusted family and practitioner networks nationwide.</p>
+            <p className="text-gray-600 text-center">
+              Arti is a parent of a non-speaking college student who began letterboarding at 17, leading her to pivot into autism innovation. She drives go-to-market and user research nationwide.
+            </p>
           </div>
+
+          {/* Faraz */}
           <div className="flex flex-col items-center max-w-xs">
             <div className="w-32 h-32 overflow-hidden mb-4 rounded-lg">
-              <Image 
-                src="/farazPicture.jpg" 
-                alt="Faraz" 
-                width={128} 
-                height={128} 
+              <Image
+                src="/farazPicture.jpg"
+                alt="Faraz"
+                width={128}
+                height={128}
                 className="w-full h-full object-cover"
               />
             </div>
             <h3 className="text-xl font-semibold mb-2">Faraz Abidi</h3>
-            <p className="text-gray-600 text-center">Faraz is a startup engineer and AI builder whose work in autism began while living with his autistic cousin and attending therapy sessions. He's created award-winning assistive tools and brings elite speed and execution to building tech that works in the real world.</p>
+            <p className="text-gray-600 text-center">
+              Faraz is a startup engineer and AI builder whose autism work began alongside his cousin’s therapy sessions. He brings rapid execution and award-winning assistive tools to the table.
+            </p>
           </div>
+
+          {/* Dan */}
           <div className="flex flex-col items-center max-w-xs">
             <div className="w-32 h-32 overflow-hidden mb-4 rounded-lg">
-              <Image 
-                src="/danPicture.jpg" 
-                alt="Dan" 
-                width={128} 
-                height={128} 
+              <Image
+                src="/danPicture.jpg"
+                alt="Dan"
+                width={128}
+                height={128}
                 quality={100}
                 className="w-full h-full object-cover"
               />
             </div>
             <h3 className="text-xl font-semibold mb-2">Dan Feshbach</h3>
-            <p className="text-gray-600 text-center">Dan is a veteran autism advocate and entrepreneur, inspired by his 31-year-old autistic son who is a limited speaker. He previously co-founded TeachTown (serving 120,000+ students), launched the Multiple autism tech accelerator, and helped organize the Autism Impact Fund.</p>
+            <p className="text-gray-600 text-center">
+              Dan is a veteran autism advocate inspired by his limited-speaking son. He co-founded TeachTown, launched an autism tech accelerator, and champions the Autism Impact Fund.
+            </p>
           </div>
         </div>
       </section>
@@ -189,7 +286,7 @@ export default function Home() {
         <h2 className="text-4xl font-bold mb-4">Get clarity without the burnout.</h2>
         <div className="flex justify-center gap-4">
           <Link href="/upload">
-            <button 
+            <button
               onClick={() => analytics.trackLandingPageButton('Try NurtureLog Free - Footer')}
               className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold"
             >
@@ -197,7 +294,7 @@ export default function Home() {
             </button>
           </Link>
           <Link href="/sample">
-            <button 
+            <button
               onClick={() => analytics.trackLandingPageButton('See a Demo Report - Footer')}
               className="border border-white px-6 py-3 rounded-lg font-semibold"
             >
