@@ -11,25 +11,22 @@ const deepgram = createClient(DEEPGRAM_API_KEY);
 
 /**
  * POST /api/deepgram
- * Accepts: FormData with 'file' field
- * Sends the audio to Deepgram for transcription and returns the response.
+ * Accepts: JSON with 'url' field
+ * Sends the audio URL to Deepgram for transcription and returns the response.
  */
 export async function POST(req: Request) {
   try {
-    const formData = await req.formData();
-    const file = formData.get('file') as File;
+    const { url } = await req.json();
 
-    if (!file) {
-      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
+    if (!url) {
+      return NextResponse.json({ error: 'No URL provided' }, { status: 400 });
     }
 
-    // Convert File to ArrayBuffer
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    console.log('🎧 Transcribing audio from URL:', url);
 
-    // Transcribe the audio using Deepgram
-    const { result, error } = await deepgram.listen.prerecorded.transcribeFile(
-      buffer,
+    // Transcribe the audio using Deepgram URL method
+    const { result, error } = await deepgram.listen.prerecorded.transcribeUrl(
+      { url },
       {
         model: 'nova-3',
         language: 'en',

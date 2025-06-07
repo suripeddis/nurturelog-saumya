@@ -1,5 +1,63 @@
 import { redirect } from 'next/navigation';
 
+// Get the server endpoint from environment variables
+const getServerEndpoint = () => {
+  return process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:4000';
+};
+
+// Upload file to S3 via our server and return the S3 key
+const uploadFileToS3 = async (file: File): Promise<string> => {
+  const serverUrl = getServerEndpoint();
+  
+  // Step 1: Get presigned upload URL from our server
+  const uploadUrlResponse = await fetch(
+    `${serverUrl}/get-upload-url?filename=${encodeURIComponent(file.name)}`,
+    { method: 'GET' }
+  );
+
+  if (!uploadUrlResponse.ok) {
+    throw new Error(`Failed to get upload URL: ${uploadUrlResponse.status} ${uploadUrlResponse.statusText}`);
+  }
+
+  const { uploadUrl, key } = await uploadUrlResponse.json();
+  console.log('📤 Got S3 upload URL for key:', key);
+
+  // Step 2: Upload file directly to S3 using presigned URL
+  const uploadResponse = await fetch(uploadUrl, {
+    method: 'PUT',
+    body: file,
+    headers: {
+      'Content-Type': file.type || 'audio/mp4',
+    },
+  });
+
+  if (!uploadResponse.ok) {
+    throw new Error(`S3 upload failed: ${uploadResponse.status} ${uploadResponse.statusText}`);
+  }
+
+  console.log('✅ File uploaded to S3 successfully');
+  return key;
+};
+
+// Get transcription from our server using the S3 key
+const getTranscriptionFromServer = async (key: string): Promise<{ text: string; words: any[]; confidence: number }> => {
+  const serverUrl = getServerEndpoint();
+  
+  const transcriptionResponse = await fetch(`${serverUrl}/transcribe-url`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ key }),
+  });
+
+  if (!transcriptionResponse.ok) {
+    const errorText = await transcriptionResponse.text();
+    console.error('Server transcription error:', errorText);
+    throw new Error(`Transcription failed: ${transcriptionResponse.status} ${transcriptionResponse.statusText}`);
+  }
+
+  return await transcriptionResponse.json();
+};
+
 export interface SessionAnalysis {
   summary: string;
   successes: string[];
@@ -23,40 +81,25 @@ export async function processSession(
   onProgress?: (progress: ProcessingProgress) => void
 ): Promise<ProcessingResult> {
   try {
-    // Step 1: Upload (stage=10)
+    // Step 1: Upload to S3 via our server (stage=10)
     onProgress?.({
       stage: 'uploading',
       progress: 10,
-      message: 'Uploading file…',
+      message: 'Uploading file to S3…',
     });
 
-    const formData = new FormData();
-    formData.append('file', file);
+    const s3Key = await uploadFileToS3(file);
+    console.log('📤 File uploaded to S3 with key:', s3Key);
 
-    // Step 2: Transcribe (stage=30)
+    // Step 2: Get transcription from our server (stage=30)
     onProgress?.({
       stage: 'transcribing',
       progress: 30,
       message: 'Transcribing audio…',
     });
 
-    const transcriptionResponse = await fetch(
-      'https://nurturelogserver.onrender.com/transcribe',
-      {
-        method: 'POST',
-        body: formData,
-      }
-    );
-
-    if (!transcriptionResponse.ok) {
-      // You can inspect transcriptionResponse.status or body if you like:
-      const errorText = await transcriptionResponse.text();
-      console.error('Transcription service error:', errorText);
-      throw new Error(`Transcription failed: ${errorText}`);
-    }
-
-    const transcriptionJson = await transcriptionResponse.json();
-    const transcript: string = transcriptionJson.text;
+    const transcriptionResult = await getTranscriptionFromServer(s3Key);
+    const transcript: string = transcriptionResult.text;
     console.log('📝 Transcript received:', transcript?.substring(0, 100) + '…');
 
     // Step 3: Analyze (stage=70)
