@@ -85,11 +85,10 @@ export async function processSession(
     onProgress?.({
       stage: 'uploading',
       progress: 10,
-      message: 'Uploading file to S3…',
+      message: 'Uploading file',
     });
 
-    const s3Key = await uploadFileToS3(file);
-    console.log('📤 File uploaded to S3 with key:', s3Key);
+    const s3Key = await uploadFileToS3(file);    
 
     // Step 2: Get transcription from our server (stage=30)
     onProgress?.({
