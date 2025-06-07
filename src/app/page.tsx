@@ -17,12 +17,7 @@ export default function Home() {
     sdk.logout();
   }, [sdk]);
 
-  // Redirect authenticated users to upload page
-  useEffect(() => {
-    if (!isSessionLoading && isAuthenticated) {
-      router.push('/upload');
-    }
-  }, [isAuthenticated, isSessionLoading, router]);
+
 
   return (
     <main className="bg-white text-gray-800 font-sans">
@@ -36,9 +31,11 @@ export default function Home() {
             <div className="flex items-center gap-4">
               {isAuthenticated && user ? (
                 <>
-                  <span className="text-sm text-gray-600">
-                    Welcome, {user.name || user.email || 'User'}
-                  </span>
+                  <Link href="/upload">
+                    <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors">
+                      Go to App
+                    </button>
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="text-sm text-gray-600 hover:text-gray-800 transition-colors"
@@ -49,7 +46,7 @@ export default function Home() {
               ) : (
                 <Link href="/sign-in">
                   <button className="text-sm text-green-600 hover:text-green-700 transition-colors">
-                    Sign In
+                    Login
                   </button>
                 </Link>
               )}
