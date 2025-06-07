@@ -134,6 +134,56 @@ export default function Home() {
         </p>
       </section>
 
+      {/* About Section */}
+      <section className="bg-gray-50 py-20 px-6 text-center">
+        <h2 className="text-3xl font-bold mb-4">Meet the team</h2>
+        <p className="max-w-2xl mx-auto text-lg mb-12 text-gray-600">
+          Built by parents and practitioners who understand the daily challenges of documentation and progress tracking.
+        </p>
+        <div className="flex flex-col md:flex-row justify-center gap-12 max-w-4xl mx-auto">
+          <div className="flex flex-col items-center max-w-xs">
+            <div className="w-32 h-32 overflow-hidden mb-4 rounded-lg">
+              <Image 
+                src="/artiPicture.png" 
+                alt="Arti" 
+                width={128} 
+                height={128} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Arti</h3>
+            <p className="text-gray-600 text-center">Parent and advocate passionate about making progress tracking accessible for families navigating developmental support.</p>
+          </div>
+          <div className="flex flex-col items-center max-w-xs">
+            <div className="w-32 h-32 overflow-hidden mb-4 rounded-lg">
+              <Image 
+                src="/farazPicture.jpg" 
+                alt="Faraz" 
+                width={128} 
+                height={128} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Faraz</h3>
+            <p className="text-gray-600 text-center">Engineer and parent who believes technology should simplify the complex work of understanding and supporting development.</p>
+          </div>
+          <div className="flex flex-col items-center max-w-xs">
+            <div className="w-32 h-32 overflow-hidden mb-4 rounded-lg">
+              <Image 
+                src="/danPicture.jpg" 
+                alt="Dan" 
+                width={128} 
+                height={128} 
+                quality={100}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Dan</h3>
+            <p className="text-gray-600 text-center">Practitioner who understands the time crunch of documentation and the importance of clear, actionable progress reports.</p>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="bg-green-600 text-white py-20 px-6 text-center">
         <h2 className="text-4xl font-bold mb-4">Get clarity without the burnout.</h2>
