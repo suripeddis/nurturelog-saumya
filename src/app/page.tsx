@@ -239,9 +239,7 @@ export default function Home() {
               />
             </div>
             <h3 className="text-xl font-semibold mb-2">Arti Bhatia</h3>
-            <p className="text-gray-600 text-center">
-              Arti is a parent of a non-speaking college student who began letterboarding at 17, leading her to pivot into autism innovation. She drives go-to-market and user research nationwide.
-            </p>
+            <p className="text-gray-600 text-center">Arti is a parent of a non-speaking college student who began letterboarding at 17, leading her to pivot from a 15-year career at Microsoft, Dell, and AWS into autism innovation. She leads go-to-market and user research through trusted family and practitioner networks nationwide.</p>
           </div>
 
           {/* Faraz */}
@@ -256,9 +254,8 @@ export default function Home() {
               />
             </div>
             <h3 className="text-xl font-semibold mb-2">Faraz Abidi</h3>
-            <p className="text-gray-600 text-center">
-              Faraz is a startup engineer and AI builder whose autism work began alongside his cousin’s therapy sessions. He brings rapid execution and award-winning assistive tools to the table.
-            </p>
+            <p className="text-gray-600 text-center">Faraz is a startup engineer and AI builder whose work in autism began while living with his autistic cousin and attending therapy sessions. He's created award-winning assistive tools and brings elite speed and execution to building tech that works in the real world.</p>
+
           </div>
 
           {/* Dan */}
@@ -274,9 +271,7 @@ export default function Home() {
               />
             </div>
             <h3 className="text-xl font-semibold mb-2">Dan Feshbach</h3>
-            <p className="text-gray-600 text-center">
-              Dan is a veteran autism advocate inspired by his limited-speaking son. He co-founded TeachTown, launched an autism tech accelerator, and champions the Autism Impact Fund.
-            </p>
+            <p className="text-gray-600 text-center">Dan is a veteran autism advocate and entrepreneur, inspired by his 31-year-old autistic son who is a limited speaker. He previously co-founded TeachTown (serving 120,000+ students), launched the Multiple autism tech accelerator, and helped organize the Autism Impact Fund.</p>
           </div>
         </div>
       </section>
@@ -309,16 +304,16 @@ export default function Home() {
           </ul>
 
           <div className="mt-12">
-            <Link href="/sign-in">
-              <button
-                onClick={() =>
-                  analytics.trackLandingPageButton('Early Access CTA - Footer')
-                }
-                className="inline-flex items-center gap-2 rounded-full bg-green-600 px-8 py-4 text-lg font-semibold text-white shadow-md shadow-green-600/30 hover:bg-green-700 hover:shadow-lg transition-all duration-200"
-              >
-                Upload a Session
-              </button>
-            </Link>
+                  <Link href="/upload">
+        <button
+          onClick={() =>
+            analytics.trackLandingPageButton('Early Access CTA - Footer')
+          }
+          className="inline-flex items-center gap-2 rounded-full bg-green-600 px-8 py-4 text-lg font-semibold text-white shadow-md shadow-green-600/30 hover:bg-green-700 hover:shadow-lg transition-all duration-200"
+        >
+          Upload a Session
+        </button>
+      </Link>
           </div>
         </div>
       </motion.section>;
