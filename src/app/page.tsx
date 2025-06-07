@@ -100,7 +100,7 @@ export default function Home() {
         <div className="flex flex-col md:flex-row justify-center gap-12 max-w-4xl mx-auto">
           <div>
             <span className="text-4xl">🎥</span>
-            <h3 className="text-xl font-semibold mt-2">Upload a video or link</h3>
+            <h3 className="text-xl font-semibold mt-2">Upload a video</h3>
           </div>
           <div>
             <span className="text-4xl">🧠</span>
