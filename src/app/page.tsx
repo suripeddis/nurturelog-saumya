@@ -95,7 +95,7 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-6 bg-white text-center">
+      <section className="py-20 px-6 bg-blue-50 text-center">
         <h2 className="text-3xl font-bold mb-12">From session to summary in under a minute</h2>
         <div className="flex flex-col md:flex-row justify-center gap-12 max-w-4xl mx-auto">
           <div>
@@ -114,30 +114,30 @@ export default function Home() {
       </section>
       {/* Here’s What You Get */}
       <motion.section
-        className="py-16 px-6"
+        className="py-16 px-6 bg-slate-50"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <div className="max-w-5xl mx-auto rounded-2xl bg-green-50 shadow-lg p-8">
+        <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center">🔍 What You’ll Unlock</h2>
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="flex items-center gap-4">
-              <Presentation className="w-6 h-6 text-green-600" />
+            <div className="flex items-start gap-4">
+              <Presentation className="w-6 h-6 text-green-600 mt-1" />
               <span className="text-lg">Session Summary</span>
             </div>
-            <div className="flex items-center gap-4">
-              <Zap className="w-6 h-6 text-green-600" />
+            <div className="flex items-start gap-4">
+              <Zap className="w-6 h-6 text-green-600 mt-1" />
               <span className="text-lg">Strengths &amp; Challenges</span>
             </div>
-            <div className="flex items-center gap-4">
-              <LucideUsers className="w-6 h-6 text-green-600" />
+            <div className="flex items-start gap-4">
+              <LucideUsers className="w-6 h-6 text-green-600 mt-1" />
               <span className="text-lg">Communication Patterns</span>
             </div>
-            <div className="flex items-center gap-4">
-              <BarChart2 className="w-6 h-6 text-green-600" />
+            <div className="flex items-start gap-4">
+              <BarChart2 className="w-6 h-6 text-green-600 mt-1" />
               <span className="text-lg">Visuals &amp; Trends (coming soon)</span>
-            </div>            
+            </div>
           </div>
         </div>
       </motion.section>
@@ -149,7 +149,7 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <div className="max-w-5xl mx-auto rounded-2xl border border-gray-200 shadow-lg p-8">
+        <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center">👥 Made for the Team Around the Learner</h2>
           <div className="grid gap-6 md:grid-cols-3 text-lg">
             <div className="flex items-start gap-4">
@@ -170,12 +170,12 @@ export default function Home() {
 
       {/* Why You’ll Care */}
       <motion.section
-        className="py-16 px-6 bg-amber-50"
+        className="py-16 px-6 bg-green-50"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <div className="max-w-5xl mx-auto rounded-2xl shadow-lg p-8">
+        <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center">💡 Why It Matters</h2>
           <div className="grid gap-6 md:grid-cols-2">
             <div className="flex items-start gap-4">
@@ -282,27 +282,46 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="bg-green-600 text-white py-20 px-6 text-center">
-        <h2 className="text-4xl font-bold mb-4">Get clarity without the burnout.</h2>
-        <div className="flex justify-center gap-4">
-          <Link href="/upload">
-            <button
-              onClick={() => analytics.trackLandingPageButton('Try NurtureLog Free - Footer')}
-              className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold"
-            >
-              Try NurtureLog Free
-            </button>
-          </Link>
-          <Link href="/sample">
-            <button
-              onClick={() => analytics.trackLandingPageButton('See a Demo Report - Footer')}
-              className="border border-white px-6 py-3 rounded-lg font-semibold"
-            >
-              See a Demo Report
-            </button>
-          </Link>
+      <motion.section
+        className="bg-blue-50 py-24 px-6"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-green-700 tracking-tight">
+            Sign Up for Early&nbsp;Access
+          </h2>
+
+          <ul className="mt-8 space-y-3 text-lg max-w-sm mx-auto">
+            <li className="flex items-center gap-3">
+              <span role="img" aria-label="check">✅</span>
+              Upload your first video
+            </li>
+            <li className="flex items-center gap-3">
+              <span role="img" aria-label="check">✅</span>
+              Get your session summary
+            </li>
+            <li className="flex items-center gap-3">
+              <span role="img" aria-label="check">✅</span>
+              See the power of clear insight
+            </li>
+          </ul>
+
+          <div className="mt-12">
+            <Link href="/sign-in">
+              <button
+                onClick={() =>
+                  analytics.trackLandingPageButton('Early Access CTA - Footer')
+                }
+                className="inline-flex items-center gap-2 rounded-full bg-green-600 px-8 py-4 text-lg font-semibold text-white shadow-md shadow-green-600/30 hover:bg-green-700 hover:shadow-lg transition-all duration-200"
+              >
+                Upload a Session
+              </button>
+            </Link>
+          </div>
         </div>
-      </section>
+      </motion.section>;
     </main>
   );
 }
