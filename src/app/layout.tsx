@@ -6,7 +6,7 @@ import UserIdentification from '@/components/UserIdentification';
 
 export const metadata: Metadata = {
   title: "NurtureLog – Skip the Paperwork",
-  description: "Whether you're a parent or a practitioner, NurtureLog writes the report so you don't have to. Upload your letterboarding session—get instant summaries, strengths, and next steps.",
+  description: "Whether you're a parent or a facilitator, NurtureLog writes the report so you don't have to. Upload your spelling board session—get instant summaries, strengths, and next steps.",
 };
 
 export default function RootLayout({

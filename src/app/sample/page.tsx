@@ -29,7 +29,7 @@ export default function SamplePage() {
   // Sample hardcoded data
   const sampleResults = {
     analysis: {
-      summary: "The session between the practitioner and Reed involved using a spelling board to facilitate communication, focusing on the topic of aliens and the concept of a paradox. Reed demonstrated strong conceptual understanding and reasoning abilities while navigating some anxiety around new tasks. The discussion centered on the Fermi Paradox - the contradiction between the likelihood of extraterrestrial life and the lack of evidence. Reed engaged thoughtfully with complex philosophical concepts while using comfort phrases to manage anxiety throughout the session.",
+      summary: "The session between the facilitator and Reed involved using a spelling board to facilitate communication, focusing on the topic of aliens and the concept of a paradox. Reed demonstrated strong conceptual understanding and reasoning abilities while navigating some anxiety around new tasks. The discussion centered on the Fermi Paradox - the contradiction between the likelihood of extraterrestrial life and the lack of evidence. Reed engaged thoughtfully with complex philosophical concepts while using comfort phrases to manage anxiety throughout the session.",
       successes: [
         "Spelling and Conceptual Understanding: Reed successfully chose and spelled the topic 'aliens,' exploring the concept of a paradox: 'no evidence' despite the high probability of extraterrestrial life. He spelled out and understood complex ideas like 'most likely aliens but no evidence.'",
         "Expressing Opinions and Reasoning: Reed communicated his thoughts on why he believes there are no aliens, spelling out 'no because there is no evidence,' showing his ability to reason and express his opinion using the board.",
@@ -37,18 +37,18 @@ export default function SamplePage() {
         "Articulating Complex Ideas: He articulated his stance that 'intelligent life may be extremely rare,' providing the rationale 'only we exist' with clear logical reasoning."
       ],
       struggles: [
-        "Initial Topic Decision: Reed initially struggled to confirm his chosen topic, moving between 'eggs' and 'aliens' before settling on the latter. The practitioner guided him to verify his choice, suggesting a bit of indecision.",
+        "Initial Topic Decision: Reed initially struggled to confirm his chosen topic, moving between 'eggs' and 'aliens' before settling on the latter. The facilitator guided him to verify his choice, suggesting a bit of indecision.",
         "Anxiety and Comfort Words: Throughout the session, Reed intermittently used comfort phrases like 'done,' 'all done,' and 'no,' indicating anxiety or a need for reassurance, especially when tasks required more intention or were new.",
         "Drawing Task: Reed showed reluctance and anxiety when asked to draw an alien, repeatedly saying 'no' and refusing to draw, perhaps due to discomfort with the demand or a lack of confidence in the task.",
         "Task Transitions: Reed demonstrated ongoing struggle with tasks outside his comfort zone, particularly when moving from discussion to hands-on activities."
       ],
       topicsDiscussed: [
         "The session primarily revolved around discussing aliens and the Fermi Paradox, which relates to the contradiction between the likelihood of extraterrestrial life and the lack of evidence.",
-        "Reed and the practitioner explored explanations for why humans have not encountered alien life, considering possibilities such as \"we are alone,\" \"aliens are hiding,\" and \"we are in a zoo.\"",
+        "Reed and the facilitator explored explanations for why humans have not encountered alien life, considering possibilities such as \"we are alone,\" \"aliens are hiding,\" and \"we are in a zoo.\"",
         "Reed shared his belief that intelligent life is rare, emphasizing that \"only we exist\" and expressing skepticism about alien visibility or contact.",
-        "The practitioner encouraged Reed to explore hypothetical scenarios, such as the potential appearance of aliens and reasons for contacting Earth.",
+        "The facilitator encouraged Reed to explore hypothetical scenarios, such as the potential appearance of aliens and reasons for contacting Earth.",
         "The session also touched briefly on Reed's anxiety, revealing that it could stem from engaging in new or purposeful tasks requiring intention.",
-        "The practitioner closed the session with an activity, inviting Reed to draw an alien, which Reed resisted, pointing to an ongoing struggle with tasks outside his comfort zone."
+        "The facilitator closed the session with an activity, inviting Reed to draw an alien, which Reed resisted, pointing to an ongoing struggle with tasks outside his comfort zone."
       ]
     },
     
