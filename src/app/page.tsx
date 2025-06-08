@@ -239,7 +239,7 @@ export default function Home() {
               />
             </div>
             <h3 className="text-xl font-semibold mb-2">Arti Bhatia</h3>
-            <p className="text-gray-600 text-center">Arti is a parent of a non-speaking college student who began letterboarding at 17, leading her to pivot from a 15-year career at Microsoft, Dell, and AWS into autism innovation. She leads go-to-market and user research through trusted family and practitioner networks nationwide.</p>
+            <p className="text-gray-600 text-center">Arti is a parent of a non-speaking college student who began letterboarding at 17—an experience that led her to pivot into autism innovation. She previously held leadership roles in product strategy, business development, and sales at Microsoft, AWS, and Dell. Today, she works with trusted family and practitioner networks in the autism community throughout the world.</p>
           </div>
 
           {/* Faraz */}
@@ -254,7 +254,7 @@ export default function Home() {
               />
             </div>
             <h3 className="text-xl font-semibold mb-2">Faraz Abidi</h3>
-            <p className="text-gray-600 text-center">Faraz is a startup engineer and AI builder whose work in autism began while living with his autistic cousin and attending therapy sessions. He's created award-winning assistive tools and brings elite speed and execution to building tech that works in the real world.</p>
+            <p className="text-gray-600 text-center">Faraz is an AI engineer whose work in autism began while living with his autistic cousin and attending therapy sessions. He's since created award-winning assistive tools. Previously, he was the founding engineer and  Director of Software at SprintRay, one of the world's top 3d printing companies.</p>
 
           </div>
 
