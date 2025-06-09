@@ -71,7 +71,7 @@ export default function Home() {
       <section className="bg-green-50 py-16 px-6 text-center">
         <h1 className="text-4xl font-bold mb-4">Skip the paperwork. Keep the progress.</h1>
         <p className="text-lg max-w-xl mx-auto mb-6">
-          Whether you're a parent or a facilitator, NurtureLog writes the report so you don't have to. Upload your spelling board session—get instant summaries, strengths, and next steps.
+          Whether you're a parent or a practitioner, NurtureLog writes the report so you don't have to. Upload your letterboard session—get instant summaries, strengths, and next steps.
         </p>
         <div className="flex justify-center gap-4">
           <Link href="/upload">
@@ -158,7 +158,7 @@ export default function Home() {
             </div>
             <div className="flex items-start gap-4">
               <ClipboardList className="w-6 h-6 text-green-600 mt-1" />
-              <p className="text-gray-700">facilitators saving time on notes while giving families deeper insights.</p>
+              <p className="text-gray-700">practitioners saving time on notes while giving families deeper insights.</p>
             </div>
             <div className="flex items-start gap-4">
               <BookOpen className="w-6 h-6 text-green-600 mt-1" />
@@ -203,7 +203,7 @@ export default function Home() {
               <LucideUsers className="w-6 h-6 text-green-600 mt-1" />
               <div>
                 <h3 className="font-semibold">Aligned</h3>
-                <p className="text-gray-700">Built for both parents &amp; facilitators doing the work.</p>
+                <p className="text-gray-700">Built for both parents &amp; practitioners doing the work.</p>
               </div>
             </div>
           </div>
@@ -224,7 +224,7 @@ export default function Home() {
       <section className="bg-gray-50 py-20 px-6 text-center">
         <h2 className="text-3xl font-bold mb-4">Meet the team</h2>
         <p className="max-w-2xl mx-auto text-lg mb-12 text-gray-600">
-          Built by families of non-verbal learners. Informed by facilitators.
+          Built by families of non-speaking learners. Informed by practitioners.
         </p>
         <div className="flex flex-col md:flex-row justify-center gap-12 max-w-4xl mx-auto">
           {/* Arti */}
@@ -239,7 +239,7 @@ export default function Home() {
               />
             </div>
             <h3 className="text-xl font-semibold mb-2">Arti Bhatia</h3>
-            <p className="text-gray-600 text-center">Arti is a parent of a non-speaking college student who began using a spelling board at 17—an experience that led her to pivot into autism innovation. She previously held leadership roles in product strategy, business development, and sales at Microsoft, AWS, and Dell. Today, she works with trusted family and facilitator networks in the autism community throughout the world.</p>
+            <p className="text-gray-600 text-center">Arti is a parent of a non-speaking college student who began using a letterboard at 17—an experience that led her to pivot into autism innovation. She previously held leadership roles in product strategy, business development, and sales at Microsoft, AWS, and Dell. Today, she works with trusted family and practitioner networks in the autism community throughout the world.</p>
           </div>
 
           {/* Faraz */}

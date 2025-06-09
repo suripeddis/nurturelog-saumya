@@ -30,12 +30,12 @@ export async function POST(req: Request) {
             input: [
                 {
                     role: 'system',
-                    content: 'You are a skilled clinical analyst helping to interpret spelling board sessions with non-verbal learners using a spelling board.',
+                    content: 'You are a skilled clinical analyst helping to interpret letterboard sessions with non-speaking autistic learners using a letterboard.',
                 },
                 {
                     role: 'user',
                     content: `
-Analyze this spelling board session transcript and return exactly these fields—no extra keys:
+Analyze this letterboard session transcript and return exactly these fields—no extra keys:
 - summary: Professional summary of the session. When you see words being spelled out, that means the learner is speaking. Treat that as their speech. 
 - successes: List of quoted examples where learner succeeded. Give at least 3 examples. Describe the success in detail, then include a quote from the transcript.
 - struggles: List of quoted examples where learner struggled. Give at least 3 examples. Describe the struggle in detail, then include a quote from the transcript.
