@@ -359,7 +359,7 @@ export default function ResultsPage() {
             </ul>
           </div>
 
-          {/* Full Transcript */}
+          {/* Full Transcript - Commented out
           <div
             style={{
               padding: '24px',
@@ -390,6 +390,7 @@ export default function ResultsPage() {
               {results.transcript}
             </div>
           </div>
+          */}
         </div>
       </div>
     </main>
