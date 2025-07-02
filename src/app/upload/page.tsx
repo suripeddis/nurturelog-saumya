@@ -70,7 +70,16 @@ export default function UploadPage() {
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold text-green-600 mb-8">Upload Your Session</h1>
         
-
+        <div className="mb-6">
+          <a 
+            href="https://docs.google.com/document/d/1hTMQRv-te-5yFJo006snUiQNc23QjmLYvPHv-a7Tj_I/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-800 underline"
+          >
+            How to upload your video
+          </a>
+        </div>
 
         {/* File Upload Section */}
         <div className="mb-8">
@@ -87,7 +96,7 @@ export default function UploadPage() {
                 <p className="text-lg">Drop the files here...</p>
               ) : (
                 <>
-                  <p className="text-lg">Drag and drop your file here, or click to select</p>
+                  <p className="text-lg">Drag and Drop from your computer, or click to select</p>
                   <p className="text-sm text-gray-500">
                     Supports MP4, MOV, AVI, MP3, WAV, M4A
                   </p>
