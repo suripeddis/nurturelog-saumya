@@ -72,7 +72,7 @@ export default function UploadPage() {
         
         <div className="mb-6">
           <a 
-            href="https://docs.google.com/document/d/1hTMQRv-te-5yFJo006snUiQNc23QjmLYvPHv-a7Tj_I/edit?usp=sharing"
+            href="https://docs.google.com/document/d/1odqYl0E4FwabOauBt6okP1RBMoKq0xDZasPUVSpAxTQ/edit?tab=t.0"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 hover:text-blue-800 underline"
