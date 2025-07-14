@@ -81,6 +81,11 @@ export default function UploadPage() {
           </a>
         </div>
 
+        {/* Early Access Banner */}
+        <div className="mb-6 p-4 bg-yellow-100 border border-yellow-300 rounded-lg text-center text-green-700 font-medium">
+            Get early access — Cohort 2 waitlist open
+        </div>
+
         {/* File Upload Section */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4">Upload a file</h2>
