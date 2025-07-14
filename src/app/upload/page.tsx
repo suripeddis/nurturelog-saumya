@@ -77,7 +77,7 @@ export default function UploadPage() {
             rel="noopener noreferrer"
             className="text-blue-600 hover:text-blue-800 underline"
           >
-            How to upload your video
+            How to upload your audio or video file
           </a>
         </div>
 
