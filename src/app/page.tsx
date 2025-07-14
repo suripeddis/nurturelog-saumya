@@ -96,11 +96,11 @@ export default function Home() {
 
       {/* How It Works */}
       <section className="py-20 px-6 bg-blue-50 text-center">
-        <h2 className="text-3xl font-bold mb-12">From session to summary in under a minute</h2>
+        <h2 className="text-3xl font-bold mb-12">From session to summary in a few minutes</h2>
         <div className="flex flex-col md:flex-row justify-center gap-12 max-w-4xl mx-auto">
           <div>
             <span className="text-4xl">🎥</span>
-            <h3 className="text-xl font-semibold mt-2">Upload a video</h3>
+            <h3 className="text-xl font-semibold mt-2">Upload audio or video</h3>
           </div>
           <div>
             <span className="text-4xl">🧠</span>
