@@ -36,7 +36,7 @@ export async function POST(req: Request) {
                     role: 'user',
                     content: `
 Analyze this letterboard session transcript and return exactly these fields—no extra keys:
-- summary: Professional summary of the session. When you see words being spelled out, that means the learner is speaking. Treat that as their speech. 
+- summary: Write a professional summary of the session, focusing only on what was discussed and the learner’s engagement with those topics. Do not describe the learner’s diagnosis, communication style labels, or personal identifiers beyond what they said. When you see words being spelled out, treat that as the learner’s speech.
 - successes: List of quoted examples where learner succeeded. Give at least 3 examples. Describe the success in detail, then include a quote from the transcript.
 - struggles: List of quoted examples where learner struggled. Give at least 3 examples. Describe the struggle in detail, then include a quote from the transcript.
 - topicsDiscussed: List of distinct topics discussed, with details.
