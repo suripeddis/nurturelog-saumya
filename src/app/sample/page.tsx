@@ -86,7 +86,7 @@ export default function SamplePage() {
             </button>
             <Link href="/upload">
               <button
-                onClick={() => analytics.trackLandingPageButton('Try NurtureLog - Sample Page')}
+                onClick={() => analytics.trackLandingPageButton('Try SessionClarity - Sample Page')}
                 className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center gap-2 font-semibold whitespace-nowrap"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">

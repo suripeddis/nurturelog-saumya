@@ -35,7 +35,7 @@ export default function Home() {
       {/* App Header */}
       <header className="bg-white shadow px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-green-600">NurtureLog</h1>
+          <h1 className="text-2xl font-bold text-green-600">SessionClarity</h1>
           {!isSessionLoading && (
             <div className="flex items-center gap-4">
               {isAuthenticated && user ? (
@@ -71,7 +71,7 @@ export default function Home() {
       <section className="bg-green-50 py-16 px-6 text-center">
         <h1 className="text-4xl font-bold mb-4">Skip the paperwork. Keep the progress.</h1>
         <p className="text-lg max-w-xl mx-auto mb-6">
-          Whether you're a parent or a practitioner, NurtureLog writes the report so you don't have to. Upload your letterboard session—get instant summaries, strengths, and next steps.
+          Whether you're a parent or a practitioner, SessionClarity writes the report so you don't have to. Upload your letterboard session—get instant summaries, strengths, and next steps.
         </p>
         <div className="flex justify-center gap-4">
           <Link href="/upload">

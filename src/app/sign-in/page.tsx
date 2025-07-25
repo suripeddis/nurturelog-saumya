@@ -11,7 +11,7 @@ export default function SignInPage() {
   return (
     <main className="min-h-screen bg-white flex items-center justify-center p-8">
       <div className="max-w-md mx-auto">
-        <h1 className="text-2xl font-bold text-green-600 mb-8 text-center">Welcome to NurtureLog</h1>
+        <h1 className="text-2xl font-bold text-green-600 mb-8 text-center">Welcome to SessionClarity</h1>
         
         {/* Loading Spinner */}
         {isLoading && (
