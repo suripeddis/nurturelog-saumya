@@ -98,8 +98,17 @@ export async function processSession(
     });
 
     const transcriptionResult = await getTranscriptionFromServer(s3Key);
-    const transcript: string = transcriptionResult.text;
-    console.log('📝 Transcript received:', transcript?.substring(0, 100) + '…');
+    const rawTranscript: string = transcriptionResult.text;
+    
+    const response = await fetch('/api/cleanTranscript', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rawTranscript }),
+    });
+    const data = await response.json();
+    const cleanedTranscript: string = data.cleanedTranscript;
+    
+    console.log('📝 Transcript received:', cleanedTranscript?.substring(0, 100) + '…');
 
     // Step 3: Analyze (stage=70)
     onProgress?.({
@@ -111,7 +120,7 @@ export async function processSession(
     const analysisResponse = await fetch('/api/chatgpt', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ transcript }),
+      body: JSON.stringify({ transcript: cleanedTranscript }),
     });
 
     if (!analysisResponse.ok) {
@@ -130,7 +139,7 @@ export async function processSession(
     });
 
     return {
-      transcript,
+      transcript: cleanedTranscript,
       analysis: analysisJson,
     };
   } catch (error: any) {
