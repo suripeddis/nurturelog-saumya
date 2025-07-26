@@ -148,7 +148,7 @@ export default function ResultsPage() {
                   color: '#16a34a',
                 }}
               >
-                NurtureLog
+                SessionClarity
               </h1>
               <a
                 href="https://nurturelog.com"
