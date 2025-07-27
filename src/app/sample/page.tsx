@@ -142,7 +142,7 @@ export default function SamplePage() {
                   display: 'block',
                 }}
               >
-                nurturelog.com
+                sessionclarity.com
               </a>
             </div>
             <h2
