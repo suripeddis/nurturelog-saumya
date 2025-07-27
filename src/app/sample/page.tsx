@@ -131,7 +131,7 @@ export default function SamplePage() {
                 SessionClarity
               </h1>
               <a
-                href="https://nurturelog.com"
+                href="https://sessionclarity.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
