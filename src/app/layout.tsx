@@ -5,8 +5,8 @@ import { AuthProvider } from '@descope/nextjs-sdk';
 import UserIdentification from '@/components/UserIdentification';
 
 export const metadata: Metadata = {
-  title: "NurtureLog – Skip the Paperwork",
-  description: "Whether you're a parent or a practitioner, NurtureLog writes the report so you don't have to. Upload your letterboard session—get instant summaries, strengths, and next steps.",
+  title: "SessionClarity – Skip the Paperwork",
+  description: "Whether you're a parent or a practitioner, SessionClarity writes the report so you don't have to. Upload your letterboard session—get instant summaries, strengths, and next steps.",
 };
 
 export default function RootLayout({
