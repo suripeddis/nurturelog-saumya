@@ -151,7 +151,7 @@ export default function ResultsPage() {
                 SessionClarity
               </h1>
               <a
-                href="https://nurturelog.com"
+                href="https://sessionclarity.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -162,7 +162,7 @@ export default function ResultsPage() {
                   display: 'block',
                 }}
               >
-                nurturelog.com
+                sessionclarity.com
               </a>
             </div>
             <h2
