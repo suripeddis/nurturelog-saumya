@@ -40,9 +40,13 @@ export async function POST(req: Request) {
 Clean this transcript. Use the following format:
 <date>; <practitioner initials>; <client initials>; <topic>
 - [TEACH] for each teaching or instruction from the practitioner.
-- [QUESTION ASKED] for each question asked by the practitioner.
+- [QUESTION] for each question asked by the practitioner.
 - [COACH] for brief coaching prompts that help focus, posture, breathing, etc.
 - [CLIENT] for the response in ALL CAPS (or (ACTION) if nonverbal).
+Only include the <date>; ... header once at the top — not for each section.
+Format each line as follows:
+**LABEL**: message  
+(Make the speaker label bold using Markdown asterisks, like **TEACH**)
 Be concise. Skip filler, small talk, and repeated phrases.
 
 Transcript:
