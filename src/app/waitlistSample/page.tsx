@@ -1,6 +1,7 @@
 // src/app/waitlistSample/page.tsx
 import styles from "./styles.module.css";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Waitlist Sample — SessionClarity",
@@ -21,9 +22,9 @@ export default function WaitlistSamplePage() {
             Your letterboard sessions deserve more than scribbled notes. <br />
             Be among the first to experience effortless insights—with AI-generated reports that reveal strengths, patterns, and progress.
           </p>
-          <a className={styles.ctaButtonPrimary} href="#waitlist">
+          <Link href="/getStarted" className={styles.ctaButtonPrimary}>
             Join the Waitlist
-          </a>
+          </Link>
           <p className={styles.subText}>
             Built by families and practitioners. Powered by insight.
           </p>
@@ -61,9 +62,9 @@ export default function WaitlistSamplePage() {
       {/* CTA ROW */}
       <div className={styles.ctaRowBottom}>
         <span className={styles.orange}>👉 Be among the first to bring clarity to every session.</span>
-        <a className={styles.ctaButtonPrimary} href="#waitlist">
-          Join the Waitlist
-        </a>
+        <Link href="/getStarted" className={styles.ctaButtonPrimary}>
+            Join the Waitlist
+        </Link>
       </div>
 
       {/* WHY WE BUILT */}
@@ -149,7 +150,9 @@ export default function WaitlistSamplePage() {
           <p className={styles.body}>
             Families and practitioners are reshaping what’s possible. Be among the first to access tools that clarify what happens in the session, display competence, save time, and build real inclusion.
           </p>
-          <a className={styles.ctaButtonPrimary} href="/sign-in">Join the Waitlist</a>
+          <Link href="/getStarted" className={styles.ctaButtonPrimary}>
+            Join the Waitlist
+          </Link>
         </div>
       </section>
     </main>
