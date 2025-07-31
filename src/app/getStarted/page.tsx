@@ -36,17 +36,18 @@ export default function GetStartedPage() {
           padding: '64px 64px',             // was 48px
         }}
       >
-        <h1
-          style={{
+    <h1
+        style={{
             margin: 0,
-            fontSize: 72,                    // was 56
+            fontSize: 72,
             lineHeight: 1.15,
             color: '#0f172a',
             textAlign: 'center',
             fontWeight: 800,
-          }}
+            display: submitted ? 'none' : 'block',  // 👈 add this
+         }}
         >
-          Join the Waitlist
+            Join the Waitlist
         </h1>
 
         {!submitted ? (
@@ -68,6 +69,13 @@ export default function GetStartedPage() {
                 onChange={onChange}
                 required
                 placeholder="Enter your full name"
+
+                minLength={2}
+                maxLength={80}
+                pattern="^[A-Za-z][A-Za-z' -]{1,}$"
+                title="Use letters, spaces, apostrophes (’), and hyphens only."
+                autoComplete="name"
+
                 style={{
                   marginTop: 10,
                   width: '100%',
@@ -94,6 +102,15 @@ export default function GetStartedPage() {
                 onChange={onChange}
                 required
                 placeholder="Enter your email"
+
+                autoComplete="email"
+                inputMode="email"
+                spellCheck={false}
+                minLength={6}
+                maxLength={254}
+                pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                title="Enter a valid email like name@example.com"
+                
                 style={{
                   marginTop: 10,
                   width: '100%',
@@ -139,12 +156,12 @@ export default function GetStartedPage() {
             style={{
               marginTop: 36,
               textAlign: 'center',
-              fontSize: 24,
+              fontSize: 55,
               color: '#16a34a',
-              fontWeight: 700,
+              fontWeight: 800,
             }}
           >
-            Thanks! You’re on the list.
+            Thank you for sigining up!
           </p>
         )}
       </section>
