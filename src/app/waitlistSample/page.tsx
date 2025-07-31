@@ -35,10 +35,9 @@ export default function WaitlistSamplePage() {
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>Why Join the Waitlist?</h2>
           <ul className={styles.bulletListLarge}>
-            <li>✅ <strong>Be first to access AI-generated reports.</strong> Get clear summaries and trends without perfect video/audio.</li>
+            <li>✅ <strong>Be first to access AI-generated reports.</strong> Get clear summaries from video/audio.</li>
+            <li>✅ <strong>Save time, see progress.</strong> No more rewatching sessions; let SessionClarity handle note-taking and analysis instantly.</li>
             <li>✅ <strong>Advocate with data.</strong> Bring evidence rooted in presumed competence to IEP meetings and therapy teams.</li>
-            <li>✅ <strong>Save time, see progress.</strong> Stop rewatching sessions; let SessionClarity handle note-taking and analysis instantly.</li>
-            <li>✅ <strong>Validate the method.</strong> Use insights to reinforce letterboarding’s value with educators, therapists, and skeptics.</li>
             <li>✅ <strong>Help shape the future.</strong> Early access members will share feedback and influence development.</li>
           </ul>
         </div>

@@ -29,7 +29,7 @@
   margin: 0 auto 28px;
 }
 .subText {
-  font-size: 14px;
+  font-size: 35px;
   margin-top: 12px;
   color: #6b7280;
 }
@@ -37,23 +37,39 @@
 /* WHY JOIN THE WAITLIST */
 .whyJoin {
   background: #f9fafb;
-  padding: 80px 24px;
+  padding: 20px 10px;
   text-align: center; 
 }
+/* CHANGE THIS BLOCK */
 .bulletListLarge {
-  list-style: none;
+  /* remove: list-style: none;  (we need a marker) */
+  list-style-position: outside;   /* normal bullets position */
   padding: 0;
   margin: 28px auto 0;
-  font-size: 30px;
-  line-height: 1.8;
-  max-width: 900px;
+  max-width: 1500px;
   color: #0f172a;
+
+  font-size: 35px;
+  line-height: 1.6;
+  text-align: left;               /* text aligned nicely */
+
+  /* NEW: two-column layout */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 40px;               /* space between columns */
+  row-gap: 50px;                  /* space between rows */
+}
+
+/* CHANGE THIS BLOCK */
+.bulletListLarge li {
+  margin: 1;                      /* grid handles spacing */
+  padding-left: 1;                /* no manual indent */
 }
 
 /* WHO'S IT FOR - full width */
 .whosForSection {
   background: #ffffff;
-  padding: 80px 24px;
+  padding: 40px 24px;
   text-align: center;
 }
 .whosForText {
@@ -121,7 +137,7 @@
   text-align: center;
 }
 .sectionTitle {
-  font-size: 36px;
+  font-size: 45px;
   margin-bottom: 20px;
   font-weight: 700;
 }
