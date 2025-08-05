@@ -204,7 +204,7 @@ export default function GetStartedPage() {
               style={{
                 display: 'block',
                 margin: '40px auto 8px',
-                height: '170px' // increase this for larger size
+                height: '110px' // increase this for larger size
               }}
             />
               <p style={{ fontSize: '20px', color: '#334155', marginTop: 4 }}>
