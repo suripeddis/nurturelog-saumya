@@ -10,6 +10,13 @@ export default function GetStartedPage() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
+    await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form), // assuming form = { name, email }
+    });
+  
     setSubmitted(true);
   };
 
@@ -178,8 +185,7 @@ export default function GetStartedPage() {
             >
               <li>✓ Check your inbox — we’ll send early access and updates soon.</li>
               <li>
-                ✓ Invite others — share the waitlist with families or practitioners who believe in
-                spelling to communicate.
+              ✓ Invite others — share the waitlist with families or practitioners who believe in spelling as a method to communicate. 
               </li>
               <li>
                 ✓ Start imagining — what would it mean to have real-time, data-rich reports on
@@ -213,7 +219,7 @@ export default function GetStartedPage() {
                   href="mailto:artipriya@gmail.com"
                   style={{ color: '#16a34a', textDecoration: 'none' }}
                 >
-                  artipriya@gmail.com
+                  arti@multiplehub.org
                 </a>
                 <br />
                 425-647-8307
