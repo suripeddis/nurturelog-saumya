@@ -157,7 +157,7 @@ export default function GetStartedPage() {
               lineHeight: 1.6,
             }}
           >
-            <h2 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '80px', marginTop: 48 }}>
+            <h2 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '60px', marginTop: 48 }}>
               You’re In. Welcome to SessionClarity!
             </h2>
 
@@ -166,7 +166,7 @@ export default function GetStartedPage() {
               You’re now part of a community working to bring clarity, data, and dignity to letterboard communication.
             </p>
 
-            <h3 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '20px', marginBottom: 12 }}>
+            <h3 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '30px', marginBottom: 12 }}>
               While You Wait…
             </h3>
 
