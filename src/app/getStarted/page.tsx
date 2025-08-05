@@ -170,7 +170,7 @@ export default function GetStartedPage() {
               You’re now part of a community working to bring clarity, data, and dignity to letterboard communication.
             </p>
 
-            <h3 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '27px', marginBottom: 12 }}>
+            <h3 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '30px', marginBottom: 12 }}>
               While You Wait…
             </h3>
 
@@ -180,7 +180,7 @@ export default function GetStartedPage() {
                 marginBottom: 24,
                 textAlign: 'left',
                 display: 'inline-block',
-                fontSize: '20px',
+                fontSize: '25px',
               }}
             >
               <li>✓ Check your inbox — we’ll send early access and updates soon.</li>
@@ -198,20 +198,18 @@ export default function GetStartedPage() {
             </ul>
 
             <div>
-              <p
-                style={{
-                  fontFamily: `'Brush Script MT', 'Dancing Script', cursive`,
-                  fontSize: '28px',
-                  color: '#16a34a',
-                  fontStyle: 'italic',
-                  marginBottom: 0,
-                }}
-              >
-                Arti Bhatia
-              </p>
+            <img
+              src="/artibhatiasignature.png"
+              alt="Handwritten signature of Arti Bhatia"
+              style={{
+                display: 'block',
+                margin: '40px auto 8px',
+                height: '150spx' // increase this for larger size
+              }}
+            />
               <p style={{ fontSize: '20px', color: '#334155', marginTop: 4 }}>
                 <a
-                  href="mailto:artipriya@gmail.com"
+                  href="mailto:arti@multiplehub.org"
                   style={{ color: '#16a34a', textDecoration: 'none' }}
                 >
                   arti@multiplehub.org
