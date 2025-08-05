@@ -202,7 +202,7 @@ export default function GetStartedPage() {
               <p
                 style={{
                   fontFamily: `'Brush Script MT', 'Dancing Script', cursive`,
-                  fontSize: '22px',
+                  fontSize: '40px',
                   color: '#16a34a',
                   fontStyle: 'italic',
                   marginBottom: 0,
