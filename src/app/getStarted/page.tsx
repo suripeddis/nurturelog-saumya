@@ -28,36 +28,36 @@ export default function GetStartedPage() {
       <section
         style={{
           width: '100%',
-          maxWidth: 920,                    // was 720
+          maxWidth: 920,
           background: '#ffffff',
-          borderRadius: 20,                 // was 16
+          borderRadius: 20,
           boxShadow: '0 16px 48px rgba(2, 6, 23, 0.10)',
           border: '1px solid #e5e7eb',
-          padding: '64px 64px',             // was 48px
+          padding: '64px 64px',
         }}
       >
-    <h1
-        style={{
+        <h1
+          style={{
             margin: 0,
             fontSize: 72,
             lineHeight: 1.15,
             color: '#0f172a',
             textAlign: 'center',
             fontWeight: 800,
-            display: submitted ? 'none' : 'block',  // 👈 add this
-         }}
+            display: submitted ? 'none' : 'block',
+          }}
         >
-            Join the Waitlist
+          Join the Waitlist
         </h1>
 
         {!submitted ? (
           <form
             onSubmit={onSubmit}
             style={{
-              marginTop: 40,                 // was 32
+              marginTop: 40,
               display: 'grid',
               gridTemplateColumns: '1fr',
-              gap: 28,                       // was 24
+              gap: 28,
             }}
           >
             <label style={{ fontSize: 40, color: '#0f172a' }}>
@@ -69,23 +69,21 @@ export default function GetStartedPage() {
                 onChange={onChange}
                 required
                 placeholder="Enter your full name"
-
                 minLength={2}
                 maxLength={80}
                 pattern="^[A-Za-z][A-Za-z' -]{1,}$"
                 title="Use letters, spaces, apostrophes (’), and hyphens only."
                 autoComplete="name"
-
                 style={{
                   marginTop: 10,
                   width: '100%',
-                  height: 64,                // was 56
+                  height: 64,
                   padding: '0 20px',
-                  fontSize: 40,              // was 18
+                  fontSize: 40,
                   color: '#0f172a',
                   background: '#ffffff',
                   border: '1.5px solid #cbd5e1',
-                  borderRadius: 14,          // was 12
+                  borderRadius: 14,
                   outline: 'none',
                 }}
                 onFocus={(e) => (e.currentTarget.style.boxShadow = '0 0 0 6px #dcfce7')}
@@ -102,7 +100,6 @@ export default function GetStartedPage() {
                 onChange={onChange}
                 required
                 placeholder="Enter your email"
-
                 autoComplete="email"
                 inputMode="email"
                 spellCheck={false}
@@ -110,11 +107,10 @@ export default function GetStartedPage() {
                 maxLength={254}
                 pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
                 title="Enter a valid email like name@example.com"
-                
                 style={{
                   marginTop: 10,
                   width: '100%',
-                  height: 64,                // was 56
+                  height: 64,
                   padding: '0 20px',
                   fontSize: 40,
                   color: '#0f172a',
@@ -132,12 +128,12 @@ export default function GetStartedPage() {
               type="submit"
               style={{
                 marginTop: 8,
-                height: 64,                  // was 56
+                height: 64,
                 border: 'none',
                 borderRadius: 14,
                 background: '#16a34a',
                 color: '#ffffff',
-                fontSize: 22,                // was 20
+                fontSize: 22,
                 fontWeight: 700,
                 cursor: 'pointer',
                 boxShadow: '0 10px 22px rgba(22,163,74,0.28)',
@@ -152,17 +148,64 @@ export default function GetStartedPage() {
             </button>
           </form>
         ) : (
-          <p
+          <div
             style={{
               marginTop: 36,
               textAlign: 'center',
-              fontSize: 55,
-              color: '#16a34a',
-              fontWeight: 800,
+              fontFamily: 'Helvetica, sans-serif',
+              fontSize: '14.5px',
+              color: '#0f172a',
+              lineHeight: 1.6,
             }}
           >
-            Thank you for sigining up!
-          </p>
+            <h2 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '18.5px', marginBottom: 8 }}>
+              You’re In. Welcome to SessionClarity!
+            </h2>
+
+            <p style={{ marginBottom: 32 }}>
+              Thanks for joining the waitlist.<br />
+              You’re now part of a community working to bring clarity, data, and dignity to letterboard communication.
+            </p>
+
+            <h3 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '15.5px', marginBottom: 12 }}>
+              While You Wait…
+            </h3>
+
+            <ul style={{ paddingLeft: 20, marginBottom: 24, textAlign: 'left', display: 'inline-block' }}>
+              <li>✓ Check your inbox — we’ll send early access and updates soon.</li>
+              <li>✓ Invite others — share the waitlist with families or practitioners who believe in spelling to communicate.</li>
+              <li>✓ Start imagining — what would it mean to have real-time, data-rich reports on every session?</li>
+              <li>✓ We’ll be reaching out to invite you into our next early access cohort — stay tuned.</li>
+            </ul>
+
+            <p style={{ marginBottom: 8 }}>
+              We’re building this with and for you.
+            </p>
+            <p style={{ marginBottom: 24 }}>
+              Built by families and practitioners. Powered by insight.
+            </p>
+
+            <div>
+              <p
+                style={{
+                  fontFamily: `'Brush Script MT', 'Dancing Script', cursive`,
+                  fontSize: '22px',
+                  color: '#16a34a',
+                  fontStyle: 'italic',
+                  marginBottom: 0,
+                }}
+              >
+                Arti Bhatia
+              </p>
+              <p style={{ fontSize: '13px', color: '#334155', marginTop: 4 }}>
+                <a href="mailto:artipriya@gmail.com" style={{ color: '#16a34a', textDecoration: 'none' }}>
+                  artipriya@gmail.com
+                </a>
+                <br />
+                425-647-8307
+              </p>
+            </div>
+          </div>
         )}
       </section>
     </main>
