@@ -202,7 +202,7 @@ export default function GetStartedPage() {
               <p
                 style={{
                   fontFamily: `'Brush Script MT', 'Dancing Script', cursive`,
-                  fontSize: '40px',
+                  fontSize: '80px',
                   color: '#16a34a',
                   fontStyle: 'italic',
                   marginBottom: 0,
@@ -210,7 +210,7 @@ export default function GetStartedPage() {
               >
                 Arti Bhatia
               </p>
-              <p style={{ fontSize: '13px', color: '#334155', marginTop: 4 }}>
+              <p style={{ fontSize: '40px', color: '#334155', marginTop: 4 }}>
                 <a
                   href="mailto:artipriya@gmail.com"
                   style={{ color: '#16a34a', textDecoration: 'none' }}
