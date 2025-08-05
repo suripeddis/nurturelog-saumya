@@ -10,7 +10,6 @@ export default function GetStartedPage() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: POST to your API
     setSubmitted(true);
   };
 
@@ -19,15 +18,18 @@ export default function GetStartedPage() {
       style={{
         background: '#ffffff',
         minHeight: '100vh',
-        padding: '48px 32px',
+        padding: '32px 48px',
         fontFamily: 'Helvetica, sans-serif',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <section
         style={{
           width: '100%',
           maxWidth: '100%',
-          padding: '0',
+          padding: 0,
+          flexGrow: 1,
         }}
       >
         <h1
@@ -68,9 +70,6 @@ export default function GetStartedPage() {
                 placeholder="Enter your full name"
                 minLength={2}
                 maxLength={80}
-                pattern="^[A-Za-z][A-Za-z' -]{1,}$"
-                title="Use letters, spaces, apostrophes (’), and hyphens only."
-                autoComplete="name"
                 style={{
                   marginTop: 10,
                   width: '100%',
@@ -148,13 +147,11 @@ export default function GetStartedPage() {
           <div
             style={{
               marginTop: 0,
-              maxWidth: 800,
-              marginLeft: 'auto',
-              marginRight: 'auto',
               textAlign: 'center',
               fontSize: '14.5px',
               color: '#0f172a',
               lineHeight: 1.6,
+              maxWidth: '100%',
             }}
           >
             <h2 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '60px', marginTop: 48 }}>
@@ -176,7 +173,7 @@ export default function GetStartedPage() {
                 marginBottom: 24,
                 textAlign: 'left',
                 display: 'inline-block',
-                fontSize: 25
+                fontSize: '20px',
               }}
             >
               <li>✓ Check your inbox — we’ll send early access and updates soon.</li>
@@ -203,7 +200,7 @@ export default function GetStartedPage() {
               <p
                 style={{
                   fontFamily: `'Brush Script MT', 'Dancing Script', cursive`,
-                  fontSize: '22px',
+                  fontSize: '28px',
                   color: '#16a34a',
                   fontStyle: 'italic',
                   marginBottom: 0,
