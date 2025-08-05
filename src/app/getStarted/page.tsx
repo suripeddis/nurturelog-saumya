@@ -161,12 +161,12 @@ export default function GetStartedPage() {
               You’re In. Welcome to SessionClarity!
             </h2>
 
-            <p style={{ marginBottom: 32, fontSize: '35px' }}>
+            <p style={{ marginBottom: 32, fontSize: '27px' }}>
               Thanks for joining the waitlist.<br />
               You’re now part of a community working to bring clarity, data, and dignity to letterboard communication.
             </p>
 
-            <h3 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '30px', marginBottom: 12 }}>
+            <h3 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '27px', marginBottom: 12 }}>
               While You Wait…
             </h3>
 
@@ -176,6 +176,7 @@ export default function GetStartedPage() {
                 marginBottom: 24,
                 textAlign: 'left',
                 display: 'inline-block',
+                fontSize: 25
               }}
             >
               <li>✓ Check your inbox — we’ll send early access and updates soon.</li>
