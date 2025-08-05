@@ -197,11 +197,6 @@ export default function GetStartedPage() {
               </li>
             </ul>
 
-            <p style={{ marginBottom: 8 }}>We’re building this with and for you.</p>
-            <p style={{ marginBottom: 24 }}>
-              Built by families and practitioners. Powered by insight.
-            </p>
-
             <div>
               <p
                 style={{
