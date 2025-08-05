@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: 'saumyasuripeddi@gmail.com', // for testing
+    to: 'arti@multiplehub.org', // for testing
     subject: 'New Waitlist Signup',
     text: `A new user has joined the waitlist:\n\nName: ${name}\nEmail: ${email}`,
   };
