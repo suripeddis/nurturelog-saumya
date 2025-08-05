@@ -19,21 +19,15 @@ export default function GetStartedPage() {
       style={{
         background: '#ffffff',
         minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '96px 24px',
+        padding: '48px 32px',
+        fontFamily: 'Helvetica, sans-serif',
       }}
     >
       <section
         style={{
           width: '100%',
-          maxWidth: 920,
-          background: '#ffffff',
-          borderRadius: 20,
-          boxShadow: '0 16px 48px rgba(2, 6, 23, 0.10)',
-          border: '1px solid #e5e7eb',
-          padding: '64px 64px',
+          maxWidth: '100%',
+          padding: '0',
         }}
       >
         <h1
@@ -58,6 +52,9 @@ export default function GetStartedPage() {
               display: 'grid',
               gridTemplateColumns: '1fr',
               gap: 28,
+              maxWidth: 800,
+              marginLeft: 'auto',
+              marginRight: 'auto',
             }}
           >
             <label style={{ fontSize: 40, color: '#0f172a' }}>
@@ -150,37 +147,53 @@ export default function GetStartedPage() {
         ) : (
           <div
             style={{
-              marginTop: 36,
+              marginTop: 0,
+              maxWidth: 800,
+              marginLeft: 'auto',
+              marginRight: 'auto',
               textAlign: 'center',
-              fontFamily: 'Helvetica, sans-serif',
               fontSize: '14.5px',
               color: '#0f172a',
               lineHeight: 1.6,
             }}
           >
-            <h2 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '18.5px', marginBottom: 8 }}>
+            <h2 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '22px', marginTop: 48 }}>
               You’re In. Welcome to SessionClarity!
             </h2>
 
-            <p style={{ marginBottom: 32 }}>
+            <p style={{ marginBottom: 32, fontSize: '15px' }}>
               Thanks for joining the waitlist.<br />
               You’re now part of a community working to bring clarity, data, and dignity to letterboard communication.
             </p>
 
-            <h3 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '15.5px', marginBottom: 12 }}>
+            <h3 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '16px', marginBottom: 12 }}>
               While You Wait…
             </h3>
 
-            <ul style={{ paddingLeft: 20, marginBottom: 24, textAlign: 'left', display: 'inline-block' }}>
+            <ul
+              style={{
+                paddingLeft: 20,
+                marginBottom: 24,
+                textAlign: 'left',
+                display: 'inline-block',
+              }}
+            >
               <li>✓ Check your inbox — we’ll send early access and updates soon.</li>
-              <li>✓ Invite others — share the waitlist with families or practitioners who believe in spelling to communicate.</li>
-              <li>✓ Start imagining — what would it mean to have real-time, data-rich reports on every session?</li>
-              <li>✓ We’ll be reaching out to invite you into our next early access cohort — stay tuned.</li>
+              <li>
+                ✓ Invite others — share the waitlist with families or practitioners who believe in
+                spelling to communicate.
+              </li>
+              <li>
+                ✓ Start imagining — what would it mean to have real-time, data-rich reports on
+                every session?
+              </li>
+              <li>
+                ✓ We’ll be reaching out to invite you into our next early access cohort — stay
+                tuned.
+              </li>
             </ul>
 
-            <p style={{ marginBottom: 8 }}>
-              We’re building this with and for you.
-            </p>
+            <p style={{ marginBottom: 8 }}>We’re building this with and for you.</p>
             <p style={{ marginBottom: 24 }}>
               Built by families and practitioners. Powered by insight.
             </p>
@@ -198,7 +211,10 @@ export default function GetStartedPage() {
                 Arti Bhatia
               </p>
               <p style={{ fontSize: '13px', color: '#334155', marginTop: 4 }}>
-                <a href="mailto:artipriya@gmail.com" style={{ color: '#16a34a', textDecoration: 'none' }}>
+                <a
+                  href="mailto:artipriya@gmail.com"
+                  style={{ color: '#16a34a', textDecoration: 'none' }}
+                >
                   artipriya@gmail.com
                 </a>
                 <br />
