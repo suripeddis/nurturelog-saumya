@@ -157,16 +157,16 @@ export default function GetStartedPage() {
               lineHeight: 1.6,
             }}
           >
-            <h2 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '22px', marginTop: 48 }}>
+            <h2 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '80px', marginTop: 48 }}>
               You’re In. Welcome to SessionClarity!
             </h2>
 
-            <p style={{ marginBottom: 32, fontSize: '15px' }}>
+            <p style={{ marginBottom: 32, fontSize: '35px' }}>
               Thanks for joining the waitlist.<br />
               You’re now part of a community working to bring clarity, data, and dignity to letterboard communication.
             </p>
 
-            <h3 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '16px', marginBottom: 12 }}>
+            <h3 style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '20px', marginBottom: 12 }}>
               While You Wait…
             </h3>
 
@@ -202,7 +202,7 @@ export default function GetStartedPage() {
               <p
                 style={{
                   fontFamily: `'Brush Script MT', 'Dancing Script', cursive`,
-                  fontSize: '80px',
+                  fontSize: '22px',
                   color: '#16a34a',
                   fontStyle: 'italic',
                   marginBottom: 0,
@@ -210,7 +210,7 @@ export default function GetStartedPage() {
               >
                 Arti Bhatia
               </p>
-              <p style={{ fontSize: '40px', color: '#334155', marginTop: 4 }}>
+              <p style={{ fontSize: '20px', color: '#334155', marginTop: 4 }}>
                 <a
                   href="mailto:artipriya@gmail.com"
                   style={{ color: '#16a34a', textDecoration: 'none' }}
