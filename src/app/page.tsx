@@ -22,7 +22,7 @@ export default function WaitlistSamplePage() {
             Your letterboard sessions deserve more than scribbled notes. <br />
             Be among the first to experience effortless insights—with AI-generated reports that reveal strengths, patterns, and progress.
           </p>
-          <Link href="/getStarted" className={styles.ctaButtonPrimary}>
+          <Link href="/getStarted/page.tsx" className={styles.ctaButtonPrimary}>
             Join the Waitlist
           </Link>
           <p className={styles.subText}>
@@ -62,7 +62,7 @@ export default function WaitlistSamplePage() {
       {/* CTA ROW */}
       <div className={styles.ctaRowBottom}>
         <span className={styles.orange}>👉 Be among the first to bring clarity to every session.</span>
-        <Link href="/getStarted" className={styles.ctaButtonPrimary}>
+        <Link href="/getStarted/page.tsx" className={styles.ctaButtonPrimary}>
             Join the Waitlist
         </Link>
       </div>
@@ -150,7 +150,7 @@ export default function WaitlistSamplePage() {
           <p className={styles.body}>
             Families and practitioners are reshaping what’s possible. Be among the first to access tools that clarify what happens in the session, display competence, save time, and build real inclusion.
           </p>
-          <Link href="/getStarted" className={styles.ctaButtonPrimary}>
+          <Link href="/getStarted/page.tsx" className={styles.ctaButtonPrimary}>
             Join the Waitlist
           </Link>
         </div>
