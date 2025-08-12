@@ -13,6 +13,7 @@ export default authMiddleware({
     '/sign-in',    // Sign-in page
     '/sample',     // Sample page (if it exists)
     '/api/*',      // API routes
+    '/getStarted'
   ]
 });
 
