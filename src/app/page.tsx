@@ -74,6 +74,15 @@ export default function Home() {
           Whether you're a parent or a practitioner, SessionClarity writes the report so you don't have to. Upload your letterboard session—get instant summaries, strengths, and next steps.
         </p>
         <div className="flex justify-center gap-4">
+        <Link href="/getStarted">
+          <button
+            onClick={() => analytics.trackLandingPageButton('Sign Up for Early Access - Hero')}
+            className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold"
+          >
+            Sign Up for Early Access
+          </button>
+        </Link>
+          {/*}
           <Link href="/upload">
             <button
               onClick={() => analytics.trackLandingPageButton('Upload a Session - Hero')}
@@ -82,6 +91,7 @@ export default function Home() {
               Upload a Session
             </button>
           </Link>
+          */}
           <Link href="/sample">
             <button
               onClick={() => analytics.trackLandingPageButton('See Sample Report - Hero')}
@@ -90,57 +100,99 @@ export default function Home() {
               See Sample Report
             </button>
           </Link>
-        </div>
+      </div>
         <p className="mt-4 text-sm text-gray-600">Supports real-world, imperfect recordings—no need for clean audio or perfect structure.</p>
       </section>
 
+ {/* Early Access (moved up) */}
+ <motion.section
+  className="bg-blue-50 py-6 px-4"
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+>
+  <div className="mx-auto max-w-2xl text-center">
+    <h2 className="text-3xl sm:text-4xl font-extrabold text-green-700 tracking-tight">
+      Sign Up for Early&nbsp;Access
+    </h2>
+
+    <ul className="mt-4 text-lg mx-auto w-fit space-y-2">
+  <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
+    <span className="h-6 w-6 text-center leading-6">✅</span>
+    <span className="text-left">Upload your first video</span>
+  </li>
+  <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
+    <span className="h-6 w-6 text-center leading-6">✅</span>
+    <span className="text-left">Get your session summary</span>
+  </li>
+  <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
+    <span className="h-6 w-6 text-center leading-6">✅</span>
+    <span className="text-left">See the power of clear insight</span>
+  </li>
+</ul>
+
+    <div className="mt-6">
+      <Link href="/getStarted">
+        <button
+          onClick={() =>
+            analytics.trackLandingPageButton('Early Access CTA - Footer')
+          }
+          className="inline-flex items-center gap-2 rounded-full bg-green-600 px-6 py-3 text-lg font-semibold text-white shadow-md shadow-green-600/30 hover:bg-green-700 hover:shadow-lg transition-all duration-200"
+        >
+          Sign Up for Early Access
+        </button>
+      </Link>
+    </div>
+  </div>
+</motion.section>
+
       {/* How It Works */}
-      <section className="py-20 px-6 bg-blue-50 text-center">
-        <h2 className="text-3xl font-bold mb-12">From session to summary in a few minutes</h2>
-        <div className="flex flex-col md:flex-row justify-center gap-12 max-w-4xl mx-auto">
-          <div>
-            <span className="text-4xl">🎥</span>
-            <h3 className="text-xl font-semibold mt-2">Upload audio or video</h3>
-          </div>
-          <div>
-            <span className="text-4xl">🧠</span>
-            <h3 className="text-xl font-semibold mt-2">AI analyzes patterns and cues</h3>
-          </div>
-          <div>
-            <span className="text-4xl">📋</span>
-            <h3 className="text-xl font-semibold mt-2">Get a clear report instantly</h3>
-          </div>
-        </div>
-      </section>
+      <section className="py-20 px-6 bg-green-50 text-center">
+  <h2 className="text-3xl font-bold mb-12">From session to summary in a few minutes</h2>
+  <div className="flex flex-col md:flex-row justify-center gap-12 max-w-4xl mx-auto">
+    <div>
+      <span className="text-4xl">🎥</span>
+      <h3 className="text-xl font-semibold mt-2">Upload audio or video</h3>
+    </div>
+    <div>
+      <span className="text-4xl">🧠</span>
+      <h3 className="text-xl font-semibold mt-2">AI analyzes patterns and cues</h3>
+    </div>
+    <div>
+      <span className="text-4xl">📋</span>
+      <h3 className="text-xl font-semibold mt-2">Get a clear report instantly</h3>
+    </div>
+  </div>
+</section>
       {/* Here’s What You Get */}
       <motion.section
-        className="py-16 px-6 bg-slate-50"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6 text-center">🔍 What You’ll Unlock</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="flex items-start gap-4">
-              <Presentation className="w-6 h-6 text-green-600 mt-1" />
-              <span className="text-lg">Session Summary</span>
-            </div>
-            <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-green-600 mt-1" />
-              <span className="text-lg">Strengths &amp; Challenges</span>
-            </div>
-            <div className="flex items-start gap-4">
-              <LucideUsers className="w-6 h-6 text-green-600 mt-1" />
-              <span className="text-lg">Communication Patterns</span>
-            </div>
-            <div className="flex items-start gap-4">
-              <BarChart2 className="w-6 h-6 text-green-600 mt-1" />
-              <span className="text-lg">Visuals &amp; Trends (coming soon)</span>
-            </div>
-          </div>
-        </div>
-      </motion.section>
+  className="py-16 px-6 bg-slate-50 text-center"
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+>
+  <div className="max-w-4xl mx-auto">
+    <h2 className="text-3xl font-bold mb-6">🔍 What You’ll Unlock</h2>
+    <div className="grid gap-6 md:grid-cols-2 justify-items-center">
+      <div className="flex items-start gap-4">
+        <Presentation className="w-6 h-6 text-green-600 mt-1" />
+        <span className="text-lg">Session Summary</span>
+      </div>
+      <div className="flex items-start gap-4">
+        <Zap className="w-6 h-6 text-green-600 mt-1" />
+        <span className="text-lg">Strengths &amp; Challenges</span>
+      </div>
+      <div className="flex items-start gap-4">
+        <LucideUsers className="w-6 h-6 text-green-600 mt-1" />
+        <span className="text-lg">Communication Patterns</span>
+      </div>
+      <div className="flex items-start gap-4">
+        <BarChart2 className="w-6 h-6 text-green-600 mt-1" />
+        <span className="text-lg">Visuals &amp; Trends (coming soon)</span>
+      </div>
+    </div>
+  </div>
+</motion.section>
 
       {/* Built for... */}
       <motion.section
@@ -208,6 +260,7 @@ export default function Home() {
             </div>
           </div>
           <div className="text-center mt-8">
+            {/*}
             <Link href="/upload">
               <button
                 onClick={() => analytics.trackLandingPageButton('Get Started - Why Section')}
@@ -216,6 +269,7 @@ export default function Home() {
                 Get Started
               </button>
             </Link>
+            */}
           </div>
         </div>
       </motion.section>
@@ -275,48 +329,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Final CTA */}
-      <motion.section
-        className="bg-blue-50 py-24 px-6"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-green-700 tracking-tight">
-            Sign Up for Early&nbsp;Access
-          </h2>
-
-          <ul className="mt-8 space-y-3 text-lg max-w-sm mx-auto">
-            <li className="flex items-center gap-3">
-              <span role="img" aria-label="check">✅</span>
-              Upload your first video
-            </li>
-            <li className="flex items-center gap-3">
-              <span role="img" aria-label="check">✅</span>
-              Get your session summary
-            </li>
-            <li className="flex items-center gap-3">
-              <span role="img" aria-label="check">✅</span>
-              See the power of clear insight
-            </li>
-          </ul>
-
-          <div className="mt-12">
-                  <Link href="/upload">
-        <button
-          onClick={() =>
-            analytics.trackLandingPageButton('Early Access CTA - Footer')
-          }
-          className="inline-flex items-center gap-2 rounded-full bg-green-600 px-8 py-4 text-lg font-semibold text-white shadow-md shadow-green-600/30 hover:bg-green-700 hover:shadow-lg transition-all duration-200"
-        >
-          Upload a Session
-        </button>
-      </Link>
-          </div>
-        </div>
-      </motion.section>;
     </main>
   );
 }
