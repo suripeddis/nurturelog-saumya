@@ -468,18 +468,18 @@ export default function SamplePage() {
   >
     Transcript (Sample)
   </h2>
-  <p
-    style={{
-      whiteSpace: 'pre-wrap',
-      lineHeight: 2,   // 👈 double-spaced
-      color: '#374151',
-      fontSize: '14px',
-      margin: 0,
-    }}
-  >
-    {/* Replace this placeholder with your full transcript text */}
-    yeah oh good take your headset off here I'll take this iPad too okay this over here...
-  </p>
+  <pre
+  style={{
+    whiteSpace: 'pre-wrap',
+    lineHeight: 2,   // double spaced
+    color: '#374151',
+    fontSize: '14px',
+    margin: 0,
+    fontFamily: 'monospace',
+  }}
+>
+  {sampleResults.analysis.transcript}
+</pre>
 </div>  
         </div>
       </div>
