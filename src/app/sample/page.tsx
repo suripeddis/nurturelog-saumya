@@ -49,7 +49,117 @@ export default function SamplePage() {
         "The practitioner encouraged Reed to explore hypothetical scenarios, such as the potential appearance of aliens and reasons for contacting Earth.",
         "The session also touched briefly on Reed's anxiety, revealing that it could stem from engaging in new or purposeful tasks requiring intention.",
         "The practitioner closed the session with an activity, inviting Reed to draw an alien, which Reed resisted, pointing to an ongoing struggle with tasks outside his comfort zone."
-      ]
+      ],
+      transcript: `<date>; <practitioner initials>; <client initials>; <topic>
+
+      - [QUESTION] Do you want to talk directly about aliens or Area 51?
+      - [QUESTION] What topic do you want to choose?
+      - [CLIENT] (ACTION: CHOOSES EGGS)
+      - [TEACH] Area 51 is like a top-secret place. You can talk about theories about aliens or eggs.
+      - [QUESTION] Do you need to talk about the food you want to eat when you're done?
+      - [CLIENT] YES I DO
+      - [QUESTION] Are you sure you don't want to talk about aliens?
+      - [CLIENT] ALIENS BE FINE
+      - [TEACH] Let's talk about the word "Paradox." A paradox is something that looks like they contradict each other.
+      - [TEACH] A paradox has to do with contradictory statements about an alien.
+      - [QUESTION] Do you want to keep going with this lesson or switch to the other topic?
+      - [CLIENT] (ACTION: CHOOSES TO CONTINUE WITH ALIENS)
+      - [TEACH] This is the contradiction between the high probability of extraterrestrial life and the lack of evidence.
+      - [QUESTION] What's the Paradox?
+      - [CLIENT] MOST LIKELY ALIENS BUT NO EVIDENCE
+      - [TEACH] It's very unlikely that there aren't aliens, but we have no proof of it.
+      
+      <date>; <practitioner initials>; <client initials>; Discussion on Aliens and the Fermi Paradox
+      
+      - [TEACH] Most likely aliens exist, but we have no proof, making it a question.
+      - [QUESTION] Do you think there are aliens or life outside of Earth?
+      - [CLIENT] NO BECAUSE THERE IS NO EVIDENCE
+      - [TEACH] The universe is vast with billions of galaxies, each with billions of stars.
+      - [QUESTION] How many galaxies are out there?
+      - [CLIENT] BILLIONS
+      - [TEACH] Our Milky Way galaxy is spiral-shaped.
+      - [QUESTION] If intelligent life is common, why haven't they found us?
+      - [CLIENT] THEY SHOULD FIND US
+      - [TEACH] Despite potential for life, we have no confirmed contact from alien civilizations.
+      - [COACH] Take a deep breath and keep at it; you're doing great.
+      
+      <date>; <practitioner initials>; <client initials>; Discussion on Intelligent Life
+      
+      - [TEACH] Intelligent life may be extremely rare.
+      - [QUESTION] Intelligent life could be rare. What do you think is the most common reason: we are alone, or aliens are hiding?
+      - [CLIENT] WE ARE ALONE.
+      - [QUESTION] Why would you say that? Give a reason.
+      - [CLIENT] HARD TO COME BY. ONLY WE EXIST.
+      - [TEACH] Looking at the Sun, only we exist on the planets we know. Maybe it's really hard to come by.
+      - [QUESTION] What evidence would show that aliens are rare?
+      - [CLIENT] WE ARE ALONE.
+      - [COACH] Notice how he's plotting along just fine, but speeds up impulsively. I'll stop if I see a change in speed that doesn't make sense.
+      
+      <date>; <practitioner initials>; <client initials>; <topic>
+      
+      - [TEACH] Notice how he's plotting along fine, then speeds up due to an impulse.
+      - [QUESTION] Do you think we are going to self-destruct before we achieve interstellar travel?
+      - [CLIENT] Y AND N AND O
+      - [QUESTION] Do you think we're part of a zoo the aliens watch?
+      - [CLIENT] NOT TRUE
+      - [QUESTION] Do you think he deserves a reward for his thinking skills about aliens?
+      - [CLIENT] NO
+      - [QUESTION] If there are aliens, do you think they would look different from Earth forms?
+      - [CLIENT] DIFFERENT
+      - [QUESTION] Do you have other comments on this?
+      - [CLIENT] NOT DEBATING GOD'S EXISTENCE
+      - [TEACH] We've explored only a tiny fraction of the universe. We've mapped nearly all of Earth's surface, sent humans to the Moon, and probes to every planet. Humans haven't gone beyond the Moon.
+      
+      <date>; <practitioner initials>; <client initials>; Space Exploration
+      
+      - [TEACH] We've explored only a tiny fraction of the Universe. We've mapped nearly all of Earth's surface, sent humans to the Moon, and probes to every planet. Humans haven't gone beyond the Moon. 
+      - [QUESTION] Can you imagine traveling 93 billion light years at the speed of light?
+      - [CLIENT] NOT POSSIBLE TO DO.
+      
+      <date>; <practitioner initials>; <client initials>; Language and Expression
+      
+      - [TEACH] Let's use "done" and "alien" in a sentence.
+      - [CLIENT] DONE ALL DONE. I AM FINISHED LIVING IN SPACE.
+      
+      <date>; <practitioner initials>; <client initials>; Emotional Expression
+      
+      - [TEACH] Remember, overcoming fear requires action. Your words are comforting, but you're working hard and engaging with the session.
+      - [QUESTION] Did I get it right?
+      - [CLIENT] AGREED.
+      
+      <date>; <practitioner initials>; <client initials>; Creative Exercise
+      
+      - [TEACH] Let's draw our own version of an alien.
+      - [CLIENT] DECAYING FACE. NO NO NO NO NO.
+      - [COACH] Keep going, good, excellent.
+      
+      <date>; <practitioner initials>; <client initials>; Alien Drawing and Anxiety
+      
+      - [TEACH] You can draw your alien differently than me. Maybe add some decay or a skinny body.
+      - [COACH] I know you're anxious, but keep going. You're doing great.
+      - [QUESTION] How was your alien drawing experience?
+      - [CLIENT] (ACTION: Drawing completed)
+      - [TEACH] We're building sensory tolerance for drawing and confidence when feeling anxious.
+      - [QUESTION] What was different than what your dad said?
+      - [CLIENT] I DON'T NEED TO BE CONSOLED. I JUST AM ANXIOUS FOR NO REASON.
+      - [TEACH] It's good you're recognizing your anxiety without a clear reason. It might be triggered by new, purposeful tasks.
+      - [QUESTION] If aliens did contact us, what would be the point of contacting us?
+      - [CLIENT] I DON'T THINK...
+      
+      <date>; <practitioner initials>; <client initials>; Aliens and Exploration
+      
+      - [QUESTION] If aliens did contact us, what would be the point of contacting us?
+      - [CLIENT] I DON'T THINK THEY WANT TO.
+      - [QUESTION] Do you want to go into more detail on that?
+      - [CLIENT] NO.
+      
+      <date>; <practitioner initials>; <client initials>; Teaching and Coaching Options
+      
+      - [TEACH] Some civilizations in the past didn't think about topics like women's rights; they were focused on survival.
+      - [TEACH] We can try different teaching methods: work with him this evening and show me a clip, or work in front of me.
+      - [TEACH] I can teach the lesson while you get the answers, and I coach you.
+      - [CLIENT] (ACTION: Nods in agreement)`,
+      
     },
     
   }
@@ -337,7 +447,40 @@ export default function SamplePage() {
                 </li>
               ))}
             </ul>
-          </div>        
+          </div>
+{/* Transcript Section */}
+<div
+  style={{
+    marginTop: '32px',
+    padding: '24px',
+    borderRadius: '8px',
+    backgroundColor: '#f9fafb',
+    border: '1px solid #e5e7eb',
+  }}
+>
+  <h2
+    style={{
+      fontSize: '20px',
+      fontWeight: '600',
+      marginBottom: '16px',
+      color: '#111827',
+    }}
+  >
+    Transcript (Sample)
+  </h2>
+  <p
+    style={{
+      whiteSpace: 'pre-wrap',
+      lineHeight: 2,   // 👈 double-spaced
+      color: '#374151',
+      fontSize: '14px',
+      margin: 0,
+    }}
+  >
+    {/* Replace this placeholder with your full transcript text */}
+    yeah oh good take your headset off here I'll take this iPad too okay this over here...
+  </p>
+</div>  
         </div>
       </div>
     </main>
