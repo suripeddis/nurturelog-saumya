@@ -469,13 +469,15 @@ export default function SamplePage() {
     Transcript (Sample)
   </h2>
   <pre
-  style={{
-    whiteSpace: 'pre-wrap',
-    lineHeight: 2,   // double spaced
-    color: '#374151',
-    fontSize: '14px',
-    margin: 0,
-    fontFamily: 'monospace',
+ style={{
+  whiteSpace: 'pre-wrap',
+  lineHeight: 2,
+  color: '#374151',
+  fontSize: '14px',
+  margin: 0,
+  fontFamily: 'monospace',
+  paddingLeft: '20px',
+  textIndent: '-20px',   // 👈 creates hanging indent
   }}
 >
   {sampleResults.analysis.transcript}
