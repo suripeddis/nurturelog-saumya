@@ -466,7 +466,7 @@ export default function SamplePage() {
       color: '#111827',
     }}
   >
-    Transcript (Sample)
+    Transcript 
   </h2>
   <pre
  style={{
@@ -477,7 +477,7 @@ export default function SamplePage() {
   margin: 0,
   fontFamily: 'monospace',
   paddingLeft: '20px',
-  textIndent: '-20px',   // 👈 creates hanging indent
+  textIndent: '20px',  
   }}
 >
   {sampleResults.analysis.transcript}
