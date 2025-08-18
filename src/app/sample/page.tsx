@@ -476,7 +476,6 @@ export default function SamplePage() {
   fontSize: '14px',
   margin: 0,
   fontFamily: 'monospace',
-  paddingLeft: '20px',
   textIndent: '20px',  
   }}
 >
