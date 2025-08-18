@@ -1,6 +1,6 @@
 import mixpanel from 'mixpanel-browser';
 
-const MIXPANEL_TOKEN = '8f0562d8c10801f9647ee0113789df94';
+const MIXPANEL_TOKEN = '881bc53c4f201c411270be15d839c8b54';
 
 // Initialize Mixpanel
 if (typeof window !== 'undefined') {
@@ -105,6 +105,18 @@ export const analytics = {
       context: context || 'unknown',
     });
   },
+
+  trackUserLoggedIn: (user: { id: string; email?: string }) => {
+    if (typeof window === 'undefined') return;
+    mixpanel.identify(user.id);
+    mixpanel.people.set({ $email: user.email });
+    mixpanel.track('User Logged In', {
+      user_id: user.id,
+      email: user.email,
+      timestamp: new Date().toISOString(),
+    });
+  },
+
 };
 
 export default analytics; 
