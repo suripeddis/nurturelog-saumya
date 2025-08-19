@@ -32,6 +32,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!isSessionLoading && isAuthenticated && user?.userId) {
+      console.log("LOGIN TRACK firing", { userId: user.userId, email: user.email });
       analytics.trackUserLoggedIn({
         id: user.userId,
         // depending on your setup this might be a string or nested—use optional chaining:
