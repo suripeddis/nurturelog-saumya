@@ -110,6 +110,7 @@ export const analytics = {
     if (typeof window === 'undefined') return;
     mixpanel.identify(user.id);
     mixpanel.people.set({ $email: user.email });
+    console.log("📡 Tracking login event")
     mixpanel.track('User Logged In', {
       user_id: user.id,
       email: user.email,
