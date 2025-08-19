@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { analytics } from '@/lib/mixpanel';
 import { useSession, useUser, useDescope } from '@descope/nextjs-sdk/client';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
@@ -29,6 +29,16 @@ export default function Home() {
   const handleLogout = useCallback(() => {
     sdk.logout();
   }, [sdk]);
+
+  useEffect(() => {
+    if (!isSessionLoading && isAuthenticated && user?.userId) {
+      analytics.trackUserLoggedIn({
+        id: user.userId,
+        // depending on your setup this might be a string or nested—use optional chaining:
+        email: (user as any)?.email ?? (user as any)?.emails?.[0],
+      });
+    }
+  }, [isSessionLoading, isAuthenticated, user]);
 
   return (
     <main className="font-sans text-gray-800">
