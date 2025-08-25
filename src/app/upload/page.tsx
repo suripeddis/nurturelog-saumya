@@ -65,6 +65,16 @@ export default function UploadPage() {
     router.push('/processing');
   };
 
+  useEffect(() => {
+    if (!isSessionLoading && isAuthenticated && user?.userId) {
+      console.log("LOGIN TRACK firing", user.userId);
+      analytics.trackUserLoggedIn({
+        id: user.userId,
+        email: user.email,
+      });
+    }
+  }, [isSessionLoading, isAuthenticated, user?.userId, user?.email]);
+  
   return (
     <main className="min-h-screen bg-white p-8">
       <div className="max-w-2xl mx-auto">

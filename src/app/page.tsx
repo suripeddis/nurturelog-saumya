@@ -112,7 +112,7 @@ export default function Home() {
             </button>
           </Link>
       </div>
-        <p className="mt-4 text-sm text-gray-600">Supports real-world, imperfect recordings—no need for clean audio or perfect structure.</p>
+        <p className="mt-4 text-sm text-gray-600">Supports real-world, imperfect recordings—no need for clean audio, video, or perfect structure.</p>
       </section>
 
  {/* Early Access (moved up) */}
