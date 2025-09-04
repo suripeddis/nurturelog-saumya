@@ -106,18 +106,20 @@ export const analytics = {
     });
   },
 
-  trackUserLoggedIn: (user: { id: string; email?: string }) => {
+  trackUserLoggedIn: (user: { id: string; email?: string; name?: string }) => {
     if (typeof window === 'undefined') return;
-    mixpanel.identify(user.id);
-    mixpanel.people.set({ $email: user.email });
-    console.log("📡 Tracking login event")
+  
+    mixpanel.identify(user.id);                         // bind future events to this user
+    mixpanel.people.set({ $email: user.email, $name: user.name }); // profile properties
+  
+    console.log("📡 Tracking login event");
     mixpanel.track('User Logged In', {
+      distinct_id: user.id,     // <-- add this
       user_id: user.id,
       email: user.email,
       timestamp: new Date().toISOString(),
     });
   },
-
 };
 
 export default analytics; 
