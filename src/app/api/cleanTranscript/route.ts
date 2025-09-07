@@ -37,28 +37,36 @@ export async function POST(req: Request) {
           {
             role: 'user',
             content: `
-FORMAT THE RAW TRANSCRIPT INTO A SINGLE SEQUENTIAL TRANSCRIPT USING ONLY THESE LABELS:
-- **TEACH**: practitioner instructions, explanations, coaching prompts.
-- **ASK**: practitioner questions.
-- **CLIENT**: client responses in ALL CAPS (or (ACTION) for nonverbal).
+FORMAT THE RAW TRANSCRIPT INTO A SINGLE SEQUENTIAL TRANSCRIPT.
 
-HEADER (ONCE ONLY):
-<date if available>; <practitioner initials>; <client initials>; <topic or N/A>
+USE ONLY THESE LABELS:
+- **TEACH**: practitioner instructions, explanations, or coaching prompts.  
+- **ASK**: practitioner questions.  
+- **CLIENT**: client responses in ALL CAPS (or (ACTION) for nonverbal).  
 
-RULES:
-1) Bold labels (**TEACH**, **ASK**, **CLIENT**) followed by a colon and the text.
-2) Remove filler, small talk, timestamps, and practitioner echoes of spelled letters.
-3) Preserve client wording exactly; keep spelled letters and ALL CAPS.
-4) Treat coaching as **TEACH**.
-5) Keep order. No summaries or block titles.
-6) HEADER appears only once at the start of the full transcript (not every chunk).
+HEADER (ONCE ONLY):  
+<date if available>; <practitioner initials>; <client initials>; <topic or N/A>  
 
-OUTPUT EXAMPLE:
-<date>; <P_INIT>; <C_INIT>; <topic or N/A>
-**TEACH:** ...
-**ASK:** ...
-**CLIENT:** ...
-**CLIENT:** (ACTION)
+RULES:  
+1) Bold labels (**TEACH**, **ASK**, **CLIENT**) followed by a colon and the text.  
+2) Remove filler, small talk, timestamps, and practitioner echoes of spelled letters.  
+3) Preserve client wording exactly; keep spelled letters and ALL CAPS.  
+4) Coaching counts as **TEACH**.  
+5) Keep the original order. Do not summarize or add block titles.  
+6) Include the HEADER only once at the very start of the full transcript (not for every chunk).  
+7) Space out entries clearly with line breaks so the output is easy to read.  
+
+OUTPUT EXAMPLE:  
+
+<date>; <P_INIT>; <C_INIT>; <topic or N/A>  
+
+**TEACH:** ...  
+
+**ASK:** ...  
+
+**CLIENT:** ...  
+
+**CLIENT:** (ACTION)  
 
 Transcript:
 ${chunk}
