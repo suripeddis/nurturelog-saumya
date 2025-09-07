@@ -37,17 +37,28 @@ export async function POST(req: Request) {
           {
             role: 'user',
             content: `
-Clean this transcript. Use the following format:
-<date>; <practitioner initials>; <client initials>; <topic>
-- [TEACH] for each teaching or instruction from the practitioner.
-- [QUESTION] for each question asked by the practitioner.
-- [COACH] for brief coaching prompts that help focus, posture, breathing, etc.
-- [CLIENT] for the response in ALL CAPS (or (ACTION) if nonverbal).
-Only include the <date>; ... header once at the top — not for each section.
-Format each line as follows:
-**LABEL**: message  
-(Make the speaker label bold using Markdown asterisks, like **TEACH**)
-Be concise. Skip filler, small talk, and repeated phrases.
+FORMAT THE RAW TRANSCRIPT INTO A SINGLE SEQUENTIAL TRANSCRIPT USING ONLY THESE LABELS:
+- **TEACH**: practitioner instructions, explanations, coaching prompts.
+- **ASK**: practitioner questions.
+- **CLIENT**: client responses in ALL CAPS (or (ACTION) for nonverbal).
+
+HEADER (ONCE ONLY):
+<date if available>; <practitioner initials>; <client initials>; <topic or N/A>
+
+RULES:
+1) Bold labels (**TEACH**, **ASK**, **CLIENT**) followed by a colon and the text.
+2) Remove filler, small talk, timestamps, and practitioner echoes of spelled letters.
+3) Preserve client wording exactly; keep spelled letters and ALL CAPS.
+4) Treat coaching as **TEACH**.
+5) Keep order. No summaries or block titles.
+6) HEADER appears only once at the start of the full transcript (not every chunk).
+
+OUTPUT EXAMPLE:
+<date>; <P_INIT>; <C_INIT>; <topic or N/A>
+**TEACH:** ...
+**ASK:** ...
+**CLIENT:** ...
+**CLIENT:** (ACTION)
 
 Transcript:
 ${chunk}
