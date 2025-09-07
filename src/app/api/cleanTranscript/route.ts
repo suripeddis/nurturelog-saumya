@@ -42,7 +42,7 @@ FORMAT THE RAW TRANSCRIPT INTO A SINGLE SEQUENTIAL TRANSCRIPT.
 USE ONLY THESE LABELS:
 - **TEACH**: practitioner instructions, explanations, or coaching prompts.  
 - **ASK**: practitioner questions.  
-- **CLIENT**: client responses in ALL CAPS (or (ACTION) for nonverbal).  
+- **CLIENT**: client responses in ALL CAPS, or (ACTION) if nonverbal.
 
 HEADER (ONCE ONLY):  
 <date if available>; <practitioner initials>; <client initials>; <topic or N/A>  
@@ -55,6 +55,7 @@ RULES:
 5) Keep the original order. Do not summarize or add block titles.  
 6) Include the HEADER only once at the very start of the full transcript (not for every chunk).  
 7) Space out entries clearly with line breaks so the output is easy to read.  
+8)  The **practitioner asks**, the **client answers** — never the other way around.  
 
 OUTPUT EXAMPLE:  
 
@@ -66,7 +67,7 @@ OUTPUT EXAMPLE:
 
 **CLIENT:** ...  
 
-**CLIENT:** (ACTION)  
+**CLIENT:** (ACTION)   
 
 Transcript:
 ${chunk}
