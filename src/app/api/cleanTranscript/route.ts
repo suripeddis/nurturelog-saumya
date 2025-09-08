@@ -48,7 +48,7 @@ HEADER (ONCE ONLY):
 <date if available>; <practitioner initials>; <client initials>; <topic or N/A>  
 
 RULES:  
-1) Bold labels (**TEACH**, **ASK**, **CLIENT**) followed by a colon and the text.  
+1) Bold labels (TEACH, ASK, CLIENT) followed by a colon and the text.  
 2) Remove filler, small talk, timestamps, and practitioner echoes of spelled letters.  
 3) Preserve client wording exactly; keep spelled letters and ALL CAPS.  
 4) Coaching counts as **TEACH**.  
@@ -66,8 +66,6 @@ OUTPUT EXAMPLE:
 **ASK:** ...  
 
 **CLIENT:** ...  
-
-**CLIENT:** (ACTION)   
 
 Transcript:
 ${chunk}
