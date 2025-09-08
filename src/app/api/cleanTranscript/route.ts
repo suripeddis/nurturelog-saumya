@@ -42,30 +42,30 @@ FORMAT THE RAW TRANSCRIPT INTO A SINGLE SEQUENTIAL TRANSCRIPT.
 USE ONLY THESE LABELS:
 - **TEACH**: practitioner instructions, explanations, or coaching prompts.  
 - **ASK**: practitioner questions.  
-- **CLIENT**: client responses in ALL CAPS, or (ACTION) if nonverbal.
+- **CLIENT**: client responses in ALL CAPS, or a clear description of their action (e.g., TAKES DEEP BREATH, NODS).  
 
-HEADER (ONCE ONLY):  
+HEADER (ONCE ONLY AT THE TOP NOT FOR EACH CHUNK):  
 <date if available>; <practitioner initials>; <client initials>; <topic or N/A>  
 
 RULES:  
 1) Bold labels (TEACH, ASK, CLIENT) followed by a colon and the text.  
 2) Remove filler, small talk, timestamps, and practitioner echoes of spelled letters.  
-3) Preserve client wording exactly; keep spelled letters and ALL CAPS.  
-4) Coaching counts as **TEACH**.  
-5) Keep the original order. Do not summarize or add block titles.  
-6) Include the HEADER only once at the very start of the full transcript (not for every chunk).  
-7) Space out entries clearly with line breaks so the output is easy to read.  
-8)  The **practitioner asks**, the **client answers** — never the other way around.  
+3) Remove side conversations between practitioner and parents/observers.  
+4) Preserve client wording exactly; keep spelled letters and ALL CAPS.  
+5) Replace vague “(ACTION)” with the most likely client action based on context.  
+6) Coaching counts as TEACH.  
+7) Practitioner asks, client answers — never the other way around.  
+8) Keep the original order. Do not summarize or add block titles.  
+9) HEADER appears only once at the very start (not for every chunk).  
+10) Space out entries clearly with line breaks for readability.  
 
-OUTPUT EXAMPLE:  
+OUTPUT FORMAT:  
 
-<date>; <P_INIT>; <C_INIT>; <topic or N/A>  
+TEACH: …  
 
-**TEACH:** ...  
+ASK: …  
 
-**ASK:** ...  
-
-**CLIENT:** ...  
+CLIENT: …  
 
 Transcript:
 ${chunk}
