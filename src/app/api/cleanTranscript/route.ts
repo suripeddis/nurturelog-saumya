@@ -26,7 +26,9 @@ export async function POST(req: Request) {
     const chunks = chunkText(rawTranscript);
     const cleanedChunks: string[] = [];
 
-    for (const chunk of chunks) {
+    for (let i = 0; i < chunks.length; i++) {
+      const chunk = chunks[i];
+
       const response = await openai.chat.completions.create({
         model: 'gpt-4o',
         messages: [
@@ -46,7 +48,9 @@ LABELS (ONLY):
 
 HEADER:
 <date if available>; <practitioner initials>; <client initials>; <topic or N/A>
-Print the header ONLY ONCE at the very start where the transcript just begins (not per chunk).
+${i === 0 
+  ? 'Print the header ONCE at the very start.' 
+  : 'DO NOT print the header again. Continue transcript seamlessly.'}
 
 RULES:
 1) Preserve sequence. Do not reorder.
@@ -78,6 +82,10 @@ ${chunk}
       const cleanedPart = response.choices[0].message?.content?.trim() || '';
       cleanedChunks.push(cleanedPart);
     }
+
+    const finalTranscript = cleanedChunks
+    .join('\n\n')
+    .replace(/<date[^>]*>.*\n/i, (match, offset) => (offset === 0 ? match : ''));
 
     return NextResponse.json({ cleanedTranscript: cleanedChunks.join('\n\n') });
   } catch (err) {
