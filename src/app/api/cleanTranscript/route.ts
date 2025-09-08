@@ -47,6 +47,12 @@ USE ONLY THESE LABELS:
 HEADER (ONCE ONLY AT THE TOP NOT FOR EACH CHUNK):  
 <date if available>; <practitioner initials>; <client initials>; <topic or N/A>  
 
+HEADER RULE — PRINT THE HEADER **ONLY IF ALL** ARE TRUE:  
+A) The first non-empty lines of the input clearly indicate a session start (e.g., date/time, “session start,” introductions, orientation/goal-setting).  
+B) The input begins cleanly (not mid-sentence, not starting with punctuation like “,” “.” “—”, and not with ellipses “…”) and does **not** look like a continuation.  
+C) No header-like line (angle-bracket fields separated by semicolons) already appears anywhere in the input.  
+If any of A–C fails, **do not** print a header for this chunk.
+
 RULES:  
 1) Bold labels (TEACH, ASK, CLIENT) followed by a colon and the text.  
 2) Remove filler, small talk, timestamps, and practitioner echoes of spelled letters.  
@@ -57,7 +63,7 @@ RULES:
 7) Practitioner asks, client answers — never the other way around.  
 8) Keep the original order. Do not summarize or add block titles.  
 9) HEADER appears only once at the very start (not for every chunk).  
-10) Space out entries clearly with line breaks for readability.  
+10) Space out entries clearly with line breaks for readability.
 
 OUTPUT FORMAT:  
 
