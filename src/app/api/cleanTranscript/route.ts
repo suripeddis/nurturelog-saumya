@@ -37,41 +37,35 @@ export async function POST(req: Request) {
           {
             role: 'user',
             content: `
-FORMAT THE RAW TRANSCRIPT INTO A SINGLE SEQUENTIAL TRANSCRIPT.
+FORMAT THE RAW TRANSCRIPT INTO ONE SEQUENTIAL TRANSCRIPT.
 
-USE ONLY THESE LABELS:
-- **TEACH**: practitioner instructions, explanations, or coaching prompts.  
-- **ASK**: practitioner questions.  
-- **CLIENT**: client responses in ALL CAPS, or a clear description of their action (e.g., TAKES DEEP BREATH, NODS).  
+LABELS (ONLY):
+- TEACH — practitioner instructions, explanations, or coaching prompts. Max 3 sentences each.
+- ASK — practitioner questions only (max 1 sentence).
+- CLIENT — client responses in ALL CAPS; if nonverbal, infer a SHORT action (e.g., TAKES DEEP BREATH, NODS).
 
-HEADER (ONCE ONLY AT THE TOP NOT FOR EACH CHUNK):  
-<date if available>; <practitioner initials>; <client initials>; <topic or N/A>  
+HEADER:
+<date if available>; <practitioner initials>; <client initials>; <topic or N/A>
+Print the header ONLY ONCE at the very start where the transcript just begins (not per chunk).
 
-HEADER RULE — PRINT THE HEADER **ONLY IF ALL** ARE TRUE:  
-A) The first non-empty lines of the input clearly indicate a session start (e.g., date/time, “session start,” introductions, orientation/goal-setting).  
-B) The input begins cleanly (not mid-sentence, not starting with punctuation like “,” “.” “—”, and not with ellipses “…”) and does **not** look like a continuation.  
-C) No header-like line (angle-bracket fields separated by semicolons) already appears anywhere in the input.  
-If any of A–C fails, **do not** print a header for this chunk.
+RULES:
+1) Preserve sequence. Do not reorder.
+2) **TEACH** entries: keep essential prompts or feedback, but no filler or side-talk. At most 3 concise sentences.
+3) **ASK**: one clear question, no repeats.
+4) **CLIENT**: preserve wording in ALL CAPS. Merge spelled letters into words if unambiguous (e.g., D-E-E-P → DEEP). If action is implied, write as an action in present tense (e.g., TAKES DEEP BREATH).
+5) Remove timestamps, greetings, chit-chat, repetition/echo of spelled letters, and any side conversations with parents/observers.
+6) Practitioner should only **ask** questions; client should only **answer**.
+7) Insert a blank line between entries so text is not smushed.
 
-RULES:  
-1) Bold labels (TEACH, ASK, CLIENT) followed by a colon and the text.  
-2) Remove filler, small talk, timestamps, and practitioner echoes of spelled letters.  
-3) Remove side conversations between practitioner and parents/observers.  
-4) Preserve client wording exactly; keep spelled letters and ALL CAPS.  
-5) Replace vague “(ACTION)” with the most likely client action based on context.  
-6) Coaching counts as TEACH.  
-7) Practitioner asks, client answers — never the other way around.  
-8) Keep the original order. Do not summarize or add block titles.  
-9) HEADER appears only once at the very start (not for every chunk).  
-10) Space out entries clearly with line breaks for readability.
+OUTPUT FORMAT (STRUCTURE ONLY, NOT CONTENT):
 
-OUTPUT FORMAT:  
+<date>; <P_INIT>; <C_INIT>; <topic or N/A>
 
-TEACH: …  
+**TEACH:** short instruction (≤3 sentences)
 
-ASK: …  
+**ASK:** short question
 
-CLIENT: …  
+**CLIENT:** CLIENT’S RESPONSE
 
 Transcript:
 ${chunk}
