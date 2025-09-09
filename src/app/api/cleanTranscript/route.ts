@@ -54,9 +54,9 @@ ${i === 0
 
 RULES:
 1) Preserve sequence. Do not reorder.
-2) **TEACH** entries: keep essential prompts or feedback, but no filler or side-talk. At most 3 concise sentences.
-3) **ASK**: one clear question, no repeats.
-4) **CLIENT**: preserve wording in ALL CAPS. Merge spelled letters into words if unambiguous (e.g., D-E-E-P → DEEP). If action is implied, write as an action in present tense (e.g., TAKES DEEP BREATH).
+2) TEACH entries: keep essential prompts or feedback, but no filler or side-talk. At most 3 concise sentences.
+3) ASK: one clear question, no repeats.
+4) CLIENT: preserve wording in ALL CAPS. Merge spelled letters into words if unambiguous (e.g., D-E-E-P → DEEP). If action is implied, write as an action in present tense (e.g., TAKES DEEP BREATH).
 5) Remove timestamps, greetings, chit-chat, repetition/echo of spelled letters, and any side conversations with parents/observers.
 6) Practitioner should only **ask** questions; client should only **answer**.
 7) Insert a blank line between entries so text is not smushed.
@@ -65,11 +65,11 @@ OUTPUT FORMAT (STRUCTURE ONLY, NOT CONTENT):
 
 <date>; <P_INIT>; <C_INIT>; <topic or N/A>
 
-**TEACH:** short instruction (≤3 sentences)
+TEACH: short instruction (≤3 sentences)
 
-**ASK:** short question
+ASK: short question
 
-**CLIENT:** CLIENT’S RESPONSE
+CLIENT: CLIENT’S RESPONSE
 
 Transcript:
 ${chunk}
