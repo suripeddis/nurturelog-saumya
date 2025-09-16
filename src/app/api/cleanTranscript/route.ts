@@ -87,7 +87,7 @@ ${chunk}
     .join('\n\n')
     .replace(/<date[^>]*>.*\n/i, (match, offset) => (offset === 0 ? match : ''));
 
-    return NextResponse.json({ cleanedTranscript: cleanedChunks.join('\n\n') });
+    return NextResponse.json({ cleanedTranscript: finalTranscript});
   } catch (err) {
     console.error('❌ Error in cleanTranscript API:', err);
     return NextResponse.json({ error: 'Failed to clean transcript' }, { status: 500 });
