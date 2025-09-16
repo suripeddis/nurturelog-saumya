@@ -49,8 +49,8 @@ LABELS (ONLY):
 HEADER:
 <date if available>; <practitioner initials>; <client initials>; <topic or N/A>
 ${i === 0 
-  ? 'Print the header ONCE at the very start.' 
-  : 'DO NOT print the header again. Continue transcript seamlessly.'}
+  ? 'Print the header ONCE at the very FIRST chunk.' 
+  : 'DO NOT print the header again AFTER THE FIRST CHUNK. Continue transcript seamlessly.'}
 
 RULES:
 1) Preserve sequence. Do not reorder.
