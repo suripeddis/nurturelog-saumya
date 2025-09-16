@@ -24,70 +24,112 @@ export async function POST(req: Request) {
 
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const chunks = chunkText(rawTranscript);
+    const total = chunks.length; 
     const cleanedChunks: string[] = [];
 
-    for (let i = 0; i < chunks.length; i++) {
+    for (let i = 0; i < total; i++) {
       const chunk = chunks[i];
 
       const response = await openai.chat.completions.create({
         model: 'gpt-4o',
+        temperature: 0,
         messages: [
           {
             role: 'system',
-            content: 'You are processing a session transcript. Format your output as instructed.',
+            content:
+              'You are a transcript formatter. Follow the exact output shape. ' +
+              'NEVER output any line starting with "<" unless headerExpected=YES.',
           },
           {
             role: 'user',
             content: `
-FORMAT THE RAW TRANSCRIPT INTO ONE SEQUENTIAL TRANSCRIPT.
+CHUNK_META:
+- index: ${i + 1}
+- total: ${total}
+- headerExpected: ${i === 0 ? 'YES' : 'NO'}
+
+TASK:
+Format this raw chunk into the ongoing transcript.
+
+HEADER RULE:
+- If headerExpected=YES, begin with exactly one header line:
+  <date if available>; <P_INIT>; <C_INIT>; <topic or N/A>
+- If headerExpected=NO, you MUST NOT output any header or any line that starts with "<".
 
 LABELS (ONLY):
-- TEACH — practitioner instructions, explanations, or coaching prompts. Max 3 sentences each.
-- ASK — practitioner questions only (max 1 sentence).
-- CLIENT — client responses in ALL CAPS; if nonverbal, infer a SHORT action (e.g., TAKES DEEP BREATH, NODS).
-
-HEADER:
-<date if available>; <practitioner initials>; <client initials>; <topic or N/A>
-${i === 0 
-  ? 'Print the header ONCE at the very FIRST chunk.' 
-  : 'DO NOT print the header again AFTER THE FIRST CHUNK. Continue transcript seamlessly.'}
+- TEACH — practitioner instruction/explanation/coaching. Max 3 sentences.
+- ASK — exactly one practitioner question. Max 1 sentence.
+- CLIENT — response in ALL CAPS; if nonverbal, SHORT present-tense action (e.g., TAKES DEEP BREATH, NODS).
 
 RULES:
-1) Preserve sequence. Do not reorder.
-2) TEACH entries: keep essential prompts or feedback, but no filler or side-talk. At most 3 concise sentences.
-3) ASK: one clear question, no repeats.
-4) CLIENT: preserve wording in ALL CAPS. Merge spelled letters into words if unambiguous (e.g., D-E-E-P → DEEP). If action is implied, write as an action in present tense (e.g., TAKES DEEP BREATH).
-5) Remove timestamps, greetings, chit-chat, repetition/echo of spelled letters, and any side conversations with parents/observers.
-6) Practitioner should only **ask** questions; client should only **answer**.
-7) Insert a blank line between entries so text is not smushed.
+1) Preserve chronological sequence; do not reorder.
+2) TEACH: essentials only; ≤3 concise sentences; remove filler/side-talk.
+3) ASK: one clear question; no repeats.
+4) CLIENT: ALL CAPS; merge spelled letters if unambiguous; nonverbal → short action.
+5) Remove timestamps, greetings, letter-echoes, side conversations.
+6) Practitioner only TEACH/ASK; client only CLIENT.
+7) Insert a blank line between entries. No extra commentary.
 
-OUTPUT FORMAT (STRUCTURE ONLY, NOT CONTENT):
+OUTPUT SHAPE:
 
+# When headerExpected=YES
 <date>; <P_INIT>; <C_INIT>; <topic or N/A>
 
-TEACH: short instruction (≤3 sentences)
+TEACH: ...
 
-ASK: short question
+ASK: ...
 
-CLIENT: CLIENT’S RESPONSE
+CLIENT: ...
 
-Transcript:
+# When headerExpected=NO
+TEACH: ...
+
+ASK: ...
+
+CLIENT: ...
+
+RAW CHUNK:
 ${chunk}
             `.trim(),
           },
         ],
-        temperature: 0.2,
       });
 
-      const cleanedPart = response.choices[0].message?.content?.trim() || '';
-      cleanedChunks.push(cleanedPart);
+      let part = response.choices[0].message?.content?.trim() || '';
+
+      // Defensive cleanup for non-first chunks
+      if (i > 0) {
+        part = part.replace(/^\s*<[^>\n]+>.*(?:\r?\n|$)+/i, '').trim();
+        part = part.replace(/^\s*<[^>\n]+>.*(?:\r?\n|$)+/i, '').trim();
+      }
+
+      cleanedChunks.push(part);
     }
 
-    const finalTranscript = cleanedChunks
-    .join('\n\n')
-    .replace(/<date[^>]*>.*\n/i, (match, offset) => (offset === 0 ? match : ''));
+    // Join chunks
+    let joined = cleanedChunks.join('\n\n');
 
-    return NextResponse.json({ cleanedTranscript: finalTranscript});
+    // Keep only the very first header (<...>) and drop all others
+    let sawHeader = false;
+    joined = joined
+      .split(/\r?\n/)
+      .filter((line) => {
+        if (/^\s*<[^>\n]+>/.test(line)) {
+          if (!sawHeader) {
+            sawHeader = true;
+            return true; // keep first header
+          }
+          return false; // drop later headers
+        }
+        return true;
+      })
+      .join('\n');
+
+    const finalTranscript = joined
+      .replace(/(\n{3,})/g, '\n\n') // squeeze extra blank lines
+      .trim();
+
+    return NextResponse.json({ cleanedTranscript: finalTranscript });
   } catch (err) {
     console.error('❌ Error in cleanTranscript API:', err);
     return NextResponse.json({ error: 'Failed to clean transcript' }, { status: 500 });
