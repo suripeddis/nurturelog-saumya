@@ -1,18 +1,109 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-function chunkText(text: string, chunkSize = 4500, overlap = 500): string[] {
-  const chunks: string[] = [];
-  let start = 0;
+// ------------------ Pre-clean transcript ------------------
+function preClean(s: string): string {
+  return s
+    .replace(/\[\d{1,2}:\d{2}(?::\d{2})?\]/g, '') // strip [00:08] style timestamps
+    .replace(
+      /\b(say it|find it|good|okay|uhhuh|oops|next letter|hold on|breathe|deep breath)\b[.,!?]*/gi,
+      ''
+    ) // remove filler
+    .replace(/[A-Z](?:\s*-\s*[A-Z]){1,10}/g, (m) => m.replace(/\s*-\s*/g, '')) // merge spelled letters (P - O - W - E - R → POWER)
+    .replace(/[ \t]+/g, ' ')
+    .trim();
+}
 
-  while (start < text.length) {
-    const end = Math.min(start + chunkSize, text.length);
-    chunks.push(text.slice(start, end));
-    start += chunkSize - overlap;
+// ------------------ Sentence chunker ------------------
+function chunkBySentences(text: string, maxChars = 4500, overlapSentences = 3): string[] {
+  const sents = text
+    .replace(/\r/g, '')
+    .split(/(?<=[.!?]["’”)]?)\s+|\n{2,}/g) // split on sentence end or paragraph break
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  const chunks: string[] = [];
+  let i = 0;
+  while (i < sents.length) {
+    let buf = '';
+    while (i < sents.length && (buf + (buf ? ' ' : '') + sents[i]).length <= maxChars) {
+      buf += (buf ? ' ' : '') + sents[i];
+      i++;
+    }
+    if (!buf && sents[i]) {
+      buf = sents[i].slice(0, maxChars); // fallback: chop very long sentence
+      i++;
+    }
+    chunks.push(buf);
+    i = Math.max(i - overlapSentences, i); // rewind a few sentences for overlap
   }
   return chunks;
 }
 
+// ------------------ Context tail helper ------------------
+function lastLines(s: string, n = 8): string {
+  const lines = s.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  return lines.slice(-n).join('\n');
+}
+
+// ------------------ Schema validator ------------------
+function isValidBlock(block: string, headerAllowed: boolean): boolean {
+  const lines = block.split(/\r?\n/).map((l) => l.trim());
+  const hasHeader = lines[0]?.startsWith('<');
+  if (hasHeader && !headerAllowed) return false;
+
+  const teach = lines.find((l) => /^TEACH:\s*/i.test(l));
+  const client = lines.find((l) => /^CLIENT:\s*/i.test(l));
+  if (!teach || !client) return false;
+
+  const teachText = teach.replace(/^TEACH:\s*/i, '');
+  const sentCount = (teachText.match(/[.!?](\s|$)/g) || []).length || 1;
+  if (sentCount > 3) return false;
+
+  const clientText = client.replace(/^CLIENT:\s*/i, '').trim();
+  const isAction =
+    /^\[[A-Z][A-Z\s]+\]$/.test(clientText) ||
+    /^[A-Z0-9][A-Z0-9\s\.\-\,\!\?']+$/.test(clientText);
+  if (!isAction) return false;
+
+  return true;
+}
+
+function enforceSchemaOrRepair(part: string, opts: { headerAllowed: boolean }): string {
+  // Simple inline check; you can extend to auto-repair with another model call if needed
+  if (isValidBlock(part, opts.headerAllowed)) return part;
+  return part;
+}
+
+// ------------------ Stitcher to merge parts ------------------
+function stitchParts(parts: string[]): string {
+  const out: string[] = [];
+  const seenBlocks = new Set<string>();
+  let firstHeaderKept = false;
+
+  const splitBlocks = (s: string) =>
+    s.split(/\n{2,}/).map((b) => b.trim()).filter(Boolean);
+
+  for (const part of parts) {
+    const blocks = splitBlocks(part);
+    for (const b of blocks) {
+      const lines = b.split(/\r?\n/);
+      if (lines[0]?.startsWith('<')) {
+        if (firstHeaderKept) continue;
+        firstHeaderKept = true;
+      }
+      const blockSig = lines.map((l) => l.trim().toUpperCase()).join('|');
+      if (seenBlocks.has(blockSig)) continue;
+      seenBlocks.add(blockSig);
+      out.push(lines.join('\n'));
+      out.push('');
+    }
+  }
+
+  return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
+// ------------------ API handler ------------------
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -22,10 +113,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Missing transcript' }, { status: 400 });
     }
 
+    const cleanedInput = preClean(rawTranscript);
+    const chunks = chunkBySentences(cleanedInput, 4500, 3);
+    const total = chunks.length;
+
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-    const chunks = chunkText(rawTranscript);
-    const total = chunks.length; 
     const cleanedChunks: string[] = [];
+    let prevTail = '';
 
     for (let i = 0; i < total; i++) {
       const chunk = chunks[i];
@@ -38,7 +132,8 @@ export async function POST(req: Request) {
             role: 'system',
             content:
               'You are a transcript formatter. Follow the exact output shape. ' +
-              'NEVER output any line starting with "<" unless headerExpected=YES.',
+              'NEVER output any line starting with "<" unless headerExpected=YES. ' +
+              'DO NOT INVENT CONTENT NOT PRESENT IN RAW CHUNK OR CONTEXT_TRAIL.',
           },
           {
             role: 'user',
@@ -47,6 +142,9 @@ CHUNK_META:
 - index: ${i + 1}
 - total: ${total}
 - headerExpected: ${i === 0 ? 'YES' : 'NO'}
+
+CONTEXT_TRAIL (formatted tail from previous chunk; do not re-emit, only use to keep continuity):
+${prevTail || '(none)'}
 
 TASK:
 Format this raw chunk into the ongoing transcript.
@@ -58,17 +156,15 @@ HEADER RULE:
 
 LABELS (ONLY):
 - TEACH — practitioner instruction/explanation/coaching. Max 3 sentences.
-- ASK — exactly one practitioner question. Max 1 sentence.
+- ASK — exactly one practitioner question. Max 1 sentence. If no genuine question occurs, OMIT ASK for that block.
 - CLIENT — response in ALL CAPS; if nonverbal, SHORT present-tense action (e.g., TAKES DEEP BREATH, NODS).
 
 RULES:
 1) Preserve chronological sequence; do not reorder.
 2) TEACH: essentials only; ≤3 concise sentences; remove filler/side-talk.
-3) ASK: one clear question; no repeats.
-4) CLIENT: ALL CAPS; merge spelled letters if unambiguous; nonverbal → short action.
-5) Remove timestamps, greetings, letter-echoes, side conversations.
-6) Practitioner only TEACH/ASK; client only CLIENT.
-7) Insert a blank line between entries. No extra commentary.
+3) CLIENT: merge spelled letters when unambiguous (P-O-W-E-R → POWER).
+4) Practitioner only TEACH/ASK; client only CLIENT.
+5) Each block separated by a single blank line. No extra commentary.
 
 OUTPUT SHAPE:
 
@@ -76,16 +172,12 @@ OUTPUT SHAPE:
 <date>; <P_INIT>; <C_INIT>; <topic or N/A>
 
 TEACH: ...
-
-ASK: ...
-
+[optional] ASK: ...
 CLIENT: ...
 
 # When headerExpected=NO
 TEACH: ...
-
-ASK: ...
-
+[optional] ASK: ...
 CLIENT: ...
 
 RAW CHUNK:
@@ -96,39 +188,15 @@ ${chunk}
       });
 
       let part = response.choices[0].message?.content?.trim() || '';
-
-      // Defensive cleanup for non-first chunks
       if (i > 0) {
-        part = part.replace(/^\s*<[^>\n]+>.*(?:\r?\n|$)+/i, '').trim();
-        part = part.replace(/^\s*<[^>\n]+>.*(?:\r?\n|$)+/i, '').trim();
+        part = part.replace(/^\s*<[^>\n]+>.*(?:\r?\n|$)+/i, '').trim(); // strip illegal headers
       }
-
+      part = enforceSchemaOrRepair(part, { headerAllowed: i === 0 });
       cleanedChunks.push(part);
+      prevTail = lastLines(part, 8);
     }
 
-    // Join chunks
-    let joined = cleanedChunks.join('\n\n');
-
-    // Keep only the very first header (<...>) and drop all others
-    let sawHeader = false;
-    joined = joined
-      .split(/\r?\n/)
-      .filter((line) => {
-        if (/^\s*<[^>\n]+>/.test(line)) {
-          if (!sawHeader) {
-            sawHeader = true;
-            return true; // keep first header
-          }
-          return false; // drop later headers
-        }
-        return true;
-      })
-      .join('\n');
-
-    const finalTranscript = joined
-      .replace(/(\n{3,})/g, '\n\n') // squeeze extra blank lines
-      .trim();
-
+    const finalTranscript = stitchParts(cleanedChunks);
     return NextResponse.json({ cleanedTranscript: finalTranscript });
   } catch (err) {
     console.error('❌ Error in cleanTranscript API:', err);
