@@ -46,20 +46,44 @@ function lastLines(s: string, n = 8): string {
   return lines.slice(-n).join('\n');
 }
 
-// ------------------ Schema validator ------------------
-function isValidBlock(block: string, headerAllowed: boolean): boolean {
-  const lines = block.split(/\r?\n/).map((l) => l.trim());
-  const hasHeader = lines[0]?.startsWith('<');
-  if (hasHeader && !headerAllowed) return false;
+// ------------------ Block-level validation + repair ------------------
+type Block = { text: string };
 
-  const teach = lines.find((l) => /^TEACH:\s*/i.test(l));
-  const client = lines.find((l) => /^CLIENT:\s*/i.test(l));
+function splitBlocks(part: string): Block[] {
+  return part
+    .split(/\n{2,}/)
+    .map((b) => b.trim())
+    .filter(Boolean)
+    .map((text) => ({ text }));
+}
+
+function validateBlock(block: Block, headerAllowed: boolean): boolean {
+  const lines = block.text.split(/\r?\n/).map((l) => l.trim());
+  if (!lines.length) return false;
+
+  // header
+  if (lines[0]?.startsWith('<') && !headerAllowed) return false;
+
+  const teach = lines.find((l) => /^TEACH:/i.test(l));
+  const ask = lines.find((l) => /^ASK:/i.test(l));
+  const client = lines.find((l) => /^CLIENT:/i.test(l));
   if (!teach || !client) return false;
 
+  // TEACH ≤ 3 sentences and must NOT have '?'
   const teachText = teach.replace(/^TEACH:\s*/i, '');
-  const sentCount = (teachText.match(/[.!?](\s|$)/g) || []).length || 1;
-  if (sentCount > 3) return false;
+  const teachSentences = (teachText.match(/[.!?](\s|$)/g) || []).length || 1;
+  if (teachSentences > 3) return false;
+  if (teachText.includes('?')) return false;
 
+  // ASK ≤ 1 sentence and MUST have '?', if present
+  if (ask) {
+    const askText = ask.replace(/^ASK:\s*/i, '');
+    const askSentences = (askText.match(/[.!?](\s|$)/g) || []).length || 1;
+    if (askSentences > 1) return false;
+    if (!askText.includes('?')) return false;
+  }
+
+  // CLIENT all caps or [ACTION]
   const clientText = client.replace(/^CLIENT:\s*/i, '').trim();
   const isAction =
     /^\[[A-Z][A-Z\s]+\]$/.test(clientText) ||
@@ -69,10 +93,56 @@ function isValidBlock(block: string, headerAllowed: boolean): boolean {
   return true;
 }
 
-function enforceSchemaOrRepair(part: string, opts: { headerAllowed: boolean }): string {
-  // Simple inline check; you can extend to auto-repair with another model call if needed
-  if (isValidBlock(part, opts.headerAllowed)) return part;
-  return part;
+async function repairBlock(
+  openai: OpenAI,
+  block: Block,
+  headerAllowed: boolean
+): Promise<string> {
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o',
+    temperature: 0,
+    messages: [
+      {
+        role: 'system',
+        content:
+          'Fix this transcript block to satisfy the schema. Do not invent new content. Preserve meaning.'
+      },
+      {
+        role: 'user',
+        content: `
+SCHEMA RULES:
+- Optional header only if headerAllowed=${headerAllowed}.
+- Must contain TEACH (≤3 sentences, no "?").
+- ASK optional, ≤1 sentence, must contain "?" if present.
+- CLIENT required, ALL CAPS or [ACTION].
+- One block only, no commentary.
+
+BLOCK TO FIX:
+${block.text}
+        `.trim()
+      }
+    ]
+  });
+  return response.choices[0].message?.content?.trim() || block.text;
+}
+
+async function enforceBlocksOrRepair(
+  openai: OpenAI,
+  part: string,
+  headerAllowed: boolean
+): Promise<string> {
+  const blocks = splitBlocks(part);
+  const fixedBlocks: string[] = [];
+  for (const b of blocks) {
+    if (validateBlock(b, headerAllowed)) {
+      fixedBlocks.push(b.text);
+    } else {
+      const repaired = await repairBlock(openai, b, headerAllowed);
+      fixedBlocks.push(repaired);
+    }
+    headerAllowed = false; // only first block may keep header
+  }
+  return fixedBlocks.join('\n\n');
 }
 
 // ------------------ Stitcher to merge parts ------------------
@@ -191,7 +261,9 @@ ${chunk}
       if (i > 0) {
         part = part.replace(/^\s*<[^>\n]+>.*(?:\r?\n|$)+/i, '').trim(); // strip illegal headers
       }
-      part = enforceSchemaOrRepair(part, { headerAllowed: i === 0 });
+
+      part = await enforceBlocksOrRepair(openai, part, i === 0);
+
       cleanedChunks.push(part);
       prevTail = lastLines(part, 8);
     }
