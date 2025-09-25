@@ -1,15 +1,18 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
+// Ensure this route runs on Node (not Edge), since the OpenAI SDK needs Node APIs.
+export const runtime = 'nodejs';
+
 // ------------------ Pre-clean transcript ------------------
 function preClean(s: string): string {
   return s
-    .replace(/\[\d{1,2}:\d{2}(?::\d{2})?\]/g, '') // strip [00:08] style timestamps
+    .replace(/\[\d{1,2}:\d{2}(?::\d{2})?\]/g, '') // strip [00:08] timestamps
     .replace(
       /\b(say it|find it|good|okay|uhhuh|oops|next letter|hold on|breathe|deep breath)\b[.,!?]*/gi,
       ''
     ) // remove filler
-    .replace(/[A-Z](?:\s*-\s*[A-Z]){1,10}/g, (m) => m.replace(/\s*-\s*/g, '')) // merge spelled letters (P - O - W - E - R → POWER)
+    .replace(/[A-Z](?:\s*-\s*[A-Z]){1,10}/g, (m) => m.replace(/\s*-\s*/g, '')) // merge spelled letters
     .replace(/[ \t]+/g, ' ')
     .trim();
 }
@@ -18,7 +21,8 @@ function preClean(s: string): string {
 function chunkBySentences(text: string, maxChars = 4500, overlapSentences = 3): string[] {
   const sents = text
     .replace(/\r/g, '')
-    .split(/(?<=[.!?]["’”)]?)\s+|\n{2,}/g) // split on sentence end or paragraph break
+    // split on punctuation + space OR blank lines (no lookbehind)
+    .split(/(?:[.!?]["’”)]?\s+|\n{2,})/g)
     .map((s) => s.trim())
     .filter(Boolean);
 
@@ -35,7 +39,7 @@ function chunkBySentences(text: string, maxChars = 4500, overlapSentences = 3): 
       i++;
     }
     chunks.push(buf);
-    i = Math.max(i - overlapSentences, i); // rewind a few sentences for overlap
+    i = Math.max(i - overlapSentences, i); // rewind for overlap
   }
   return chunks;
 }
@@ -46,36 +50,32 @@ function lastLines(s: string, n = 8): string {
   return lines.slice(-n).join('\n');
 }
 
-// ------------------ Schema validator ------------------
-function isValidBlock(block: string, headerAllowed: boolean): boolean {
-  const lines = block.split(/\r?\n/).map((l) => l.trim());
-  const hasHeader = lines[0]?.startsWith('<');
-  if (hasHeader && !headerAllowed) return false;
-
-  const teach = lines.find((l) => /^TEACH:\s*/i.test(l));
-  const client = lines.find((l) => /^CLIENT:\s*/i.test(l));
-  if (!teach || !client) return false;
-
-  const teachText = teach.replace(/^TEACH:\s*/i, '');
-  const sentCount = (teachText.match(/[.!?](\s|$)/g) || []).length || 1;
-  if (sentCount > 3) return false;
-
-  const clientText = client.replace(/^CLIENT:\s*/i, '').trim();
-  const isAction =
-    /^\[[A-Z][A-Z\s]+\]$/.test(clientText) ||
-    /^[A-Z0-9][A-Z0-9\s\.\-\,\!\?']+$/.test(clientText);
-  if (!isAction) return false;
-
-  return true;
+// ------------------ Label normalizer helpers ------------------
+function normalizeLabels(part: string): string {
+  return part
+    // split mashed TEACH+ASK without using 's' flag (use [\s\S]*? instead)
+    .replace(/TEACH:([\s\S]*?)ASK:/i, (_m: string, g1: string) => `TEACH:${g1.trim()}\nASK:`)
+    // ensure each label starts on its own line
+    .replace(/\s*(TEACH:|ASK:|CLIENT:)/g, '\n$1')
+    // collapse extra blank lines
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
-function enforceSchemaOrRepair(part: string, opts: { headerAllowed: boolean }): string {
-  // Simple inline check; you can extend to auto-repair with another model call if needed
-  if (isValidBlock(part, opts.headerAllowed)) return part;
-  return part;
+function mergeAdjacentClient(part: string): string {
+  // Merge any immediately consecutive CLIENT lines into one
+  let out = part;
+  const re = /CLIENT:\s*([^\n]+)\nCLIENT:\s*([^\n]+)/g;
+  while (re.test(out)) {
+    out = out.replace(re, (_m: string, a: string, b: string) => {
+      const merged = `${a} ${b}`.replace(/\s+/g, ' ').trim();
+      return `CLIENT: ${merged}`;
+    });
+  }
+  return out;
 }
 
-// ------------------ Stitcher to merge parts ------------------
+// ------------------ Stitcher ------------------
 function stitchParts(parts: string[]): string {
   const out: string[] = [];
   const seenBlocks = new Set<string>();
@@ -191,15 +191,24 @@ ${chunk}
       if (i > 0) {
         part = part.replace(/^\s*<[^>\n]+>.*(?:\r?\n|$)+/i, '').trim(); // strip illegal headers
       }
-      part = enforceSchemaOrRepair(part, { headerAllowed: i === 0 });
+
+      // light normalization (no repair loop)
+      part = normalizeLabels(part);
+      part = mergeAdjacentClient(part);
+
       cleanedChunks.push(part);
       prevTail = lastLines(part, 8);
     }
 
     const finalTranscript = stitchParts(cleanedChunks);
     return NextResponse.json({ cleanedTranscript: finalTranscript });
-  } catch (err) {
-    console.error('❌ Error in cleanTranscript API:', err);
+  } catch (err: unknown) {
+    // Make the error visible in logs
+    if (err instanceof Error) {
+      console.error('❌ Error in cleanTranscript API:', err.message, err.stack);
+    } else {
+      console.error('❌ Error in cleanTranscript API:', err);
+    }
     return NextResponse.json({ error: 'Failed to clean transcript' }, { status: 500 });
   }
 }
