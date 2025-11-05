@@ -114,41 +114,39 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Early Access (card) */}
-      <motion.section
-        className="px-6 py-10"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+{/* Early Access (polished center blob) */}
+<motion.section
+  className="relative py-20 px-6 bg-white"
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+>
+  {/* Soft Background Blob */}
+  <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+    <div className="w-[500px] h-[500px] rounded-full bg-green-100 opacity-40 blur-3xl"></div>
+  </div>
+
+  <div className="relative max-w-2xl mx-auto text-center space-y-8">
+    <h2 className="text-4xl font-semibold text-gray-900">
+      Sign Up for Early Access
+    </h2>
+
+    <ul className="text-lg space-y-3 text-gray-700">
+      <li className="flex items-center justify-center gap-3">✅ <span>Upload your first video</span></li>
+      <li className="flex items-center justify-center gap-3">✅ <span>Get your session summary</span></li>
+      <li className="flex items-center justify-center gap-3">✅ <span>See the power of clear insight</span></li>
+    </ul>
+
+    <Link href="/getStarted">
+      <button
+        onClick={() => analytics.trackLandingPageButton('Early Access CTA - Centered')}
+        className="rounded-full bg-green-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-green-600/30 hover:bg-green-700 hover:shadow-green-600/40 transition-all duration-200"
       >
-        <div className="mx-auto max-w-3xl rounded-2xl border border-black/5 bg-blue-50/60 p-8 shadow-sm">
-          <h2 className="text-center text-3xl font-bold text-green-700">Sign Up for Early Access</h2>
-          <ul className="mx-auto mt-4 w-fit space-y-2 text-lg">
-            <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
-              <span className="h-6 w-6 text-center leading-6">✅</span>
-              <span>Upload your first video</span>
-            </li>
-            <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
-              <span className="h-6 w-6 text-center leading-6">✅</span>
-              <span>Get your session summary</span>
-            </li>
-            <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
-              <span className="h-6 w-6 text-center leading-6">✅</span>
-              <span>See the power of clear insight</span>
-            </li>
-          </ul>
-          <div className="mt-6 text-center">
-            <Link href="/getStarted">
-              <button
-                onClick={() => analytics.trackLandingPageButton('Early Access CTA - Footer')}
-                className="inline-flex items-center gap-2 rounded-full bg-green-600 px-6 py-3 text-lg font-semibold text-white shadow-md shadow-green-600/30 hover:bg-green-700 transition"
-              >
-                Sign Up for Early Access
-              </button>
-            </Link>
-          </div>
-        </div>
-      </motion.section>
+        Sign Up for Early Access
+      </button>
+    </Link>
+  </div>
+</motion.section>
 
       {/* How It Works (step cards) */}
       <section className="bg-green-50 px-6 py-20">
