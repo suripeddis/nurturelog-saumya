@@ -35,7 +35,6 @@ export default function Home() {
       console.log("LOGIN TRACK firing", { userId: user.userId, email: user.email });
       analytics.trackUserLoggedIn({
         id: user.userId,
-        // depending on your setup this might be a string or nested—use optional chaining:
         email: (user as any)?.email ?? (user as any)?.emails?.[0],
       });
     }
@@ -43,32 +42,32 @@ export default function Home() {
 
   return (
     <main className="font-sans text-gray-800">
-      {/* App Header */}
-      <header className="bg-white shadow px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-green-600">SessionClarity</h1>
+      {/* Header (polished glass) */}
+      <header className="sticky top-0 z-30 bg-white/70 backdrop-blur border-b border-black/5">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+          <span className="text-2xl font-bold text-green-700 tracking-tight">SessionClarity</span>
           {!isSessionLoading && (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               {isAuthenticated && user ? (
                 <>
                   <Link href="/upload">
                     <button
                       onClick={() => analytics.trackLandingPageButton('Go to App')}
-                      className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors"
+                      className="rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-green-700 transition"
                     >
                       Go to App
                     </button>
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="text-sm text-gray-600 hover:text-gray-800 transition-colors"
+                    className="text-sm text-gray-600 hover:text-gray-800 transition"
                   >
                     Logout
                   </button>
                 </>
               ) : (
                 <Link href="/sign-in">
-                  <button className="text-sm text-green-600 hover:text-green-700 transition-colors">
+                  <button className="text-sm font-semibold text-green-700 hover:text-green-800">
                     Login
                   </button>
                 </Link>
@@ -78,242 +77,209 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-green-50 py-16 px-6 text-center">
-        <h1 className="text-4xl font-bold mb-4">Skip the paperwork. Keep the progress.</h1>
-        <p className="text-lg max-w-xl mx-auto mb-6">
+      {/* Hero (soft gradient + better buttons) */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-green-50 to-white px-6 py-20 text-center">
+        <div className="absolute inset-0 -z-10 flex items-center justify-center">
+          <div className="h-[600px] w-[600px] rounded-full bg-green-100/50 blur-3xl" />
+        </div>
+
+        <h1 className="mx-auto mb-4 max-w-3xl text-5xl font-extrabold tracking-tight text-gray-900">
+          Skip the paperwork. Keep the progress.
+        </h1>
+        <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-700">
           Whether you're a parent or a practitioner, SessionClarity writes the report so you don't have to. Upload your letterboard session—get instant summaries, strengths, and next steps.
         </p>
-        <div className="flex justify-center gap-4">
-        <Link href="/getStarted">
-          <button
-            onClick={() => analytics.trackLandingPageButton('Sign Up for Early Access - Hero')}
-            className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold"
-          >
-            Sign Up for Early Access
-          </button>
-        </Link>
-          {/*}
-          <Link href="/upload">
+
+        <div className="flex justify-center gap-3">
+          <Link href="/getStarted">
             <button
-              onClick={() => analytics.trackLandingPageButton('Upload a Session - Hero')}
-              className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold"
+              onClick={() => analytics.trackLandingPageButton('Sign Up for Early Access - Hero')}
+              className="rounded-full bg-green-600 px-6 py-3 font-semibold text-white shadow-md shadow-green-600/30 hover:bg-green-700 transition"
             >
-              Upload a Session
+              Sign Up for Early Access
             </button>
           </Link>
-          */}
           <Link href="/sample">
             <button
               onClick={() => analytics.trackLandingPageButton('See Sample Report - Hero')}
-              className="border border-green-600 text-green-600 px-6 py-3 rounded-lg font-semibold"
+              className="rounded-full border border-green-600 px-6 py-3 font-semibold text-green-700 hover:bg-green-50 transition"
             >
               See Sample Report
             </button>
           </Link>
-      </div>
-        <p className="mt-4 text-sm text-gray-600">Supports real-world, imperfect recordings—no need for clean audio, video, or perfect structure.</p>
+        </div>
+
+        <p className="mt-5 text-sm text-gray-600">
+          Supports real-world, imperfect recordings—no need for clean audio, video, or perfect structure.
+        </p>
       </section>
 
- {/* Early Access (moved up) */}
- <motion.section
-  className="bg-blue-50 py-6 px-4"
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
->
-  <div className="mx-auto max-w-2xl text-center">
-    <h2 className="text-3xl sm:text-4xl font-extrabold text-green-700 tracking-tight">
-      Sign Up for Early&nbsp;Access
-    </h2>
-
-    <ul className="mt-4 text-lg mx-auto w-fit space-y-2">
-  <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
-    <span className="h-6 w-6 text-center leading-6">✅</span>
-    <span className="text-left">Upload your first video</span>
-  </li>
-  <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
-    <span className="h-6 w-6 text-center leading-6">✅</span>
-    <span className="text-left">Get your session summary</span>
-  </li>
-  <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
-    <span className="h-6 w-6 text-center leading-6">✅</span>
-    <span className="text-left">See the power of clear insight</span>
-  </li>
-</ul>
-
-    <div className="mt-6">
-      <Link href="/getStarted">
-        <button
-          onClick={() =>
-            analytics.trackLandingPageButton('Early Access CTA - Footer')
-          }
-          className="inline-flex items-center gap-2 rounded-full bg-green-600 px-6 py-3 text-lg font-semibold text-white shadow-md shadow-green-600/30 hover:bg-green-700 hover:shadow-lg transition-all duration-200"
-        >
-          Sign Up for Early Access
-        </button>
-      </Link>
-    </div>
-  </div>
-</motion.section>
-
-      {/* How It Works */}
-      <section className="py-20 px-6 bg-green-50 text-center">
-  <h2 className="text-3xl font-bold mb-12">From session to summary in a few minutes</h2>
-  <div className="flex flex-col md:flex-row justify-center gap-12 max-w-4xl mx-auto">
-    <div>
-      <span className="text-4xl">🎥</span>
-      <h3 className="text-xl font-semibold mt-2">Upload audio or video</h3>
-    </div>
-    <div>
-      <span className="text-4xl">🧠</span>
-      <h3 className="text-xl font-semibold mt-2">AI analyzes patterns and cues</h3>
-    </div>
-    <div>
-      <span className="text-4xl">📋</span>
-      <h3 className="text-xl font-semibold mt-2">Get a clear report instantly</h3>
-    </div>
-  </div>
-</section>
-      {/* Here’s What You Get */}
+      {/* Early Access (card) */}
       <motion.section
-  className="py-16 px-6 bg-slate-50 text-center"
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
->
-  <div className="max-w-4xl mx-auto">
-    <h2 className="text-3xl font-bold mb-6">🔍 What You’ll Unlock</h2>
-    <div className="grid gap-6 md:grid-cols-2 justify-items-center">
-      <div className="flex items-start gap-4">
-        <Presentation className="w-6 h-6 text-green-600 mt-1" />
-        <span className="text-lg">Session Summary</span>
-      </div>
-      <div className="flex items-start gap-4">
-        <Zap className="w-6 h-6 text-green-600 mt-1" />
-        <span className="text-lg">Strengths &amp; Challenges</span>
-      </div>
-      <div className="flex items-start gap-4">
-        <LucideUsers className="w-6 h-6 text-green-600 mt-1" />
-        <span className="text-lg">Communication Patterns</span>
-      </div>
-      <div className="flex items-start gap-4">
-        <BarChart2 className="w-6 h-6 text-green-600 mt-1" />
-        <span className="text-lg">Visuals &amp; Trends (coming soon)</span>
-      </div>
-    </div>
-  </div>
-</motion.section>
-
-      {/* Built for... */}
-      <motion.section
-        className="py-16 px-6 bg-white"
+        className="px-6 py-10"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6 text-center">👥 Made for the Team Around the Learner</h2>
+        <div className="mx-auto max-w-3xl rounded-2xl border border-black/5 bg-blue-50/60 p-8 shadow-sm">
+          <h2 className="text-center text-3xl font-bold text-green-700">Sign Up for Early Access</h2>
+          <ul className="mx-auto mt-4 w-fit space-y-2 text-lg">
+            <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
+              <span className="h-6 w-6 text-center leading-6">✅</span>
+              <span>Upload your first video</span>
+            </li>
+            <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
+              <span className="h-6 w-6 text-center leading-6">✅</span>
+              <span>Get your session summary</span>
+            </li>
+            <li className="grid grid-cols-[1.5rem_auto] items-center gap-3">
+              <span className="h-6 w-6 text-center leading-6">✅</span>
+              <span>See the power of clear insight</span>
+            </li>
+          </ul>
+          <div className="mt-6 text-center">
+            <Link href="/getStarted">
+              <button
+                onClick={() => analytics.trackLandingPageButton('Early Access CTA - Footer')}
+                className="inline-flex items-center gap-2 rounded-full bg-green-600 px-6 py-3 text-lg font-semibold text-white shadow-md shadow-green-600/30 hover:bg-green-700 transition"
+              >
+                Sign Up for Early Access
+              </button>
+            </Link>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* How It Works (step cards) */}
+      <section className="bg-green-50 px-6 py-20">
+        <h2 className="mb-10 text-center text-3xl font-bold">From session to summary in a few minutes</h2>
+        <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
+          {[
+            { emoji: '🎥', title: 'Upload audio or video' },
+            { emoji: '🧠', title: 'AI analyzes patterns and cues' },
+            { emoji: '📋', title: 'Get a clear report instantly' },
+          ].map((s) => (
+            <div key={s.title} className="rounded-2xl border border-black/5 bg-white p-6 text-center shadow-sm">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-2xl">
+                {s.emoji}
+              </div>
+              <h3 className="text-lg font-semibold">{s.title}</h3>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* What You’ll Unlock (feature cards) */}
+      <motion.section
+        className="bg-slate-50 px-6 py-16"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <div className="mx-auto max-w-5xl">
+          <h2 className="mb-8 text-center text-3xl font-bold">🔍 What You’ll Unlock</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            {[
+              { Icon: Presentation, label: 'Session Summary' },
+              { Icon: Zap, label: 'Strengths & Challenges' },
+              { Icon: LucideUsers, label: 'Communication Patterns' },
+              { Icon: BarChart2, label: 'Visuals & Trends (coming soon)' },
+            ].map(({ Icon, label }) => (
+              <div key={label} className="flex items-center gap-4 rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
+                  <Icon className="h-5 w-5 text-green-600" />
+                </div>
+                <span className="text-lg">{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Made for the Team (cards + casing fix) */}
+      <motion.section
+        className="bg-white px-6 py-16"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <div className="mx-auto max-w-6xl">
+          <h2 className="mb-8 text-center text-3xl font-bold">👥 Made for the Team Around the Learner</h2>
           <div className="grid gap-6 md:grid-cols-3 text-lg">
-            <div className="flex items-start gap-4">
-              <LucideUsers className="w-6 h-6 text-green-600 mt-1" />
+            <div className="flex items-start gap-4 rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+              <LucideUsers className="mt-1 h-6 w-6 text-green-600" />
               <p className="text-gray-700">Parents documenting growth and communication for IEPs, schools, and families.</p>
             </div>
-            <div className="flex items-start gap-4">
-              <ClipboardList className="w-6 h-6 text-green-600 mt-1" />
-              <p className="text-gray-700">practitioners saving time on notes while giving families deeper insights.</p>
+            <div className="flex items-start gap-4 rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+              <ClipboardList className="mt-1 h-6 w-6 text-green-600" />
+              <p className="text-gray-700">Practitioners saving time on notes while giving families deeper insights.</p>
             </div>
-            <div className="flex items-start gap-4">
-              <BookOpen className="w-6 h-6 text-green-600 mt-1" />
+            <div className="flex items-start gap-4 rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+              <BookOpen className="mt-1 h-6 w-6 text-green-600" />
               <p className="text-gray-700">Educators &amp; Therapists tracking progress and advocating effectively.</p>
             </div>
           </div>
         </div>
       </motion.section>
 
-{/* About Section */}
-<section id="about" className="relative bg-white py-24 px-6 border-t border-gray-200 overflow-hidden">
+      {/* About (centered with soft blob, words unchanged) */}
+      <section id="about" className="relative bg-white py-24 px-6 border-t border-gray-200 overflow-hidden">
+        <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+          <div className="w-[450px] h-[450px] rounded-full bg-green-100/45 blur-3xl"></div>
+        </div>
 
-  {/* Soft Background Blob */}
-  <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-    <div className="w-[450px] h-[450px] rounded-full bg-green-100 opacity-60 blur-3xl"></div>
-  </div>
+        <div className="relative max-w-4xl mx-auto text-center space-y-8">
+          <h2 className="text-4xl font-semibold text-gray-900">About SessionClarity</h2>
+          <p className="text-lg text-gray-700 leading-relaxed">
+            We’re really excited to have you here. We know how challenging it can be
+            to stay present in a letterboard session while also trying to take detailed
+            notes. SessionClarity helps parents and practitioners focus on the learner
+            — while we handle the paperwork.
+          </p>
+          <p className="text-lg text-gray-700 leading-relaxed">
+            Simply upload a session recording. Our system analyzes communication patterns
+            and cues, then generates a comprehensive, easy-to-share report that highlights
+            strengths, challenges, and meaningful progress.
+          </p>
+        </div>
+      </section>
 
-  <div className="relative max-w-4xl mx-auto text-center space-y-8">
-
-    <h2 className="text-4xl font-semibold text-gray-900">
-      About SessionClarity
-    </h2>
-
-    <p className="text-lg text-gray-700 leading-relaxed">
-      We’re really excited to have you here. We know how challenging it can be
-      to stay present in a letterboard session while also trying to take detailed
-      notes. SessionClarity helps parents and practitioners focus on the learner
-      — while we handle the paperwork.
-    </p>
-
-    <p className="text-lg text-gray-700 leading-relaxed">
-      Simply upload a session recording. Our system analyzes communication patterns
-      and cues, then generates a comprehensive, easy-to-share report that highlights
-      strengths, challenges, and meaningful progress.
-    </p>
-
-  </div>
-</section>
-
-      {/* About Section */}
-      <section className="bg-gray-50 py-20 px-6 text-center">
-        <h2 className="text-3xl font-bold mb-4">Meet the team</h2>
-        <p className="max-w-2xl mx-auto text-lg mb-12 text-gray-600">
+      {/* Team (soft cards) */}
+      <section id="team" className="bg-gray-50 px-6 py-20 text-center">
+        <h2 className="mb-3 text-3xl font-bold">Meet the team</h2>
+        <p className="mx-auto mb-12 max-w-2xl text-lg text-gray-600">
           Built by families of non-speaking learners. Informed by practitioners.
         </p>
-        <div className="flex flex-col md:flex-row justify-center gap-12 max-w-4xl mx-auto">
-          {/* Arti */}
-          <div className="flex flex-col items-center max-w-xs">
-            <div className="w-32 h-32 overflow-hidden mb-4 rounded-lg">
-              <Image
-                src="/artiPicture.png"
-                alt="Arti"
-                width={128}
-                height={128}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Arti Bhatia</h3>
-            <p className="text-gray-600 text-center">Arti is a parent of a non-speaking college student who began using a letterboard at 17—an experience that led her to pivot into autism innovation. She previously held leadership roles in product strategy, business development, and sales at Microsoft, AWS, and Dell. Today, she works with trusted family and practitioner networks in the autism community throughout the world.</p>
-          </div>
 
-          {/* Faraz */}
-          <div className="flex flex-col items-center max-w-xs">
-            <div className="w-32 h-32 overflow-hidden mb-4 rounded-lg">
-              <Image
-                src="/farazPicture.jpg"
-                alt="Faraz"
-                width={128}
-                height={128}
-                className="w-full h-full object-cover"
-              />
+        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
+          {[
+            {
+              name: 'Arti Bhatia',
+              img: '/artiPicture.png',
+              blurb:
+                'Arti is a parent of a non-speaking college student who began using a letterboard at 17—an experience that led her to pivot into autism innovation. She previously held leadership roles in product strategy, business development, and sales at Microsoft, AWS, and Dell. Today, she works with trusted family and practitioner networks in the autism community throughout the world.',
+            },
+            {
+              name: 'Faraz Abidi',
+              img: '/farazPicture.jpg',
+              blurb:
+                "Faraz is an AI engineer whose work in autism began while living with his autistic cousin and attending therapy sessions. He's since created award-winning assistive tools. Previously, he was the founding engineer and Director of Software at SprintRay, one of the world's top 3D printing companies.",
+            },
+            {
+              name: 'Dan Feshbach',
+              img: '/danPicture.jpg',
+              blurb:
+                'Dan is a veteran autism advocate and entrepreneur, inspired by his 31-year-old autistic son who is a limited speaker. He previously co-founded TeachTown (serving 120,000+ students), launched the Multiple autism tech accelerator, and helped organize the Autism Impact Fund.',
+            },
+          ].map((p) => (
+            <div key={p.name} className="mx-auto max-w-sm rounded-2xl border border-black/5 bg-white p-6 text-left shadow-sm">
+              <div className="mx-auto mb-4 h-28 w-28 overflow-hidden rounded-xl">
+                <Image src={p.img} alt={p.name} width={128} height={128} className="h-full w-full object-cover" />
+              </div>
+              <h3 className="mb-2 text-center text-xl font-semibold">{p.name}</h3>
+              <p className="text-gray-600">{p.blurb}</p>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Faraz Abidi</h3>
-            <p className="text-gray-600 text-center">Faraz is an AI engineer whose work in autism began while living with his autistic cousin and attending therapy sessions. He's since created award-winning assistive tools. Previously, he was the founding engineer and  Director of Software at SprintRay, one of the world's top 3d printing companies.</p>
-
-          </div>
-
-          {/* Dan */}
-          <div className="flex flex-col items-center max-w-xs">
-            <div className="w-32 h-32 overflow-hidden mb-4 rounded-lg">
-              <Image
-                src="/danPicture.jpg"
-                alt="Dan"
-                width={128}
-                height={128}
-                quality={100}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Dan Feshbach</h3>
-            <p className="text-gray-600 text-center">Dan is a veteran autism advocate and entrepreneur, inspired by his 31-year-old autistic son who is a limited speaker. He previously co-founded TeachTown (serving 120,000+ students), launched the Multiple autism tech accelerator, and helped organize the Autism Impact Fund.</p>
-          </div>
+          ))}
         </div>
       </section>
     </main>
