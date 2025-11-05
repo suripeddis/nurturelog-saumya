@@ -285,28 +285,28 @@ export default function Home() {
         </div>
       </motion.section>
 
-{/* About Section (improved visuals) */}
-<section id="about" className="bg-white py-20 px-6">
+      <section id="about" className="bg-white py-24 px-6">
   <div className="max-w-4xl mx-auto text-center">
-    <div className="inline-block bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-medium mb-6">
-      About SessionClarity
-    </div>
 
-    <h2 className="text-3xl font-bold text-gray-800 mb-6">
-      We’re really excited to have you here.
+    <h2 className="text-4xl font-semibold text-gray-900 mb-8">
+      About SessionClarity
     </h2>
 
-    <p className="text-lg text-gray-700 leading-relaxed mb-6">
-      We know how challenging it can be to stay present in a letterboard session while
-      also trying to take detailed notes. SessionClarity helps parents and practitioners
-      focus on the learner — while we handle the paperwork.
-    </p>
+    <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+      <p>
+        We’re really excited to have you here. We know how challenging it can be
+        to stay present in a letterboard session while also trying to take detailed
+        notes. SessionClarity helps parents and practitioners focus on the learner
+        — while we handle the paperwork.
+      </p>
 
-    <p className="text-lg text-gray-700 leading-relaxed">
-      Simply upload a session recording. Our system analyzes communication patterns and cues,
-      then generates a comprehensive, easy-to-share report that highlights strengths,
-      challenges, and meaningful progress.
-    </p>
+      <p>
+        Simply upload a session recording. Our system analyzes communication patterns
+        and cues, then generates a comprehensive, easy-to-share report that highlights
+        strengths, challenges, and meaningful progress.
+      </p>
+    </div>
+
   </div>
 </section>
 
