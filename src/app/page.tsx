@@ -78,41 +78,34 @@ export default function Home() {
       </header>
 
       {/* Hero (soft gradient + better buttons) */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-green-50 to-white px-6 py-20 text-center">
-        <div className="absolute inset-0 -z-10 flex items-center justify-center">
-          <div className="h-[600px] w-[600px] rounded-full bg-green-100/50 blur-3xl" />
-        </div>
+      <div className="relative max-w-2xl mx-auto text-center space-y-6">
 
-        <h1 className="mx-auto mb-4 max-w-3xl text-5xl font-extrabold tracking-tight text-gray-900">
-          Skip the paperwork. Keep the progress.
-        </h1>
-        <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-700">
-          Whether you're a parent or a practitioner, SessionClarity writes the report so you don't have to. Upload your letterboard session—get instant summaries, strengths, and next steps.
-        </p>
+<h2 className="text-4xl font-semibold text-gray-900">
+  Sign Up for Early Access
+</h2>
 
-        <div className="flex justify-center gap-3">
-          <Link href="/getStarted">
-            <button
-              onClick={() => analytics.trackLandingPageButton('Sign Up for Early Access - Hero')}
-              className="rounded-full bg-green-600 px-6 py-3 font-semibold text-white shadow-md shadow-green-600/30 hover:bg-green-700 transition"
-            >
-              Sign Up for Early Access
-            </button>
-          </Link>
-          <Link href="/sample">
-            <button
-              onClick={() => analytics.trackLandingPageButton('See Sample Report - Hero')}
-              className="rounded-full border border-green-600 px-6 py-3 font-semibold text-green-700 hover:bg-green-50 transition"
-            >
-              See Sample Report
-            </button>
-          </Link>
-        </div>
+<ul className="text-lg space-y-2 text-gray-700">
+  <li className="flex items-center justify-center gap-2">
+    ✅ <span>Upload your first video</span>
+  </li>
+  <li className="flex items-center justify-center gap-2">
+    ✅ <span>Get your session summary</span>
+  </li>
+  <li className="flex items-center justify-center gap-2">
+    ✅ <span>See the power of clear insight</span>
+  </li>
+</ul>
 
-        <p className="mt-5 text-sm text-gray-600">
-          Supports real-world, imperfect recordings—no need for clean audio, video, or perfect structure.
-        </p>
-      </section>
+<Link href="/getStarted">
+  <button
+    onClick={() => analytics.trackLandingPageButton('Early Access CTA - Centered')}
+    className="mt-4 rounded-full bg-green-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-green-600/30 hover:bg-green-700 hover:shadow-green-600/40 transition-all duration-200"
+  >
+    Sign Up for Early Access
+  </button>
+</Link>
+
+</div>
 
 {/* Early Access (polished center blob) */}
 <motion.section
