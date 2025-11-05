@@ -285,6 +285,22 @@ export default function Home() {
         </div>
       </motion.section>
 
+    {/* About Section (new) */}
+      <section id="about" className="bg-white py-16 px-6 text-center">
+        <h2 className="text-3xl font-bold mb-4">About SessionClarity</h2>
+        <p className="max-w-3xl mx-auto text-lg text-gray-700 leading-relaxed">
+          We’re really excited to have you here. We know how challenging it can be to stay present
+          in a letterboard session while also trying to take detailed notes. SessionClarity helps
+          parents and practitioners focus on the learner — while we handle the paperwork.
+        </p>
+
+        <p className="max-w-3xl mx-auto text-lg text-gray-700 leading-relaxed mt-6">
+          Simply upload a session recording. Our system analyzes communication patterns and cues,
+          then generates a comprehensive, easy-to-share report that highlights strengths,
+          challenges, and meaningful progress.
+        </p>
+      </section>
+
       {/* About Section */}
       <section className="bg-gray-50 py-20 px-6 text-center">
         <h2 className="text-3xl font-bold mb-4">Meet the team</h2>
