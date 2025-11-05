@@ -122,30 +122,34 @@ export default function Home() {
   viewport={{ once: true }}
 >
   {/* Soft Background Blob */}
-  <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-    <div className="w-[500px] h-[500px] rounded-full bg-green-100 opacity-40 blur-3xl"></div>
-  </div>
+  <div className="relative max-w-2xl mx-auto text-center space-y-6">
 
-  <div className="relative max-w-2xl mx-auto text-center space-y-8">
-    <h2 className="text-4xl font-semibold text-gray-900">
-      Sign Up for Early Access
-    </h2>
+<h2 className="text-4xl font-semibold text-gray-900">
+  Sign Up for Early Access
+</h2>
 
-    <ul className="text-lg space-y-3 text-gray-700">
-      <li className="flex items-center justify-center gap-3">✅ <span>Upload your first video</span></li>
-      <li className="flex items-center justify-center gap-3">✅ <span>Get your session summary</span></li>
-      <li className="flex items-center justify-center gap-3">✅ <span>See the power of clear insight</span></li>
-    </ul>
+<ul className="text-lg space-y-2 text-gray-700">
+  <li className="flex items-center justify-center gap-2">
+    ✅ <span>Upload your first video</span>
+  </li>
+  <li className="flex items-center justify-center gap-2">
+    ✅ <span>Get your session summary</span>
+  </li>
+  <li className="flex items-center justify-center gap-2">
+    ✅ <span>See the power of clear insight</span>
+  </li>
+</ul>
 
-    <Link href="/getStarted">
-      <button
-        onClick={() => analytics.trackLandingPageButton('Early Access CTA - Centered')}
-        className="rounded-full bg-green-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-green-600/30 hover:bg-green-700 hover:shadow-green-600/40 transition-all duration-200"
-      >
-        Sign Up for Early Access
-      </button>
-    </Link>
-  </div>
+<Link href="/getStarted">
+  <button
+    onClick={() => analytics.trackLandingPageButton('Early Access CTA - Centered')}
+    className="mt-4 rounded-full bg-green-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-green-600/30 hover:bg-green-700 hover:shadow-green-600/40 transition-all duration-200"
+  >
+    Sign Up for Early Access
+  </button>
+</Link>
+
+</div>
 </motion.section>
 
       {/* How It Works (step cards) */}
