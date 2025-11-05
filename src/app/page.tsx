@@ -232,34 +232,31 @@ export default function Home() {
       </motion.section>
 
 {/* About Section */}
-<section id="about" className="bg-white py-24 px-6 border-t border-gray-200">
-  <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+<section id="about" className="relative bg-white py-24 px-6 border-t border-gray-200 overflow-hidden">
 
-    {/* Text */}
-    <div className="space-y-6 text-center md:text-left">
-      <h2 className="text-4xl font-semibold text-gray-900">
-        About SessionClarity
-      </h2>
+  {/* Soft Background Blob */}
+  <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+    <div className="w-[450px] h-[450px] rounded-full bg-green-100 opacity-60 blur-3xl"></div>
+  </div>
 
-      <p className="text-lg text-gray-700 leading-relaxed">
-        We’re really excited to have you here. We know how challenging it can be
-        to stay present in a letterboard session while also trying to take detailed
-        notes. SessionClarity helps parents and practitioners focus on the learner
-        — while we handle the paperwork.
-      </p>
+  <div className="relative max-w-4xl mx-auto text-center space-y-8">
 
-      <p className="text-lg text-gray-700 leading-relaxed">
-        Simply upload a session recording. Our system analyzes communication patterns
-        and cues, then generates a comprehensive, easy-to-share report that highlights
-        strengths, challenges, and meaningful progress.
-      </p>
-    </div>
+    <h2 className="text-4xl font-semibold text-gray-900">
+      About SessionClarity
+    </h2>
 
-    {/* Decorative Shape */}
-    <div className="relative h-64 md:h-full flex justify-center items-center">
-      <div className="w-64 h-64 rounded-full bg-green-100 opacity-80 blur-2xl absolute"></div>
-      <div className="w-40 h-40 rounded-full bg-green-300 opacity-40 blur-3xl absolute"></div>
-    </div>
+    <p className="text-lg text-gray-700 leading-relaxed">
+      We’re really excited to have you here. We know how challenging it can be
+      to stay present in a letterboard session while also trying to take detailed
+      notes. SessionClarity helps parents and practitioners focus on the learner
+      — while we handle the paperwork.
+    </p>
+
+    <p className="text-lg text-gray-700 leading-relaxed">
+      Simply upload a session recording. Our system analyzes communication patterns
+      and cues, then generates a comprehensive, easy-to-share report that highlights
+      strengths, challenges, and meaningful progress.
+    </p>
 
   </div>
 </section>
