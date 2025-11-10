@@ -120,9 +120,6 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Divider line */}
-      <div className="w-full border-t border-gray-200 my-16" />
-
       {/* Early Access (light purple bg + green heading) */}
       <motion.section
         className="relative py-20 px-6 bg-purple-50"
