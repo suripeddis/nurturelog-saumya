@@ -49,7 +49,7 @@ export default function Home() {
   return (
     <main className="font-sans text-gray-800">
       {/* Header (polished glass) */}
-      <header className="sticky top-0 z-30 bg-white/70 backdrop-blur border-b border-black/5">
+      <header className="sticky top-0 z-30 bg-white">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
           <span className="text-2xl font-bold text-green-700 tracking-tight">SessionClarity</span>
           {!isSessionLoading && (
