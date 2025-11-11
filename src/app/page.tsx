@@ -41,14 +41,14 @@ export default function Home() {
     }
   }, [isSessionLoading, isAuthenticated, user]);
 
-  // --- Team card open-state (independent, multiple can be open) ---
-  const [openMap, setOpenMap] = useState<{ [idx: number]: boolean }>({});
-  const toggleCard = (idx: number) =>
-    setOpenMap(prev => ({ ...prev, [idx]: !prev[idx] }));
+  // --- Collapsible cards: allow string keys so "team-0", "advisor-1" work ---
+  const [openMap, setOpenMap] = useState<{ [key: string]: boolean }>({});
+  const toggleCard = (key: string) =>
+    setOpenMap(prev => ({ ...prev, [key]: !prev[key] }));
 
   return (
     <main className="font-sans text-gray-800">
-      {/* Header (polished glass) */}
+      {/* Header (simple white) */}
       <header className="sticky top-0 z-30 bg-white">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
           <span className="text-2xl font-bold text-green-700 tracking-tight">SessionClarity</span>
@@ -83,7 +83,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero (soft gradient + better buttons) */}
+      {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-b from-green-50 to-white px-6 py-20 text-center">
         <div className="absolute inset-0 -z-10 flex items-center justify-center">
           <div className="h-[600px] w-[600px] rounded-full bg-green-100/50 blur-3xl" />
@@ -133,15 +133,9 @@ export default function Home() {
           </h2>
 
           <ul className="text-lg space-y-2 text-gray-700">
-            <li className="flex items-center justify-center gap-2">
-              ✅ <span>Upload your first video</span>
-            </li>
-            <li className="flex items-center justify-center gap-2">
-              ✅ <span>Get your session summary</span>
-            </li>
-            <li className="flex items-center justify-center gap-2">
-              ✅ <span>See the power of clear insight</span>
-            </li>
+            <li className="flex items-center justify-center gap-2">✅ <span>Upload your first video</span></li>
+            <li className="flex items-center justify-center gap-2">✅ <span>Get your session summary</span></li>
+            <li className="flex items-center justify-center gap-2">✅ <span>See the power of clear insight</span></li>
           </ul>
 
           <Link href="/getStarted">
@@ -155,7 +149,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* How It Works (step cards) */}
+      {/* How It Works */}
       <section className="bg-green-50 px-6 py-20">
         <h2 className="mb-10 text-center text-3xl font-bold">From session to summary in a few minutes</h2>
         <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
@@ -174,7 +168,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What You’ll Unlock (feature cards) */}
+      {/* What You’ll Unlock */}
       <motion.section
         className="bg-slate-50 px-6 py-16"
         initial={{ opacity: 0, y: 20 }}
@@ -210,7 +204,7 @@ export default function Home() {
       >
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-8 text-center text-3xl font-bold">👥 Made for the Team Around the Learner</h2>
-        <div className="grid gap-6 md:grid-cols-3 text-lg">
+          <div className="grid gap-6 md:grid-cols-3 text-lg">
             <div className="flex items-start gap-4 rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
               <LucideUsers className="mt-1 h-6 w-6 text-green-600" />
               <p className="text-gray-700">Parents documenting growth and communication for IEPs, schools, and families.</p>
@@ -227,7 +221,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* About (centered with soft blob) */}
+      {/* About */}
       <section id="about" className="relative bg-white py-24 px-6 border-t border-gray-200 overflow-hidden">
         <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
           <div className="w-[450px] h-[450px] rounded-full bg-green-100/45 blur-3xl"></div>
@@ -249,35 +243,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Team (click-to-expand cards, multiple open) */}
+      {/* Team (click-to-expand, centered even with 1 card) */}
       <section id="team" className="bg-gray-50 px-6 py-20 text-center">
         <h2 className="mb-3 text-3xl font-bold">Meet the team</h2>
         <p className="mx-auto mb-12 max-w-2xl text-lg text-gray-600">
           Built by families of non-speaking learners. Informed by practitioners.
         </p>
 
-        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
+        <div className="mx-auto grid max-w-5xl gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center">
           {[
-            {
-              name: "Arti Bhatia",
-              img: "/artiPicture.png",
-              blurb:
-                "Arti is a parent of a non-speaking college student who began using a letterboard at 17—an experience that led her to pivot into autism innovation. She previously held leadership roles in product strategy, business development, and sales at Microsoft, AWS, and Dell. Today, she works with trusted family and practitioner networks in the autism community throughout the world.",
-            },
-            {
-              name: "Faraz Abidi",
-              img: "/farazPicture.jpg",
-              blurb:
-                "Faraz is an AI engineer whose work in autism began while living with his autistic cousin and attending therapy sessions. He's since created award-winning assistive tools. Previously, he was the founding engineer and Director of Software at SprintRay, one of the world's top 3D printing companies.",
-            },
+            // We'll add Saumya and Amarsh later
             {
               name: "Dan Feshbach",
               img: "/danPicture.jpg",
+              subtitle: "Autism entrepreneur, inspired by his son Reed, an emerging spelling ",
               blurb:
                 "Dan is a veteran autism advocate and entrepreneur, inspired by his 31-year-old autistic son who is a limited speaker. He previously co-founded TeachTown (serving 120,000+ students), launched the Multiple autism tech accelerator, and helped organize the Autism Impact Fund.",
             },
+            {
+              name: "Saumya Suripeddi",
+              img: "/saumyaPicture.png",
+              subtitle: "CS + AI student, emerging software developer, inspired by her brother Vineel",
+              blurb:
+                "Saumya is a junior at Northeastern University studying Computer Science with a concentration in AI. Inspired by her autistic brother, she is focused on helping develop technology that supports clearer communication and greater independence for autistic individuals.",
+            },
           ].map((p, idx) => {
-            const isOpen = !!openMap[idx];
+            const isOpen = !!openMap[`team-${idx}`];
             return (
               <div
                 key={p.name}
@@ -292,32 +283,105 @@ export default function Home() {
                     className="h-full w-full object-cover"
                   />
                 </div>
-
+          
                 {/* Clickable name row */}
                 <button
-                  onClick={() => toggleCard(idx)}
+                  onClick={() => toggleCard(`team-${idx}`)}
                   aria-expanded={isOpen}
-                  className="mb-2 flex w-full items-center justify-center gap-2 text-xl font-semibold text-gray-900 hover:text-green-700 transition"
+                  className="flex w-full items-center justify-center gap-2 text-xl font-semibold text-gray-900 hover:text-green-700 transition"
                 >
                   {p.name}
                   <ChevronDown
                     className={`h-4 w-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
                   />
                 </button>
-
-                {/* Dropdown content (full blurb) */}
+          
+                {/* → NEW SUBTITLE LINE */}
+                <p className="mt-1 text-center text-sm text-gray-500">{p.subtitle}</p>
+          
+                {/* Dropdown long description */}
                 <div
                   className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
                     isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="text-gray-600 mt-2">{p.blurb}</p>
+                    <p className="text-gray-600 mt-3 text-sm">{p.blurb}</p>
                   </div>
                 </div>
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* Advisors (new section, Arti & Faraz, centered) */}
+      <section id="advisors" className="bg-white px-6 py-20 text-center">
+        <h2 className="mb-3 text-3xl font-bold">Advisors</h2>
+        <p className="mx-auto mb-12 max-w-2xl text-lg text-gray-600">
+          Leaders and builders guiding SessionClarity.
+        </p>
+
+        <div className="mx-auto grid max-w-4xl gap-8 grid-cols-1 md:grid-cols-2 place-items-center">
+        {[
+  {
+    name: "Arti Bhatia",
+    img: "/artiPicture.png",
+    subtitle: "Tech executive, leader in the spelling community, mother of Sam,  speller in college",
+    blurb:
+      "Arti is a parent of a non-speaking college student who began using a letterboard at 17—an experience that led her to pivot into autism innovation. She previously held leadership roles in product strategy, business development, and sales at Microsoft, AWS, and Dell. Today, she works with trusted family and practitioner networks in the autism community throughout the world.",
+  },
+  {
+    name: "Faraz Abidi",
+    img: "/farazPicture.jpg",
+    subtitle: "Unicorn hacker, multi exit entrepreneur built award wining ai tech for his autistic cousin ",
+    blurb:
+      "Faraz is an AI engineer whose work in autism began while living with his autistic cousin and attending therapy sessions. He's since created award-winning assistive tools. Previously, he was the founding engineer and Director of Software at SprintRay, one of the world's top 3D printing companies.",
+  },
+].map((p, idx) => {
+  const isOpen = !!openMap[`advisor-${idx}`];
+  return (
+    <div
+      key={p.name}
+      className="mx-auto max-w-sm rounded-2xl border border-black/5 bg-white p-6 text-left shadow-sm"
+    >
+      <div className="mx-auto mb-4 h-28 w-28 overflow-hidden rounded-xl">
+        <Image
+          src={p.img}
+          alt={p.name}
+          width={128}
+          height={128}
+          className="h-full w-full object-cover"
+        />
+      </div>
+
+      <button
+        onClick={() => toggleCard(`advisor-${idx}`)}
+        aria-expanded={isOpen}
+        className="flex w-full items-center justify-center gap-2 text-xl font-semibold text-gray-900 hover:text-green-700 transition"
+      >
+        {p.name}
+        <ChevronDown
+          className={`h-4 w-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {/* Subtitle */}
+      <p className="mt-1 text-center text-sm text-gray-500">{p.subtitle}</p>
+
+      {/* Dropdown long description */}
+      <div
+        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <p className="text-gray-600 mt-3 text-sm">{p.blurb}</p>
+        </div>
+      </div>
+    </div>
+  );
+})}
         </div>
       </section>
     </main>
