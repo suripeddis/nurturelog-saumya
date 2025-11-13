@@ -322,7 +322,7 @@ export default function Home() {
           Leaders and builders guiding SessionClarity.
         </p>
 
-        <div className="mx-auto grid max-w-4xl gap-8 grid-cols-1 md:grid-cols-2 place-items-center">
+        <div className="mx-auto max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
         {[
   {
     name: "Arti Bhatia",
@@ -338,6 +338,15 @@ export default function Home() {
     blurb:
       "Faraz is an AI engineer whose work in autism began while living with his autistic cousin and attending therapy sessions. He's since created award-winning assistive tools. Previously, he was the founding engineer and Director of Software at SprintRay, one of the world's top 3D printing companies.",
   },
+  {
+    name: "Amarsh Anand",
+    img: "/amarshPicture.png",
+    subtitle:
+      "Technologist and entrepreneur focused on the needs of children and their caregivers associated with autism.",
+    blurb:
+      "Amarsh Anand is a technologist and entrepreneur with a global perspective shaped by his experience across the U.S., Australia, India, and China. He has led multicultural engineering and design teams, and founded and exited two startups: OnDaMo, a mobile banking platform acquired by Polaris Software, and BiliTutor, a language-learning app acquired by EdTech investors in China. Amarsh holds degrees in Computer Engineering from UNSW Sydney and Technology Management from UC Santa Barbara. He lives in Sydney with his wife and 11-year-old son, whose journey on the autism spectrum inspires his work in autism-focused innovation.",
+  },
+  
 ].map((p, idx) => {
   const isOpen = !!openMap[`advisor-${idx}`];
   return (
