@@ -52,34 +52,6 @@ export default function Home() {
       <header className="sticky top-0 z-30 bg-white">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
           <span className="text-2xl font-bold text-green-700 tracking-tight">SessionClarity</span>
-          {!isSessionLoading && (
-            <div className="flex items-center gap-3">
-              {isAuthenticated && user ? (
-                <>
-                  <Link href="/upload">
-                    <button
-                      onClick={() => analytics.trackLandingPageButton('Go to App')}
-                      className="rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-green-700 transition"
-                    >
-                      Go to App
-                    </button>
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="text-sm text-gray-600 hover:text-gray-800 transition"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <Link href="/sign-in">
-                  <button className="text-sm font-semibold text-green-700 hover:text-green-800">
-                    Login
-                  </button>
-                </Link>
-              )}
-            </div>
-          )}
         </div>
       </header>
 
@@ -250,7 +222,7 @@ export default function Home() {
           Built by families of non-speaking learners. Informed by practitioners.
         </p>
 
-        <div className="mx-auto grid max-w-5xl gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center">
+        <div className="mx-auto grid max-w-5xl gap-8 grid-cols-1 sm:grid-cols-2 place-items-center">
           {[
             // We'll add Saumya and Amarsh later
             {
