@@ -206,7 +206,7 @@ export default function GetStartedPage() {
                  saumyasuripeddi@gmail.com
                 </a>
                 <br />
-                425-647-8307
+                425-908-9183
               </p>
             </div>
           </div>
