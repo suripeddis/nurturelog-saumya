@@ -204,15 +204,15 @@ export default function GetStartedPage() {
               style={{
                 display: 'block',
                 margin: '40px auto 8px',
-                height: '110px' // increase this for larger size
+                height: '110px' 
               }}
             />
               <p style={{ fontSize: '20px', color: '#334155', marginTop: 4 }}>
                 <a
-                  href="mailto:arti@multiplehub.org"
+                  href="mailto:saumyasuripeddi@gmail.com"
                   style={{ color: '#16a34a', textDecoration: 'none' }}
                 >
-                  arti@multiplehub.org
+                 saumyasuripeddi@gmail.com
                 </a>
                 <br />
                 425-647-8307
