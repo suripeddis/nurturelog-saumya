@@ -198,15 +198,6 @@ export default function GetStartedPage() {
             </ul>
 
             <div>
-            <img
-              src="/artibhatiasignature.png"
-              alt="Handwritten signature of Arti Bhatia"
-              style={{
-                display: 'block',
-                margin: '40px auto 8px',
-                height: '110px' 
-              }}
-            />
               <p style={{ fontSize: '20px', color: '#334155', marginTop: 4 }}>
                 <a
                   href="mailto:saumyasuripeddi@gmail.com"
